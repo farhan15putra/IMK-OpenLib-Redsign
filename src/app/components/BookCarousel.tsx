@@ -141,7 +141,7 @@ export function BookCarousel({ books, savedBookIds = [], onToggleSave, onOpenRea
     dots: false,
     infinite: books.length > 5,
     speed: 700,
-    slidesToShow: 1.3,
+    slidesToShow: 5,
     slidesToScroll: 1,
     arrows: false,
     autoplay: true,
@@ -149,7 +149,6 @@ export function BookCarousel({ books, savedBookIds = [], onToggleSave, onOpenRea
     pauseOnHover: true,
     cssEase: "cubic-bezier(0.23, 1, 0.32, 1)",
     responsive: [
-      { breakpoint: 1600, settings: { slidesToShow: 5 } },
       { breakpoint: 1400, settings: { slidesToShow: 4 } },
       { breakpoint: 1100, settings: { slidesToShow: 3 } },
       { breakpoint: 768,  settings: { slidesToShow: 2 } },
