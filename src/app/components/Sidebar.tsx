@@ -91,13 +91,14 @@ export function Sidebar({ currentView, setCurrentView, isOpen, setIsOpen }: { cu
             <div key={id} className="relative py-1">
               <button
                 onClick={() => setCurrentView(id)}
-                className={`group relative flex items-center justify-center size-12 rounded-2xl transition-all duration-300 ease-out active:scale-90
+                className={`group relative flex flex-col items-center justify-center size-12 md:size-12 rounded-2xl transition-all duration-300 ease-out active:scale-90
                   ${isActive
                     ? "text-white shadow-[0_8px_20px_rgba(139,0,0,0.25)]"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted"}`}
                 style={isActive ? { background: "var(--primary)" } : {}}
               >
-                <Icon className={`size-5 transition-transform duration-300 ${isActive ? "scale-110" : "group-hover:scale-110"}`} />
+                <Icon className={`size-5 md:size-5 transition-transform duration-300 ${isActive ? "scale-110" : "group-hover:scale-110"}`} />
+                <span className="md:hidden text-[7px] font-black uppercase tracking-tighter mt-1 opacity-80 leading-none">{label}</span>
                 
                 {/* Active indicator dot and glow */}
                 {isActive && (
@@ -122,9 +123,10 @@ export function Sidebar({ currentView, setCurrentView, isOpen, setIsOpen }: { cu
       <div className="flex flex-col items-center gap-4 border-t pt-8" style={{ borderColor: "var(--border)" }}>
         <button 
           onClick={() => setCurrentView('login')}
-          className="group relative flex items-center justify-center size-11 rounded-2xl text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-300 active:scale-90 opacity-60"
+          className="group relative flex flex-col items-center justify-center size-11 rounded-2xl text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-300 active:scale-90 opacity-60"
         >
           <LogOut className="size-5" />
+          <span className="md:hidden text-[7px] font-black uppercase tracking-tighter mt-1 opacity-80 leading-none">Logout</span>
         </button>
       </div>
       </aside>

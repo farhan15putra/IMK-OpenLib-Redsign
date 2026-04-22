@@ -22,16 +22,18 @@ interface BookCarouselProps {
   books: Book[];
   savedBookIds?: number[];
   onToggleSave?: (id: number) => void;
+  onOpenReader?: (book: Book) => void;
 }
 
 interface BookSlideProps extends Book {
   isSaved?: boolean;
   onToggleSave?: (id: number) => void;
+  onOpenReader?: () => void;
 }
 
-function BookSlide({ id, title, author, cover, category, featured, location, status, abstract, shelf, isSaved, onToggleSave }: BookSlideProps) {
+function BookSlide({ id, title, author, cover, category, featured, location, status, abstract, shelf, isSaved, onToggleSave, onOpenReader }: BookSlideProps) {
   return (
-    <div className={`group relative cursor-pointer px-3 py-4 transition-all duration-500 ease-out ${featured ? "scale-110 z-10" : "hover:-translate-y-2 opacity-90 hover:opacity-100"}`}>
+    <div className={`group relative cursor-pointer px-3 py-4 md:py-8 transition-all duration-500 ease-out ${featured ? "md:scale-110 z-10 scale-105" : "hover:-translate-y-2 opacity-90 hover:opacity-100"}`}>
       {/* Book cover elevation */}
       <div
         className="relative overflow-hidden rounded-2xl mb-4"
@@ -54,27 +56,12 @@ function BookSlide({ id, title, author, cover, category, featured, location, sta
         {/* Featured badge */}
         {featured && (
           <div
-            className="absolute top-4 left-4 px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-widest backdrop-blur-md shadow-lg"
+            className="absolute top-5 left-5 px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest backdrop-blur-md shadow-lg flex items-center justify-center leading-none"
             style={{ background: "rgba(139,0,0,0.85)", color: "#fff", border: "1px solid rgba(255,255,255,0.2)" }}
           >
             Must Read
           </div>
         )}
-
-        {/* Dynamic Category Tag */}
-        <div 
-          className="absolute top-4 right-4 translate-y-[-10px] opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 flex flex-col gap-2 items-end"
-        >
-          <span className="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase" style={{ background: "rgba(37,37,37,0.9)", color: "var(--foreground)", border: "1px solid var(--border)" }}>
-            {category}
-          </span>
-          <button 
-            onClick={(e) => { e.stopPropagation(); onToggleSave?.(id); }}
-            className={`p-2 rounded-full border transition-all ${isSaved ? 'bg-amber-500/90 border-amber-500 text-white' : 'bg-black/60 border-white/20 text-white/70 hover:text-white hover:bg-black/80'} backdrop-blur-md`}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill={isSaved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
-          </button>
-        </div>
 
         {/* Interaction overlay (Lens Preview) */}
         <div
@@ -90,10 +77,24 @@ function BookSlide({ id, title, author, cover, category, featured, location, sta
              )}
            </div>
 
-           <button className="w-full py-2 rounded-xl text-xs font-bold uppercase tracking-widest translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75 shadow-lg"
+           <button 
+             onClick={(e) => { e.stopPropagation(); onOpenReader?.(); }}
+             className="w-full py-2 rounded-xl text-xs font-black uppercase tracking-widest translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75 shadow-lg active:scale-95"
              style={{ background: "var(--primary)", color: "#fff", border: "1px solid rgba(255,255,255,0.2)" }}>
              Open Reader
            </button>
+        </div>
+
+        {/* Dynamic Category Tag & Save Button - Moved after overlay to prevent backdrop-blur issue */}
+        <div 
+          className="absolute top-4 right-4 translate-y-[-10px] opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 flex flex-col gap-2 items-end z-20"
+        >
+          <button 
+            onClick={(e) => { e.stopPropagation(); onToggleSave?.(id); }}
+            className={`p-2 rounded-full border transition-all ${isSaved ? 'bg-amber-500/90 border-amber-500 text-white' : 'bg-black/60 border-white/20 text-white/70 hover:text-white hover:bg-black/80'} backdrop-blur-md shadow-lg active:scale-90`}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill={isSaved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
+          </button>
         </div>
       </div>
 
@@ -123,7 +124,7 @@ function BookSlide({ id, title, author, cover, category, featured, location, sta
   );
 }
 
-export function BookCarousel({ books, savedBookIds = [], onToggleSave }: BookCarouselProps) {
+export function BookCarousel({ books, savedBookIds = [], onToggleSave, onOpenReader }: BookCarouselProps) {
   const sliderRef = useRef<Slider>(null);
 
   const settings = {
@@ -140,9 +141,9 @@ export function BookCarousel({ books, savedBookIds = [], onToggleSave }: BookCar
     responsive: [
       { breakpoint: 1600, settings: { slidesToShow: 5 } },
       { breakpoint: 1400, settings: { slidesToShow: 4 } },
-      { breakpoint: 1100, settings: { slidesToShow: 3 } },
-      { breakpoint: 768,  settings: { slidesToShow: 2 } },
-      { breakpoint: 480,  settings: { slidesToShow: 1 } },
+      { breakpoint: 1100, settings: { slidesToShow: 3.5 } },
+      { breakpoint: 768,  settings: { slidesToShow: 2.2 } },
+      { breakpoint: 480,  settings: { slidesToShow: 1.5 } },
     ],
   };
 
@@ -191,6 +192,7 @@ export function BookCarousel({ books, savedBookIds = [], onToggleSave }: BookCar
                 {...book} 
                 isSaved={savedBookIds.includes(book.id)} 
                 onToggleSave={onToggleSave} 
+                onOpenReader={() => onOpenReader?.(book)}
               />
             </div>
           ))}

@@ -32,7 +32,7 @@ export function BookCard({ title, author, cover, category, featured }: BookCardP
         {/* Featured ribbon */}
         {featured && (
           <div
-            className="absolute top-3 left-3 px-2 py-0.5 rounded text-xs font-semibold uppercase tracking-wide"
+            className="absolute top-4 left-4 px-2.5 py-1 rounded text-xs font-semibold uppercase tracking-wide flex items-center justify-center leading-none"
             style={{ background: "var(--primary)", color: "#fff" }}
           >
             Featured

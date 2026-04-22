@@ -9,6 +9,7 @@ import { SavedBooks } from "./components/SavedBooks";
 import { Settings } from "./components/Settings";
 import { Login } from "./components/Login";
 import { Profile } from "./components/Profile";
+import { BookReader } from "./components/BookReader";
 import { ExternalLink } from "lucide-react";
 
 const books = [
@@ -23,6 +24,7 @@ const books = [
     status: "Available" as const,
     abstract: "An enchanting tale about looking past outward appearances to see the true beauty within. A must-read classic.",
     shelf: "FAN-301",
+    format: "Physical",
   },
   {
     id: 2,
@@ -35,6 +37,7 @@ const books = [
     status: "Borrowed" as const,
     abstract: "Set 300 years before A Game of Thrones, dragons rule Westeros. This is the definitive history of the Targaryens.",
     shelf: "FAN-992",
+    format: "Physical",
   },
   {
     id: 3,
@@ -47,52 +50,82 @@ const books = [
     status: "Available" as const,
     abstract: "Journeys to the end of the world, fantastic creatures, and epic battles between good and evil.",
     shelf: "FAN-105",
+    format: "Physical",
   },
   {
     id: 4,
-    title: "Deadpool Samurai: Marvel",
-    author: "Sanshiro Kasama",
-    cover: "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-    category: "Comics",
-    featured: false,
-    location: "Kampus Jakarta",
-    status: "Available" as const,
-    abstract: "Deadpool moves to Tokyo and joins the Samurai Avengers in this official crossover manga. Exciting logic twists.",
-    shelf: "COM-441",
-  },
-  {
-    id: 5,
-    title: "Leadership Principles",
-    author: "John Maxwell",
-    cover: "https://images.unsplash.com/photo-1532012197267-da84d127e765?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    title: "The Psychology of Success",
+    author: "Prof. David Miller",
+    cover: "https://images.unsplash.com/photo-1541963463532-d68292c34b19?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
     category: "Leadership",
     featured: false,
     location: "Kampus Bandung",
-    status: "Borrowed" as const,
-    abstract: "Essential 21 laws of leadership to help executives and students alike maximize their organizational impact.",
-    shelf: "BUS-200",
+    status: "Available" as const,
+    abstract: "Understanding the mindset of high achievers through the lens of cognitive psychology.",
+    shelf: "PSY-404",
+    format: "Physical",
+  },
+  {
+    id: 5,
+    title: "Modern Business Strategy",
+    author: "Robert Kiyosaki",
+    cover: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "Business",
+    featured: true,
+    location: "Online Access",
+    status: "Available" as const,
+    abstract: "Tactical approaches to dominating markets in the era of platform economies.",
+    shelf: "BUS-505",
+    format: "E-Book",
   },
   {
     id: 6,
-    title: "Financial Freedom Guide",
-    author: "Robert T. Kiyosaki",
-    cover: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    title: "Rich Dad Poor Dad",
+    author: "Robert Kiyosaki",
+    cover: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
     category: "Finance",
     featured: false,
-    location: "Kampus Bandung",
+    location: "Online Access",
     status: "Available" as const,
     abstract: "Learn the secrets of the rich and understand fundamental steps towards creating passive income in the modern era.",
     shelf: "FIN-199",
+    format: "E-Book",
+  },
+  {
+    id: 7,
+    title: "Journal of IT and Computer Science",
+    author: "Telkom University Researchers",
+    cover: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "Journals",
+    featured: false,
+    location: "Online Access Only",
+    status: "Available" as const,
+    abstract: "A collection of peer-reviewed research papers focusing on the latest advancements in AI, Cybersecurity, and Software Engineering.",
+    shelf: "DIG-001",
+    format: "Journal",
+  },
+  {
+    id: 8,
+    title: "Industrial Revolution in Southeast Asia",
+    author: "Prof. Ahmad Yani",
+    cover: "https://images.unsplash.com/photo-1543269865-cbf427effbad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "Journals",
+    featured: false,
+    location: "Online Access Only",
+    status: "Available" as const,
+    abstract: "A detailed analysis of industrial growth and economic shifts in the SEA region over the last century.",
+    format: "Journal",
   },
 ];
 
-const allCategories = ["All", "Fantasy", "Finance", "Psychology", "Leadership", "Marketing", "Business"];
+const allCategories = ["All", "Fantasy", "Finance", "Leadership", "Journals", "Business"];
 
 export default function App() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [currentView, setCurrentView] = useState("login"); // Start at login
   const [savedBookIds, setSavedBookIds] = useState<number[]>([1, 4]); // Init with some books
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [readingBook, setReadingBook] = useState<any>(null);
 
   const toggleSaveBook = (id: number) => {
     setSavedBookIds(prev => prev.includes(id) ? prev.filter(bId => bId !== id) : [...prev, id]);
@@ -135,7 +168,13 @@ export default function App() {
 
         <main className="flex-1 overflow-y-auto overflow-x-hidden min-w-0">
           <div className="max-w-[1440px] mx-auto transition-all duration-500">
-            {currentView === "catalog" && <SearchResults />}
+            {currentView === "catalog" && (
+              <SearchResults 
+                books={books} 
+                selectedCategory={selectedCategory} 
+                onOpenReader={(book) => setReadingBook(book)} 
+              />
+            )}
             {currentView === "history" && <LoanHistory />}
             {currentView === "saved" && <SavedBooks savedBooks={books.filter(b => savedBookIds.includes(b.id))} onRemove={toggleSaveBook} />}
             {currentView === "settings" && <Settings />}
@@ -143,7 +182,14 @@ export default function App() {
             {currentView === "home" && (
               <>
                 {/* Hero Section */}
-                <Hero />
+                <Hero onNavigate={(target, category) => {
+                  setCurrentView(target);
+                  if (category) {
+                    setSelectedCategory(category);
+                  } else if (target === "catalog") {
+                    setSelectedCategory("All");
+                  }
+                }} />
 
             {/* Divider */}
             <div className="mx-4 md:mx-8 opacity-50" style={{ borderTop: "1.5px solid var(--border)" }} />
@@ -152,12 +198,12 @@ export default function App() {
             <div className="px-4 md:px-8 pt-8 pb-6 flex items-center justify-between flex-wrap gap-4 md:gap-6">
               <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-4 flex-wrap w-full">
                 <span className="text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: "var(--muted-foreground)" }}>Explore Categories:</span>
-                <div className="flex gap-2 flex-wrap w-full md:w-auto overflow-x-auto pb-2 md:pb-0 hide-scrollbar">
+                <div className="flex gap-2 flex-nowrap w-full md:w-auto overflow-x-auto pb-4 md:pb-0 hide-scrollbar scroll-smooth">
                   {allCategories.map(cat => (
                     <button
                       key={cat}
                       onClick={() => setSelectedCategory(cat)}
-                      className="px-6 py-2 rounded-2xl text-[11px] font-bold uppercase tracking-wider transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0"
+                      className="px-6 py-2 rounded-2xl text-[11px] font-bold uppercase tracking-wider transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 whitespace-nowrap"
                       style={
                         selectedCategory === cat
                           ? { background: "var(--primary)", color: "#fff", boxShadow: "0 6px 15px rgba(139,0,0,0.25)" }
@@ -177,7 +223,7 @@ export default function App() {
             </div>
 
             {/* Carousel Segment */}
-            <section className="px-2 md:px-5 pb-10 md:pb-14 overflow-hidden">
+            <section className="px-2 md:px-5 pt-8 pb-10 md:pb-14 overflow-visible">
                <div className="px-3 mb-2">
                 <h2 className="text-2xl font-black tracking-tight" style={{ color: "var(--foreground)" }}>New Arrivals</h2>
                 <div className="w-12 h-1 mt-1 rounded-full" style={{ background: "var(--primary)" }} />
@@ -187,6 +233,7 @@ export default function App() {
                   books={selectedCategory === "All" ? books : books.filter(b => b.category === selectedCategory)} 
                   savedBookIds={savedBookIds}
                   onToggleSave={toggleSaveBook}
+                  onOpenReader={(book) => setReadingBook(book)}
                 />
               </div>
             </section>
@@ -202,7 +249,7 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                 {[
                   { code: "IEEE", name: "IEEE Xplore", color: "linear-gradient(135deg, #2463eb, #1e40af)", desc: "Engineering & Tech" },
                   { code: "S", name: "Springer", color: "linear-gradient(135deg, #8B0000, #4c0000)", desc: "Scientific Journals" },
@@ -234,6 +281,10 @@ export default function App() {
           </div>
         </main>
       </div>
+      {/* Reader Modal */}
+      {readingBook && (
+        <BookReader book={readingBook} onClose={() => setReadingBook(null)} />
+      )}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Mail, Lock, ArrowRight, BookOpen } from "lucide-react";
-import logoImg from "../../imports/openlib-logo.jpg";
+import logoImg from "../../imports/openlibcrop.png";
 
 export function Login({ onLogin }: { onLogin: () => void }) {
   const [email, setEmail] = useState("");

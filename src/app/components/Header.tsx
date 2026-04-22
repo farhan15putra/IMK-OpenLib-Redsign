@@ -1,6 +1,6 @@
 import { Search, Bell, Settings, Layers, Menu } from "lucide-react";
 import { useState } from "react";
-import logoImg from "../../imports/openlib-logo.jpg";
+import logoImg from "../../imports/openlibcrop.png";
 
 export function Header({ onHomeClick, onProfileClick, onMenuClick }: { onHomeClick?: () => void, onProfileClick?: () => void, onMenuClick?: () => void }) {
   const [showAdvanced, setShowAdvanced] = useState(false);

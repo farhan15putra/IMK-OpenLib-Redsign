@@ -61,7 +61,7 @@ export function Profile() {
                 <span className="flex items-center gap-2 text-xs font-bold text-muted-foreground uppercase tracking-wider">
                   <Mail className="size-3.5" /> Email Address
                 </span>
-                <span className="text-sm font-medium text-foreground ml-5.5">farhan.putra@student.telkomuniversity.ac.id</span>
+                <span className="text-sm font-medium text-foreground ml-5.5 break-all">farhan.putra@student.telkomuniversity.ac.id</span>
               </div>
               <div className="flex flex-col gap-1.5">
                 <span className="flex items-center gap-2 text-xs font-bold text-muted-foreground uppercase tracking-wider">
