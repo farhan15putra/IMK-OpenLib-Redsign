@@ -142,8 +142,8 @@ export function BookCarousel({ books, savedBookIds = [], onToggleSave, onOpenRea
       { breakpoint: 1600, settings: { slidesToShow: 5 } },
       { breakpoint: 1400, settings: { slidesToShow: 4 } },
       { breakpoint: 1100, settings: { slidesToShow: 3.5 } },
-      { breakpoint: 768,  settings: { slidesToShow: 2.2 } },
-      { breakpoint: 480,  settings: { slidesToShow: 1.5 } },
+      { breakpoint: 768,  settings: { slidesToShow: 2 } },
+      { breakpoint: 480,  settings: { slidesToShow: 1 } },
     ],
   };
 
@@ -184,7 +184,7 @@ export function BookCarousel({ books, savedBookIds = [], onToggleSave, onOpenRea
       </div>
 
       {/* Slider Container with min-width fix */}
-      <div className="w-full min-w-0 px-0 mx-[-12px]">
+      <div className="w-full min-w-0 px-0 md:mx-[-12px]">
         <Slider ref={sliderRef} {...settings}>
           {books.map((book) => (
             <div key={book.id}>

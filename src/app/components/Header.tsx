@@ -57,18 +57,16 @@ export function Header({ onHomeClick, onProfileClick, onMenuClick }: { onHomeCli
             className="flex-1 ml-3 md:ml-4 bg-transparent text-[11px] md:text-sm font-bold placeholder:font-medium placeholder:opacity-40 outline-none w-full"
             style={{ color: "var(--foreground)" }}
           />
-          <div className="hidden sm:flex items-center gap-2 ml-2 md:ml-4">
-            <div className="flex items-center gap-1 px-2 py-1 rounded-md bg-muted text-[10px] font-black opacity-50 uppercase tracking-widest border border-border">
-              <span>Alt</span>
-              <span>+</span>
-              <span>K</span>
+          <div className="flex items-center gap-1.5 ml-2 md:ml-4">
+            <div className="hidden sm:flex items-center gap-1 px-2 py-1 rounded-md bg-muted text-[10px] font-black opacity-50 uppercase tracking-widest border border-border">
+              <span>Alt+K</span>
             </div>
             <button 
               onClick={() => setShowAdvanced(!showAdvanced)}
-              className="flex items-center gap-1.5 px-2 py-1 rounded-md text-[10px] font-black uppercase tracking-widest transition-all hover:bg-primary/10 text-primary border border-primary/20 bg-primary/5 active:scale-95 shadow-sm"
+              className="flex items-center gap-1.5 px-2 md:px-2.5 py-1.5 md:py-1 rounded-md text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all hover:bg-primary/10 text-primary border border-primary/20 bg-primary/5 active:scale-95 shadow-sm"
             >
-              <Settings className="size-3" />
-              Advanced
+              <Settings className="size-3 md:size-3.5" />
+              <span className="hidden xs:inline">Advanced</span>
             </button>
           </div>
         </div>

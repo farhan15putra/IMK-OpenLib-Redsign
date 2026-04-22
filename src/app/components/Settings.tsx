@@ -18,9 +18,12 @@ export function Settings() {
       color: "text-primary",
       bgClass: "bg-primary/10 border-primary/20",
       content: (
-        <div className="mt-4 flex items-center gap-4">
-           {['Light', 'Dark', 'System'].map(mode => (
-              <button key={mode} className="flex-1 py-2 px-4 rounded-xl border border-border bg-card text-xs font-bold uppercase tracking-widest hover:border-primary hover:text-primary transition-all shadow-sm">
+        <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-4">
+           {['Light', 'Dark', 'System'].map((mode, idx) => (
+              <button 
+                key={mode} 
+                className={`py-2 px-3 md:px-4 rounded-xl border border-border bg-card text-[10px] md:text-xs font-black uppercase tracking-widest hover:border-primary hover:text-primary transition-all shadow-sm ${idx === 2 ? 'col-span-2 sm:col-span-1' : ''}`}
+              >
                 {mode}
               </button>
            ))}
