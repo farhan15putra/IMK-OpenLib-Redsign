@@ -63,9 +63,9 @@ function BookSlide({ id, title, author, cover, category, featured, location, sta
           </div>
         )}
 
-        {/* Interaction overlay (Lens Preview) */}
+        {/* Interaction overlay (Lens Preview) - Visible on Desktop hover */}
         <div
-          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-5 backdrop-blur-sm"
+          className="absolute inset-0 opacity-0 md:group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-5 md:backdrop-blur-sm"
           style={{ background: "linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,0.2) 100%)" }}
         >
            <div className="text-left mb-4 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out text-white drop-shadow-md">
@@ -85,9 +85,19 @@ function BookSlide({ id, title, author, cover, category, featured, location, sta
            </button>
         </div>
 
-        {/* Dynamic Category Tag & Save Button - Moved after overlay to prevent backdrop-blur issue */}
+        {/* Mobile Open Minimalist button - only visible on small screens */}
+        <div className="absolute bottom-3 inset-x-3 flex md:hidden z-30">
+          <button 
+            onClick={(e) => { e.stopPropagation(); onOpenReader?.(); }}
+            className="w-full py-1.5 rounded-lg bg-black/60 backdrop-blur-md text-white text-[8px] font-black uppercase tracking-widest border border-white/20 active:scale-95 shadow-lg"
+          >
+            Read Online
+          </button>
+        </div>
+
+        {/* Dynamic Category Tag & Save Button */}
         <div 
-          className="absolute top-4 right-4 translate-y-[-10px] opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 flex flex-col gap-2 items-end z-20"
+          className="absolute top-3 right-3 md:translate-y-[-10px] opacity-100 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 transition-all duration-300 flex flex-col gap-2 items-end z-20"
         >
           <button 
             onClick={(e) => { e.stopPropagation(); onToggleSave?.(id); }}
@@ -131,7 +141,7 @@ export function BookCarousel({ books, savedBookIds = [], onToggleSave, onOpenRea
     dots: false,
     infinite: books.length > 5,
     speed: 700,
-    slidesToShow: 5,
+    slidesToShow: 1.3,
     slidesToScroll: 1,
     arrows: false,
     autoplay: true,
@@ -141,9 +151,9 @@ export function BookCarousel({ books, savedBookIds = [], onToggleSave, onOpenRea
     responsive: [
       { breakpoint: 1600, settings: { slidesToShow: 5 } },
       { breakpoint: 1400, settings: { slidesToShow: 4 } },
-      { breakpoint: 1100, settings: { slidesToShow: 3.5 } },
+      { breakpoint: 1100, settings: { slidesToShow: 3 } },
       { breakpoint: 768,  settings: { slidesToShow: 2 } },
-      { breakpoint: 480,  settings: { slidesToShow: 1 } },
+      { breakpoint: 480,  settings: { slidesToShow: 1.3 } },
     ],
   };
 

@@ -101,7 +101,7 @@ export function SearchResults({
                   <div className="relative w-24 h-36 bg-muted rounded-2xl flex-shrink-0 bg-cover bg-center shadow-md border border-border overflow-hidden" 
                        style={{ backgroundImage: `url('${book.cover}')` }}>
                       {/* Lens Preview Hover */}
-                      <div className="absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-all duration-300 flex flex-col justify-center items-center backdrop-blur-sm p-2"
+                      <div className="absolute inset-0 opacity-0 md:group-hover/card:opacity-100 transition-all duration-300 flex flex-col justify-center items-center md:backdrop-blur-sm p-2"
                            style={{ background: "rgba(0,0,0,0.6)" }}>
                           {book.category === 'Journals' || book.id === 2 || book.id === 5 || book.id === 6 ? (
                             <button 
@@ -134,6 +134,16 @@ export function SearchResults({
                         <div className={`size-1.5 rounded-full ${book.status === 'Available' ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
                         {book.status} - {book.location || 'Kampus Jakarta'}
                       </div>
+                    </div>
+
+                    {/* Mobile Quick Action */}
+                    <div className="mt-3 flex md:hidden">
+                       <button 
+                        onClick={(e) => { e.stopPropagation(); onOpenReader?.(book); }}
+                        className="w-full py-2 bg-primary text-white text-[9px] font-black uppercase tracking-widest rounded-lg shadow-md active:scale-95"
+                       >
+                        {book.format === 'Physical' ? 'Request Loan' : 'Read Now'}
+                       </button>
                     </div>
                   </div>
                 </div>
