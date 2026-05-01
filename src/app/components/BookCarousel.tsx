@@ -36,9 +36,8 @@ function BookSlide({ id, title, author, cover, category, featured, location, sta
     <div className={`group relative cursor-pointer px-3 py-4 md:py-8 transition-all duration-500 ease-out ${featured ? "md:scale-110 z-10 scale-105" : "hover:-translate-y-2 opacity-90 hover:opacity-100"}`}>
       {/* Book cover elevation */}
       <div
-        className="relative overflow-hidden rounded-2xl mb-4"
+        className="relative overflow-hidden rounded-2xl mb-4 h-[260px] md:h-[300px]"
         style={{
-          aspectRatio: "2/3",
           boxShadow: featured
             ? "0 35px 70px -15px rgba(0,0,0,0.9), 0 0 0 2px rgba(139,0,0,0.6)"
             : "0 20px 45px -12px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05)",
@@ -53,15 +52,7 @@ function BookSlide({ id, title, author, cover, category, featured, location, sta
           }}
         />
 
-        {/* Featured badge */}
-        {featured && (
-          <div
-            className="absolute top-5 left-5 px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest backdrop-blur-md shadow-lg flex items-center justify-center leading-none"
-            style={{ background: "rgba(139,0,0,0.85)", color: "#fff", border: "1px solid rgba(255,255,255,0.2)" }}
-          >
-            Must Read
-          </div>
-        )}
+
 
         {/* Interaction overlay (Lens Preview) - Visible on Desktop hover */}
         <div

@@ -32,7 +32,7 @@ const books = [
     author: "George R. R. Martin",
     cover: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
     category: "Fantasy",
-    featured: true,
+    featured: false,
     location: "Kampus Jakarta",
     status: "Borrowed" as const,
     abstract: "Set 300 years before A Game of Thrones, dragons rule Westeros. This is the definitive history of the Targaryens.",
@@ -71,7 +71,7 @@ const books = [
     author: "Robert Kiyosaki",
     cover: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
     category: "Business",
-    featured: true,
+    featured: false,
     location: "Online Access",
     status: "Available" as const,
     abstract: "Tactical approaches to dominating markets in the era of platform economies.",
@@ -114,6 +114,87 @@ const books = [
     location: "Online Access Only",
     status: "Available" as const,
     abstract: "A detailed analysis of industrial growth and economic shifts in the SEA region over the last century.",
+    format: "Journal",
+  },
+];
+
+const topPickBooks = [
+  {
+    id: 101,
+    title: "Interaction Design: Beyond Human-Computer Interaction",
+    author: "Helen Sharp, Yvonne Rogers, Jenny Preece",
+    cover: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "HCI",
+    featured: false,
+    location: "Online Access",
+    status: "Available" as const,
+    abstract: "A comprehensive guide to interaction design covering user research, prototyping, evaluation, and interface design principles.",
+    shelf: "HCI-001",
+    format: "E-Book",
+  },
+  {
+    id: 102,
+    title: "The Design of Everyday Things",
+    author: "Don Norman",
+    cover: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "HCI",
+    featured: false,
+    location: "Kampus Bandung",
+    status: "Available" as const,
+    abstract: "A landmark book on human-centered design. Don Norman explores how good design makes products intuitive and satisfying to use.",
+    shelf: "HCI-002",
+    format: "Physical",
+  },
+  {
+    id: 103,
+    title: "Don't Make Me Think, Revisited",
+    author: "Steve Krug",
+    cover: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "HCI",
+    featured: false,
+    location: "Online Access",
+    status: "Available" as const,
+    abstract: "A common-sense guide to web usability. Learn how users think and how to design websites that are easy to navigate.",
+    shelf: "HCI-003",
+    format: "E-Book",
+  },
+  {
+    id: 104,
+    title: "Journal of Usability Studies — Vol. 18",
+    author: "Usability Professionals' Association",
+    cover: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "HCI",
+    featured: false,
+    location: "Online Access Only",
+    status: "Available" as const,
+    abstract: "Peer-reviewed research on user experience design, usability evaluation methods, and human-computer interaction studies.",
+    shelf: "JNL-HCI-018",
+    format: "Journal",
+  },
+  {
+    id: 105,
+    title: "Designing with the Mind in Mind",
+    author: "Jeff Johnson",
+    cover: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "HCI",
+    featured: false,
+    location: "Kampus Jakarta",
+    status: "Available" as const,
+    abstract: "A guide to UI design based on human psychology. Learn how perception, attention, memory, and decision-making affect UI design.",
+    shelf: "HCI-005",
+    format: "Physical",
+  },
+  {
+    id: 106,
+    title: "International Journal of Human-Computer Studies",
+    author: "Elsevier — Academic Press",
+    cover: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "HCI",
+    featured: false,
+    location: "Online Access Only",
+    status: "Available" as const,
+    abstract: "A leading peer-reviewed journal publishing research on the study and practice of how humans interact with computational systems.",
+    shelf: "JNL-HCI-INT",
     format: "Journal",
   },
 ];
@@ -222,15 +303,42 @@ export default function App() {
               </div>
             </div>
 
-            {/* Carousel Segment */}
+            {/* New Arrivals Segment */}
             <section className="px-2 md:px-5 pt-8 pb-10 md:pb-14 overflow-visible">
-               <div className="px-3 mb-2">
-                <h2 className="text-2xl font-black tracking-tight" style={{ color: "var(--foreground)" }}>New Arrivals</h2>
-                <div className="w-12 h-1 mt-1 rounded-full" style={{ background: "var(--primary)" }} />
+              <div className="px-3 mb-6">
+                <div className="flex items-center gap-3 mb-1">
+                  <h2 className="text-2xl font-black tracking-tight" style={{ color: "var(--foreground)" }}>New Arrivals</h2>
+                  <span className="px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest" style={{ background: "rgba(139,0,0,0.1)", color: "var(--primary)" }}>Latest</span>
+                </div>
+                <p className="text-xs font-medium" style={{ color: "var(--muted-foreground)" }}>Koleksi terbaru yang baru ditambahkan ke perpustakaan</p>
+                <div className="w-12 h-1 mt-2 rounded-full" style={{ background: "var(--primary)" }} />
               </div>
               <div className="min-w-0">
                 <BookCarousel 
                   books={selectedCategory === "All" ? books : books.filter(b => b.category === selectedCategory)} 
+                  savedBookIds={savedBookIds}
+                  onToggleSave={toggleSaveBook}
+                  onOpenReader={(book) => setReadingBook(book)}
+                />
+              </div>
+            </section>
+
+            {/* Divider */}
+            <div className="mx-4 md:mx-8 opacity-30" style={{ borderTop: "1.5px solid var(--border)" }} />
+
+            {/* Top Picks Segment */}
+            <section className="px-2 md:px-5 pt-8 pb-10 md:pb-14 overflow-visible">
+              <div className="px-3 mb-6">
+                <div className="flex items-center gap-3 mb-1">
+                  <h2 className="text-2xl font-black tracking-tight" style={{ color: "var(--foreground)" }}>Top Picks</h2>
+                  <span className="px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest text-white" style={{ background: "var(--primary)" }}>Rekomendasi</span>
+                </div>
+                <p className="text-xs font-medium" style={{ color: "var(--muted-foreground)" }}>Buku-buku pilihan yang paling direkomendasikan untuk kamu</p>
+                <div className="w-12 h-1 mt-2 rounded-full" style={{ background: "var(--primary)" }} />
+              </div>
+              <div className="min-w-0">
+                <BookCarousel 
+                  books={topPickBooks} 
                   savedBookIds={savedBookIds}
                   onToggleSave={toggleSaveBook}
                   onOpenReader={(book) => setReadingBook(book)}
@@ -251,10 +359,10 @@ export default function App() {
 
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                 {[
-                  { code: "IEEE", name: "IEEE Xplore", color: "linear-gradient(135deg, #2463eb, #1e40af)", desc: "Engineering & Tech" },
-                  { code: "S", name: "Springer", color: "linear-gradient(135deg, #8B0000, #4c0000)", desc: "Scientific Journals" },
-                  { code: "P", name: "ProQuest", color: "linear-gradient(135deg, #374151, #111827)", desc: "Research Papers" },
-                  { code: "SD", name: "ScienceDirect", color: "linear-gradient(135deg, #ea580c, #9a3412)", desc: "Physics & Chemistry" },
+                  { code: "IEEE", name: "IEEE Xplore", logo: "/src/imports/ieee.png", bg: "#fff", desc: "Engineering & Tech" },
+                  { code: "S", name: "Springer", logo: "/src/imports/Springer.jpg", bg: "#fff", desc: "Scientific Journals" },
+                  { code: "P", name: "ProQuest", logo: "/src/imports/proquest.jpg", bg: "#fff", desc: "Research Papers" },
+                  { code: "SD", name: "ScienceDirect", logo: "/src/imports/sciencedirect.png", bg: "#fff", desc: "Physics & Chemistry" },
                 ].map(db => (
                   <div
                     key={db.code}
@@ -262,9 +370,8 @@ export default function App() {
                     style={{ background: "var(--card)" }}
                   >
                     <div className="flex items-center justify-between mb-4">
-                      <div className="size-14 rounded-2xl flex items-center justify-center text-white text-base font-black shadow-lg transform group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500"
-                        style={{ background: db.color }}>
-                        {db.code}
+                      <div className="h-12 w-28 rounded-xl flex items-center justify-center overflow-hidden border border-border/40 bg-white px-2 shadow-sm transform group-hover:scale-105 transition-transform duration-500">
+                        <img src={db.logo} alt={db.name} className="h-full w-full object-contain" />
                       </div>
                       <ExternalLink className="size-4 opacity-20 group-hover:opacity-100 transition-all group-hover:text-primary" />
                     </div>

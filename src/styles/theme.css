@@ -39,27 +39,27 @@
 }
 
 .dark {
-  /* DARK MODE (Versi Gelap yang dibuat sebelumnya) */
-  --background: #0f0f0f;
-  --foreground: #e2e2e2;
-  --card: #181818;
-  --card-foreground: #e2e2e2;
-  --popover: #181818;
-  --popover-foreground: #e2e2e2;
-  --primary: #8B0000;
+  /* DARK MODE — Warm Dark Gray + Soft Red */
+  --background: #1e1e20;        /* Abu-abu gelap hangat, bukan hitam */
+  --foreground: #e8e6e1;        /* Putih sedikit warm */
+  --card: #26262a;              /* Card sedikit lebih terang dari bg */
+  --card-foreground: #e8e6e1;
+  --popover: #26262a;
+  --popover-foreground: #e8e6e1;
+  --primary: #c0392b;           /* Merah lebih soft/muted di dark mode */
   --primary-foreground: #ffffff;
-  --secondary: #2a2a2a;
-  --secondary-foreground: #e2e2e2;
-  --muted: #242424;
-  --muted-foreground: #888888;
-  --accent: #8B0000;
+  --secondary: #313136;
+  --secondary-foreground: #e8e6e1;
+  --muted: #2e2e32;             /* Muted area sedikit lebih terang */
+  --muted-foreground: #9a9890;  /* Abu hangat */
+  --accent: #c0392b;
   --accent-foreground: #ffffff;
-  --border: #2a2a2a;
-  --input: #2a2a2a;
-  --sidebar: #0a0a0a;
-  --sidebar-foreground: #e2e2e2;
-  --sidebar-border: #1a1a1a;
-  --sidebar-accent: #242424;
+  --border: #35353a;            /* Border lebih terlihat, tidak terlalu gelap */
+  --input: #35353a;
+  --sidebar: #18181b;           /* Sidebar sedikit lebih gelap dari bg */
+  --sidebar-foreground: #e8e6e1;
+  --sidebar-border: #2c2c30;
+  --sidebar-accent: #2e2e32;
 }
 
 @theme inline {
