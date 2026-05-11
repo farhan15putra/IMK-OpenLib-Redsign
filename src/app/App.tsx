@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Sidebar } from "./components/Sidebar";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
@@ -10,7 +10,13 @@ import { Settings } from "./components/Settings";
 import { Login } from "./components/Login";
 import { Profile } from "./components/Profile";
 import { BookReader } from "./components/BookReader";
+import { A11yPanel } from "./components/A11yPanel";
+import { VoiceOver } from "./components/VoiceOver";
+import { AssistiveTouch } from "./components/AssistiveTouch";
+import { I18nProvider, useI18n } from "../context/i18nContext";
+import { A11yProvider } from "../context/a11yContext";
 import { ExternalLink } from "lucide-react";
+
 
 const books = [
   {
@@ -202,9 +208,20 @@ const topPickBooks = [
 const allCategories = ["All", "Fantasy", "Finance", "Leadership", "Journals", "Business"];
 
 export default function App() {
+  return (
+    <I18nProvider>
+      <A11yProvider>
+        <AppContent />
+      </A11yProvider>
+    </I18nProvider>
+  );
+}
+
+function AppContent() {
+  const { t } = useI18n();
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [currentView, setCurrentView] = useState("login"); // Start at login
-  const [savedBookIds, setSavedBookIds] = useState<number[]>([1, 4]); // Init with some books
+  const [currentView, setCurrentView] = useState("login");
+  const [savedBookIds, setSavedBookIds] = useState<number[]>([1, 4]);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [readingBook, setReadingBook] = useState<any>(null);
 
@@ -247,7 +264,10 @@ export default function App() {
           onMenuClick={() => setIsMobileMenuOpen(true)}
         />
 
-        <main className="flex-1 overflow-y-auto overflow-x-hidden min-w-0">
+        {/* Screen reader live region for dynamic announcements */}
+        <div aria-live="polite" aria-atomic="true" className="sr-only" id="sr-announcer" />
+
+        <main id="main-content" className="flex-1 overflow-y-auto overflow-x-hidden min-w-0" tabIndex={-1}>
           <div className="max-w-[1440px] mx-auto transition-all duration-500">
             {currentView === "catalog" && (
               <SearchResults 
@@ -278,12 +298,15 @@ export default function App() {
             {/* Selection Hub */}
             <div className="px-4 md:px-8 pt-8 pb-6 flex items-center justify-between flex-wrap gap-4 md:gap-6">
               <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-4 flex-wrap w-full">
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: "var(--muted-foreground)" }}>Explore Categories:</span>
-                <div className="flex gap-2 flex-nowrap w-full md:w-auto overflow-x-auto pb-4 md:pb-0 hide-scrollbar scroll-smooth">
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: "var(--muted-foreground)" }}>{t("cat.label")}</span>
+                <div role="list" aria-label={t("cat.label")} className="flex gap-2 flex-nowrap w-full md:w-auto overflow-x-auto pb-4 md:pb-0 hide-scrollbar scroll-smooth">
                   {allCategories.map(cat => (
                     <button
                       key={cat}
+                      role="listitem"
                       onClick={() => setSelectedCategory(cat)}
+                      aria-pressed={selectedCategory === cat}
+                      aria-label={`${t("cat.label")} ${cat}`}
                       className="px-6 py-2 rounded-2xl text-[11px] font-bold uppercase tracking-wider transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 whitespace-nowrap"
                       style={
                         selectedCategory === cat
@@ -297,20 +320,20 @@ export default function App() {
                 </div>
               </div>
               
-              <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest px-4 py-2 rounded-full border border-border bg-muted/50">
-                <div className="size-2 rounded-full bg-primary animate-pulse" />
-                <span style={{ color: "var(--muted-foreground)" }}>Catalog Active Storage</span>
+              <div aria-live="polite" className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest px-4 py-2 rounded-full border border-border bg-muted/50">
+                <div className="size-2 rounded-full bg-primary animate-pulse" aria-hidden="true" />
+                <span style={{ color: "var(--muted-foreground)" }}>{t("cat.active")}</span>
               </div>
             </div>
 
             {/* New Arrivals Segment */}
-            <section className="px-2 md:px-5 pt-8 pb-10 md:pb-14 overflow-visible">
+            <section aria-labelledby="new-arrivals-heading" className="px-2 md:px-5 pt-8 pb-10 md:pb-14 overflow-visible">
               <div className="px-3 mb-6">
                 <div className="flex items-center gap-3 mb-1">
-                  <h2 className="text-2xl font-black tracking-tight" style={{ color: "var(--foreground)" }}>New Arrivals</h2>
-                  <span className="px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest" style={{ background: "rgba(139,0,0,0.1)", color: "var(--primary)" }}>Latest</span>
+                  <h2 id="new-arrivals-heading" className="text-2xl font-black tracking-tight" style={{ color: "var(--foreground)" }}>{t("section.new_arrivals")}</h2>
+                  <span className="px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest" style={{ background: "rgba(139,0,0,0.1)", color: "var(--primary)" }}>{t("section.new_arrivals_badge")}</span>
                 </div>
-                <p className="text-xs font-medium" style={{ color: "var(--muted-foreground)" }}>Koleksi terbaru yang baru ditambahkan ke perpustakaan</p>
+                <p className="text-xs font-medium" style={{ color: "var(--muted-foreground)" }}>{t("section.new_arrivals_sub")}</p>
                 <div className="w-12 h-1 mt-2 rounded-full" style={{ background: "var(--primary)" }} />
               </div>
               <div className="min-w-0">
@@ -327,13 +350,13 @@ export default function App() {
             <div className="mx-4 md:mx-8 opacity-30" style={{ borderTop: "1.5px solid var(--border)" }} />
 
             {/* Top Picks Segment */}
-            <section className="px-2 md:px-5 pt-8 pb-10 md:pb-14 overflow-visible">
+            <section aria-labelledby="top-picks-heading" className="px-2 md:px-5 pt-8 pb-10 md:pb-14 overflow-visible">
               <div className="px-3 mb-6">
                 <div className="flex items-center gap-3 mb-1">
-                  <h2 className="text-2xl font-black tracking-tight" style={{ color: "var(--foreground)" }}>Top Picks</h2>
-                  <span className="px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest text-white" style={{ background: "var(--primary)" }}>Rekomendasi</span>
+                  <h2 id="top-picks-heading" className="text-2xl font-black tracking-tight" style={{ color: "var(--foreground)" }}>{t("section.top_picks")}</h2>
+                  <span className="px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest text-white" style={{ background: "var(--primary)" }}>{t("section.top_picks_badge")}</span>
                 </div>
-                <p className="text-xs font-medium" style={{ color: "var(--muted-foreground)" }}>Buku-buku pilihan yang paling direkomendasikan untuk kamu</p>
+                <p className="text-xs font-medium" style={{ color: "var(--muted-foreground)" }}>{t("section.top_picks_sub")}</p>
                 <div className="w-12 h-1 mt-2 rounded-full" style={{ background: "var(--primary)" }} />
               </div>
               <div className="min-w-0">
@@ -347,13 +370,13 @@ export default function App() {
             </section>
 
             {/* Knowledge Vault Segment */}
-            <section className="px-4 md:px-8 pb-20">
+            <section aria-labelledby="vault-heading" className="px-4 md:px-8 pb-20">
               <div className="mb-8 md:mb-10 opacity-60" style={{ borderTop: "1.5px solid var(--border)" }} />
               
               <div className="flex items-center justify-between mb-8">
                 <div>
-                  <h2 className="text-2xl font-black tracking-tight" style={{ color: "var(--foreground)" }}>Digital Library Vault</h2>
-                  <p className="text-xs font-medium mt-1" style={{ color: "var(--muted-foreground)" }}>Certified academic databases & institutional partners</p>
+                  <h2 id="vault-heading" className="text-2xl font-black tracking-tight" style={{ color: "var(--foreground)" }}>{t("section.digital_vault")}</h2>
+                  <p className="text-xs font-medium mt-1" style={{ color: "var(--muted-foreground)" }}>{t("section.digital_vault_sub")}</p>
                 </div>
               </div>
 
@@ -392,6 +415,12 @@ export default function App() {
       {readingBook && (
         <BookReader book={readingBook} onClose={() => setReadingBook(null)} />
       )}
+      {/* Floating Accessibility Panel (a11y settings) */}
+      <A11yPanel />
+      {/* VoiceOver — Text-to-Speech for blind users */}
+      <VoiceOver />
+      {/* AssistiveTouch — large touch navigation for motor/visual disabilities */}
+      <AssistiveTouch />
     </div>
   );
 }

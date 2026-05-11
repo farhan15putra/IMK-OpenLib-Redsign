@@ -1,5 +1,24 @@
 @custom-variant dark (&:is(.dark *));
 
+/* ── Accessibility: VoiceOver & AssistiveTouch Animations ── */
+@keyframes ripple {
+  0%   { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+@keyframes scan-pulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(255,100,0,0.4), 0 0 0 6px rgba(255,100,0,0.15); }
+  50%       { box-shadow: 0 0 0 6px rgba(255,100,0,0.6), 0 0 0 12px rgba(255,100,0,0.2); }
+}
+@keyframes vo-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.85; transform: scale(1.02); }
+}
+
+/* AssistiveTouch scan highlight animation */
+#assistive-scan-highlight {
+  animation: scan-pulse 1.2s ease-in-out infinite;
+}
+
 :root {
   --font-size: 16px;
   --font-family: 'Poppins', sans-serif;
@@ -106,5 +125,123 @@
     @apply bg-background text-foreground;
     font-family: 'Poppins', sans-serif;
     transition: background-color 0.3s ease, color 0.3s ease;
+    line-height: 1.65;
   }
+}
+
+/* ── Accessibility: Focus Indicator ──────────────────────── */
+/* Never remove focus outlines — use focus-visible instead */
+*:focus {
+  outline: none;
+}
+*:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ── Accessibility: Skip Link ────────────────────────────── */
+.skip-link {
+  position: fixed;
+  top: -100%;
+  left: 1rem;
+  z-index: 99999;
+  padding: 0.75rem 1.5rem;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.875rem;
+  border-radius: 0 0 1rem 1rem;
+  text-decoration: none;
+  transition: top 0.2s ease;
+  box-shadow: 0 4px 20px rgba(139,0,0,0.4);
+  letter-spacing: 0.02em;
+}
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+/* ── Accessibility: Screen Reader Only ───────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ── Accessibility: High Contrast Mode ───────────────────── */
+[data-high-contrast] {
+  --background: #ffffff;
+  --foreground: #000000;
+  --card: #ffffff;
+  --card-foreground: #000000;
+  --border: #000000;
+  --primary: #00008B;
+  --primary-foreground: #ffffff;
+  --muted: #f0f0f0;
+  --muted-foreground: #333333;
+  --input: #000000;
+  --ring: #00008B;
+  --sidebar: #f0f0f0;
+  --sidebar-foreground: #000000;
+  --sidebar-border: #000000;
+}
+[data-high-contrast].dark,
+[data-high-contrast] .dark {
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #111111;
+  --card-foreground: #ffffff;
+  --border: #ffffff;
+  --primary: #ffff00;
+  --primary-foreground: #000000;
+  --muted: #1a1a1a;
+  --muted-foreground: #cccccc;
+}
+
+/* ── Accessibility: Dyslexia-Friendly Font ───────────────── */
+[data-font="dyslexic"],
+[data-font="dyslexic"] * {
+  font-family: 'OpenDyslexic', 'Arial', sans-serif !important;
+  line-height: 1.9 !important;
+  letter-spacing: 0.05em !important;
+  word-spacing: 0.15em !important;
+}
+
+/* ── Accessibility: Reduced Motion ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Also respect JS-toggled reduced motion */
+[data-reduce-motion] *, 
+[data-reduce-motion] *::before, 
+[data-reduce-motion] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* ── Accessibility: Minimum Touch Target ─────────────────── */
+button, [role="button"], a, input, select, textarea {
+  min-height: 44px;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  min-height: unset;
+  width: 1rem;
+  height: 1rem;
 }

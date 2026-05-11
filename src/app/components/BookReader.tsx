@@ -1,5 +1,6 @@
 import { X, ChevronLeft, ChevronRight, Download, BookOpen, Settings, Maximize2, Share2 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useI18n } from "../../context/i18nContext";
 
 interface Book {
   id: number;
@@ -15,28 +16,66 @@ interface BookReaderProps {
 }
 
 export function BookReader({ book, onClose }: BookReaderProps) {
+  const { t } = useI18n();
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 324; // Mock total pages
+  const totalPages = 324;
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const lastActiveElement = useRef<HTMLElement | null>(null);
+
+  // Save last focused element & set up Escape key + focus trap
+  useEffect(() => {
+    lastActiveElement.current = document.activeElement as HTMLElement;
+    const firstFocusable = dialogRef.current?.querySelector<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    firstFocusable?.focus();
+
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { onClose(); return; }
+      if (e.key !== 'Tab' || !dialogRef.current) return;
+      const focusables = Array.from(dialogRef.current.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), [href], input, [tabindex]:not([tabindex="-1"])'
+      ));
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
+    };
+    document.addEventListener('keydown', handleKey);
+    return () => {
+      document.removeEventListener('keydown', handleKey);
+      lastActiveElement.current?.focus(); // return focus on close
+    };
+  }, [onClose]);
 
   const handleDownload = () => {
-    // Mock download action
     alert(`Downloading "${book.title}"...`);
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex flex-col bg-[#0a0a0a] animate-in fade-in zoom-in-95 duration-300">
+    <div
+      ref={dialogRef}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="reader-title"
+      className="fixed inset-0 z-[100] flex flex-col bg-[#0a0a0a] animate-in fade-in zoom-in-95 duration-300"
+    >
       {/* Top Bar */}
       <div className="flex items-center justify-between px-6 py-4 bg-card/10 backdrop-blur-xl border-b border-white/5">
         <div className="flex items-center gap-4">
           <button 
             onClick={onClose}
+            aria-label={t("reader.close")}
             className="p-2 rounded-xl hover:bg-white/10 transition-colors"
           >
-            <X className="size-5 text-white/70" />
+            <X className="size-5 text-white/70" aria-hidden="true" />
           </button>
-          <div className="h-6 w-px bg-white/10 mx-2" />
+          <div className="h-6 w-px bg-white/10 mx-2" aria-hidden="true" />
           <div className="flex flex-col">
-            <h2 className="text-sm font-bold text-white truncate max-w-[200px] md:max-w-md">{book.title}</h2>
+            <h2 id="reader-title" className="text-sm font-bold text-white truncate max-w-[200px] md:max-w-md">{book.title}</h2>
             <p className="text-[10px] font-bold text-primary uppercase tracking-widest">{book.author}</p>
           </div>
         </div>
@@ -48,12 +87,19 @@ export function BookReader({ book, onClose }: BookReaderProps) {
           </div>
           
           <div className="flex items-center gap-1">
-            <button onClick={handleDownload} className="p-2.5 rounded-xl bg-primary text-white hover:shadow-[0_0_20px_rgba(139,0,0,0.4)] transition-all active:scale-95 flex items-center gap-2">
-              <Download className="size-4" />
+            <button
+              onClick={handleDownload}
+              aria-label={`${t("reader.external")} — ${book.title}`}
+              className="p-2.5 rounded-xl bg-primary text-white hover:shadow-[0_0_20px_rgba(139,0,0,0.4)] transition-all active:scale-95 flex items-center gap-2"
+            >
+              <Download className="size-4" aria-hidden="true" />
               <span className="hidden sm:inline text-xs font-black uppercase tracking-widest">Download Full PDF</span>
             </button>
-            <button className="p-2.5 rounded-xl hover:bg-white/10 transition-colors text-white/70">
-              <Share2 className="size-4" />
+            <button
+              aria-label={t("general.close")}
+              className="p-2.5 rounded-xl hover:bg-white/10 transition-colors text-white/70"
+            >
+              <Share2 className="size-4" aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -126,22 +172,24 @@ export function BookReader({ book, onClose }: BookReaderProps) {
             <button 
               onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
               disabled={currentPage === 1}
+              aria-label={t("book.prev")}
               className="size-12 rounded-full flex items-center justify-center bg-white/5 border border-white/10 text-white/50 hover:bg-white/10 hover:text-white transition-all disabled:opacity-30 disabled:pointer-events-none"
             >
-              <ChevronLeft className="size-6" />
+              <ChevronLeft className="size-6" aria-hidden="true" />
             </button>
-            <div className="px-8 py-3 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md flex flex-col items-center gap-1">
+            <div className="px-8 py-3 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md flex flex-col items-center gap-1" aria-live="polite" aria-atomic="true">
                <span className="text-white font-black tracking-widest text-sm">{currentPage} / {totalPages / 2}</span>
-               <div className="w-24 h-1 bg-white/10 rounded-full overflow-hidden">
+               <div className="w-24 h-1 bg-white/10 rounded-full overflow-hidden" role="progressbar" aria-valuenow={currentPage} aria-valuemin={1} aria-valuemax={totalPages / 2}>
                   <div className="h-full bg-primary" style={{ width: `${(currentPage / (totalPages/2)) * 100}%` }} />
                </div>
             </div>
             <button 
               onClick={() => setCurrentPage(p => Math.min(totalPages / 2, p + 1))}
               disabled={currentPage >= totalPages / 2}
+              aria-label={t("book.next")}
               className="size-12 rounded-full flex items-center justify-center bg-white/5 border border-white/10 text-white/50 hover:bg-white/10 hover:text-white transition-all disabled:opacity-30 disabled:pointer-events-none"
             >
-              <ChevronRight className="size-6" />
+              <ChevronRight className="size-6" aria-hidden="true" />
             </button>
           </div>
         </div>

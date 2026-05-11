@@ -1,0 +1,187 @@
+// Terjemahan Bahasa Indonesia
+export const id = {
+  // Navigation
+  "nav.home": "Beranda",
+  "nav.catalog": "Katalog",
+  "nav.history": "Riwayat Pinjam",
+  "nav.saved": "Buku Tersimpan",
+  "nav.settings": "Pengaturan",
+  "nav.profile": "Profil",
+  "nav.logout": "Keluar",
+  "nav.main_label": "Navigasi Utama",
+  "nav.sidebar_label": "Menu Samping",
+
+  // Header
+  "header.search_placeholder": "Cari katalog, jurnal...",
+  "header.search_label": "Cari koleksi perpustakaan",
+  "header.advanced_search": "Pencarian Lanjutan",
+  "header.notifications": "Notifikasi",
+  "header.notifications_unread": "Notifikasi ({{count}} belum dibaca)",
+  "header.user_profile": "Profil Pengguna",
+  "header.menu_open": "Buka Menu",
+  "header.menu_close": "Tutup Menu",
+  "header.app_switcher": "Pengalih Aplikasi",
+  "header.campus": "Tel-U — Kampus Jakarta",
+  "header.student_status": "Mahasiswa Aktif",
+
+  // Search Advanced
+  "search.author": "Penulis",
+  "search.author_placeholder": "mis. John Doe",
+  "search.year": "Tahun Terbit",
+  "search.year_placeholder": "mis. 2024",
+  "search.publisher": "Jurnal / Penerbit",
+  "search.publisher_placeholder": "mis. IEEE, ScienceDirect...",
+  "search.execute": "Cari Sekarang",
+  "search.advanced_options": "Opsi Lanjutan",
+
+  // Hero
+  "hero.greeting": "Selamat Datang di",
+  "hero.library_name": "Open Library",
+  "hero.subtitle": "Temukan buku, jurnal, dan sumber daya akademik Telkom University.",
+  "hero.cta_browse": "Jelajahi Katalog",
+  "hero.cta_search": "Cari Buku",
+  "hero.stats_books": "Koleksi Buku",
+  "hero.stats_digital": "Sumber Digital",
+  "hero.stats_journals": "Jurnal",
+
+  // Categories
+  "cat.all": "Semua",
+  "cat.fantasy": "Fantasi",
+  "cat.finance": "Keuangan",
+  "cat.leadership": "Kepemimpinan",
+  "cat.journals": "Jurnal",
+  "cat.business": "Bisnis",
+  "cat.hci": "HCI",
+  "cat.label": "Jelajahi Kategori:",
+  "cat.active": "Katalog Aktif",
+
+  // Book sections
+  "section.new_arrivals": "Koleksi Terbaru",
+  "section.new_arrivals_sub": "Koleksi terbaru yang baru ditambahkan ke perpustakaan",
+  "section.new_arrivals_badge": "Terbaru",
+  "section.top_picks": "Rekomendasi Pilihan",
+  "section.top_picks_sub": "Buku-buku pilihan yang paling direkomendasikan untuk kamu",
+  "section.top_picks_badge": "Rekomendasi",
+  "section.digital_vault": "Digital Library Vault",
+  "section.digital_vault_sub": "Database akademik bersertifikat & mitra institusional",
+
+  // Book card
+  "book.save": "Simpan buku {{title}}",
+  "book.unsave": "Hapus simpanan buku {{title}}",
+  "book.read": "Baca buku {{title}}",
+  "book.borrow": "Pinjam buku {{title}}",
+  "book.available": "Tersedia",
+  "book.borrowed": "Dipinjam",
+  "book.reserved": "Dipesan",
+  "book.location": "Lokasi",
+  "book.shelf": "Rak",
+  "book.format": "Format",
+  "book.abstract": "Ringkasan",
+  "book.prev": "Buku sebelumnya",
+  "book.next": "Buku berikutnya",
+  "book.cover_alt": "Sampul buku {{title}}",
+
+  // Book Reader
+  "reader.close": "Tutup pembaca buku",
+  "reader.loading": "Memuat buku...",
+  "reader.external": "Buka di tab baru",
+  "reader.title": "Membaca: {{title}}",
+
+  // Login
+  "login.title": "Masuk ke Open Library",
+  "login.subtitle": "Gunakan akun Telkom University Anda",
+  "login.nim_label": "NIM / ID Mahasiswa",
+  "login.nim_placeholder": "mis. 123456789",
+  "login.password_label": "Kata Sandi",
+  "login.password_placeholder": "Masukkan kata sandi",
+  "login.show_password": "Tampilkan kata sandi",
+  "login.hide_password": "Sembunyikan kata sandi",
+  "login.submit": "Masuk",
+  "login.loading": "Sedang masuk...",
+  "login.error.empty": "NIM dan kata sandi wajib diisi",
+  "login.error.invalid": "NIM atau kata sandi salah",
+  "login.forgot": "Lupa kata sandi?",
+  "login.help": "Bantuan login",
+
+  // Loan History
+  "history.title": "Riwayat Pinjam",
+  "history.subtitle": "Semua aktivitas peminjaman Anda",
+  "history.status_active": "Aktif",
+  "history.status_returned": "Dikembalikan",
+  "history.status_overdue": "Terlambat",
+  "history.due_date": "Jatuh Tempo",
+  "history.return_date": "Tanggal Kembali",
+  "history.borrow_date": "Tanggal Pinjam",
+  "history.empty": "Belum ada riwayat peminjaman",
+
+  // Saved Books
+  "saved.title": "Buku Tersimpan",
+  "saved.subtitle": "Koleksi buku yang telah Anda simpan",
+  "saved.remove": "Hapus dari tersimpan",
+  "saved.empty": "Belum ada buku yang disimpan",
+  "saved.empty_sub": "Simpan buku dari katalog untuk menemukannya di sini",
+
+  // Settings
+  "settings.title": "Preferensi",
+  "settings.subtitle": "Sesuaikan pengalaman perpustakaan dan detail akun Anda.",
+  "settings.account": "Pengaturan Akun",
+  "settings.account_desc": "Kelola profil, email, dan metode autentikasi Anda.",
+  "settings.appearance": "Tampilan",
+  "settings.appearance_desc": "Sesuaikan antarmuka, tema, dan animasi.",
+  "settings.notifications": "Notifikasi",
+  "settings.notifications_desc": "Kontrol notifikasi push, pengingat jatuh tempo, dan email.",
+  "settings.privacy": "Privasi & Keamanan",
+  "settings.privacy_desc": "Konfigurasi visibilitas riwayat pinjam dan aplikasi terhubung.",
+  "settings.accessibility": "Aksesibilitas",
+  "settings.accessibility_desc": "Sesuaikan tampilan untuk kebutuhan aksesibilitas Anda.",
+  "settings.language": "Bahasa & Wilayah",
+  "settings.help": "Pusat Bantuan",
+  "settings.configure": "Atur {{section}} →",
+  "settings.theme_light": "Terang",
+  "settings.theme_dark": "Gelap",
+  "settings.theme_system": "Sistem",
+
+  // Accessibility Panel
+  "a11y.panel_label": "Panel Aksesibilitas",
+  "a11y.open": "Buka pengaturan aksesibilitas",
+  "a11y.close": "Tutup pengaturan aksesibilitas",
+  "a11y.title": "Aksesibilitas",
+  "a11y.font_size": "Ukuran Teks",
+  "a11y.font_size_decrease": "Perkecil teks",
+  "a11y.font_size_increase": "Perbesar teks",
+  "a11y.font_size_reset": "Kembalikan ukuran teks ke normal",
+  "a11y.dyslexic_font": "Font Ramah Disleksia",
+  "a11y.dyslexic_font_desc": "Gunakan font OpenDyslexic",
+  "a11y.high_contrast": "Kontras Tinggi",
+  "a11y.high_contrast_desc": "Tingkatkan kontras warna",
+  "a11y.reduce_motion": "Kurangi Animasi",
+  "a11y.reduce_motion_desc": "Matikan animasi & transisi",
+  "a11y.language": "Bahasa",
+  "a11y.language_id": "Bahasa Indonesia",
+  "a11y.language_en": "English",
+  "a11y.reset_all": "Kembalikan semua pengaturan",
+
+  // Skip link
+  "skip.main": "Lewati ke konten utama",
+  "skip.nav": "Lewati ke navigasi",
+
+  // Profile
+  "profile.title": "Profil Saya",
+  "profile.edit": "Edit Profil",
+  "profile.student_id": "NIM",
+  "profile.faculty": "Fakultas",
+  "profile.active_loans": "Pinjaman Aktif",
+  "profile.total_read": "Total Dibaca",
+
+  // General
+  "general.loading": "Memuat...",
+  "general.error": "Terjadi kesalahan",
+  "general.close": "Tutup",
+  "general.confirm": "Konfirmasi",
+  "general.cancel": "Batal",
+  "general.save": "Simpan",
+  "general.back": "Kembali",
+  "general.required": "(wajib diisi)",
+};
+
+export type TranslationKey = keyof typeof id;

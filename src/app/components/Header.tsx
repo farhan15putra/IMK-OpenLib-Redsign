@@ -1,8 +1,10 @@
 import { Search, Bell, Settings, Layers, Menu } from "lucide-react";
 import { useState } from "react";
+import { useI18n } from "../../context/i18nContext";
 import logoImg from "../../imports/openlibcrop.png";
 
 export function Header({ onHomeClick, onProfileClick, onMenuClick }: { onHomeClick?: () => void, onProfileClick?: () => void, onMenuClick?: () => void }) {
+  const { t } = useI18n();
   const [showAdvanced, setShowAdvanced] = useState(false);
   return (
     <header className="flex items-center justify-between px-4 md:px-8 py-4 md:py-5 h-20 md:h-24 transition-all duration-300 relative z-40 bg-background/80 backdrop-blur-md"
@@ -11,8 +13,14 @@ export function Header({ onHomeClick, onProfileClick, onMenuClick }: { onHomeCli
       {/* Official Branding Flex Container */}
       <div className="flex items-center gap-3 md:gap-6">
         {/* Mobile Hamburger Menu */}
-        <button onClick={onMenuClick} className="md:hidden p-2 rounded-xl border border-border bg-card shadow-sm active:scale-95 transition-transform">
-          <Menu className="size-5" />
+        <button
+          onClick={onMenuClick}
+          aria-label={t("header.menu_open")}
+          aria-expanded={false}
+          aria-controls="sidebar-nav"
+          className="md:hidden p-2 rounded-xl border border-border bg-card shadow-sm active:scale-95 transition-transform"
+        >
+          <Menu className="size-5" aria-hidden="true" />
         </button>
 
         {/* Secondary Logo/Brand Identity Mark */}
@@ -48,49 +56,63 @@ export function Header({ onHomeClick, onProfileClick, onMenuClick }: { onHomeCli
 
       {/* Global Command Center (Centered Search) */}
       <div className="flex-1 min-w-0 max-w-lg mx-3 md:mx-8 relative z-50">
-        <div className="absolute inset-0 bg-primary/5 blur-xl focus-within:bg-primary/10 transition-colors rounded-3xl" />
-        <div className="relative flex items-center h-10 md:h-12 w-full px-3 md:px-5 rounded-2xl bg-card border border-border shadow-sm focus-within:border-primary focus-within:shadow-[0_0_0_3px_rgba(139,0,0,0.1)] transition-all">
-          <Search className="size-4 md:size-5 transition-transform" style={{ color: "var(--muted-foreground)" }} />
+        <div className="absolute inset-0 bg-primary/5 blur-xl focus-within:bg-primary/10 transition-colors rounded-3xl" aria-hidden="true" />
+        <div
+          role="search"
+          aria-label={t("header.search_label")}
+          className="relative flex items-center h-10 md:h-12 w-full px-3 md:px-5 rounded-2xl bg-card border border-border shadow-sm focus-within:border-primary focus-within:shadow-[0_0_0_3px_rgba(139,0,0,0.1)] transition-all"
+        >
+          <Search className="size-4 md:size-5 transition-transform" style={{ color: "var(--muted-foreground)" }} aria-hidden="true" />
+          <label htmlFor="header-search" className="sr-only">{t("header.search_label")}</label>
           <input
-            type="text"
-            placeholder="Search catalog, journals..."
+            id="header-search"
+            type="search"
+            placeholder={t("header.search_placeholder")}
             className="flex-1 ml-3 md:ml-4 bg-transparent text-[11px] md:text-sm font-bold placeholder:font-medium placeholder:opacity-40 outline-none w-full"
             style={{ color: "var(--foreground)" }}
           />
           <div className="flex items-center gap-1.5 ml-2 md:ml-4">
-            <div className="hidden sm:flex items-center gap-1 px-2 py-1 rounded-md bg-muted text-[10px] font-black opacity-50 uppercase tracking-widest border border-border">
+            <div className="hidden sm:flex items-center gap-1 px-2 py-1 rounded-md bg-muted text-[10px] font-black opacity-50 uppercase tracking-widest border border-border" aria-hidden="true">
               <span>Alt+K</span>
             </div>
             <button 
               onClick={() => setShowAdvanced(!showAdvanced)}
+              aria-expanded={showAdvanced}
+              aria-controls="advanced-search-panel"
+              aria-label={t("header.advanced_search")}
               className="flex items-center gap-1.5 px-2 md:px-2.5 py-1.5 md:py-1 rounded-md text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all hover:bg-primary/10 text-primary border border-primary/20 bg-primary/5 active:scale-95 shadow-sm"
             >
-              <Settings className="size-3 md:size-3.5" />
-              <span className="hidden xs:inline">Advanced</span>
+              <Settings className="size-3 md:size-3.5" aria-hidden="true" />
+              <span className="hidden xs:inline" aria-hidden="true">{t("header.advanced_search")}</span>
             </button>
           </div>
         </div>
 
         {/* Advanced Search Pop-up */}
         {showAdvanced && (
-          <div className="absolute top-[calc(100%+0.5rem)] left-0 w-full bg-card border border-primary/30 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] p-5 animate-in fade-in slide-in-from-top-4 duration-300 z-50 backdrop-blur-xl">
-            <h4 className="text-[10px] font-black uppercase tracking-widest text-primary mb-4 border-b border-border pb-2">Advanced Options</h4>
+          <div
+            id="advanced-search-panel"
+            role="region"
+            aria-label={t("search.advanced_options")}
+            className="absolute top-[calc(100%+0.5rem)] left-0 w-full bg-card border border-primary/30 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] p-5 animate-in fade-in slide-in-from-top-4 duration-300 z-50 backdrop-blur-xl"
+          >
+            <h4 className="text-[10px] font-black uppercase tracking-widest text-primary mb-4 border-b border-border pb-2">{t("search.advanced_options")}</h4>
             <div className="grid grid-cols-2 gap-4 mb-5">
                <div>
-                  <label className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground block mb-1.5">Author</label>
-                  <input type="text" className="w-full bg-muted/50 border border-border rounded-lg px-3 py-2 text-xs font-medium text-foreground outline-none focus:border-primary transition-colors" placeholder="e.g. John Doe" />
+                  <label htmlFor="adv-author" className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground block mb-1.5">{t("search.author")}</label>
+                  <input id="adv-author" type="text" className="w-full bg-muted/50 border border-border rounded-lg px-3 py-2 text-xs font-medium text-foreground outline-none focus:border-primary transition-colors" placeholder={t("search.author_placeholder")} />
                </div>
                <div>
-                  <label className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground block mb-1.5">Publication Year</label>
-                  <input type="text" className="w-full bg-muted/50 border border-border rounded-lg px-3 py-2 text-xs font-medium text-foreground outline-none focus:border-primary transition-colors" placeholder="e.g. 2024" />
+                  <label htmlFor="adv-year" className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground block mb-1.5">{t("search.year")}</label>
+                  <input id="adv-year" type="number" className="w-full bg-muted/50 border border-border rounded-lg px-3 py-2 text-xs font-medium text-foreground outline-none focus:border-primary transition-colors" placeholder={t("search.year_placeholder")} />
                </div>
                <div className="col-span-2">
-                  <label className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground block mb-1.5">Journal / Publisher</label>
-                  <input type="text" className="w-full bg-muted/50 border border-border rounded-lg px-3 py-2 text-xs font-medium text-foreground outline-none focus:border-primary transition-colors" placeholder="e.g. IEEE, ScienceDirect..." />
+                  <label htmlFor="adv-publisher" className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground block mb-1.5">{t("search.publisher")}</label>
+                  <input id="adv-publisher" type="text" className="w-full bg-muted/50 border border-border rounded-lg px-3 py-2 text-xs font-medium text-foreground outline-none focus:border-primary transition-colors" placeholder={t("search.publisher_placeholder")} />
                </div>
             </div>
             <button className="w-full py-2.5 bg-primary text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:opacity-90 active:scale-[0.98] transition-all shadow-lg shadow-primary/30">
-               Execute Deep Search
+               {t("search.execute")}
             </button>
           </div>
         )}
@@ -99,30 +121,37 @@ export function Header({ onHomeClick, onProfileClick, onMenuClick }: { onHomeCli
       {/* Right Action Hub */}
       <div className="flex flex-shrink-0 items-center gap-3 md:gap-6">
 
-        {/* App Switcher (Grid Style) */}
-        <button className="relative flex-center size-12 rounded-2xl bg-card border border-border shadow-sm hover:shadow-md transition-all active:scale-95 group hidden md:flex items-center justify-center">
-          <Layers className="size-5" style={{ color: "var(--muted-foreground)" }} />
+        {/* App Switcher */}
+        <button
+          aria-label={t("header.app_switcher")}
+          className="relative flex-center size-12 rounded-2xl bg-card border border-border shadow-sm hover:shadow-md transition-all active:scale-95 group hidden md:flex items-center justify-center"
+        >
+          <Layers className="size-5" style={{ color: "var(--muted-foreground)" }} aria-hidden="true" />
         </button>
 
         {/* Global Notifications */}
-        <button className="relative flex items-center justify-center size-12 rounded-2xl bg-card border border-border shadow-sm hover:bg-muted hover:shadow-md transition-all active:scale-95 group">
-          <Bell className="size-5 transition-transform group-hover:rotate-12" style={{ color: "var(--muted-foreground)" }} />
-          <span className="absolute top-3.5 right-3.5 size-2.5 rounded-full ring-2 ring-card shadow-lg" style={{ background: "var(--primary)" }} />
+        <button
+          aria-label={t("header.notifications_unread", { count: 1 })}
+          className="relative flex items-center justify-center size-12 rounded-2xl bg-card border border-border shadow-sm hover:bg-muted hover:shadow-md transition-all active:scale-95 group"
+        >
+          <Bell className="size-5 transition-transform group-hover:rotate-12" style={{ color: "var(--muted-foreground)" }} aria-hidden="true" />
+          <span className="absolute top-3.5 right-3.5 size-2.5 rounded-full ring-2 ring-card shadow-lg" style={{ background: "var(--primary)" }} aria-hidden="true" />
         </button>
 
-        {/* User Account / Librarian Badge */}
-        <div 
+        {/* User Account */}
+        <button
           onClick={onProfileClick}
+          aria-label={t("header.user_profile")}
           className="flex items-center gap-2 md:gap-4 py-1 md:py-1.5 px-1.5 md:px-2.5 rounded-2xl bg-card border border-border shadow-sm hover:shadow-md transition-shadow cursor-pointer active:scale-95"
         >
           <div className="size-8 md:size-10 rounded-xl overflow-hidden shadow-lg border-2 border-primary/20 bg-muted">
             <img
               src="https://api.dicebear.com/9.x/notionists/svg?seed=TelkomStudent&backgroundColor=FDFBF3"
-              alt="User"
+              alt={t("header.user_profile")}
               className="w-full h-full object-cover"
             />
           </div>
-        </div>
+        </button>
 
       </div>
     </header>
