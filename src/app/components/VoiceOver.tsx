@@ -331,6 +331,10 @@ export function VoiceOver() {
             borderRadius: "1.5rem",
             boxShadow: "0 20px 60px rgba(0,0,0,0.2)",
             padding: "1.25rem",
+            maxHeight: "75vh",
+            overflowY: "auto",
+            scrollbarWidth: "thin",
+            scrollbarColor: "var(--primary) transparent",
           }}
         >
           {/* Header */}
