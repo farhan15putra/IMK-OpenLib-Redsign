@@ -1,10 +1,10 @@
-import { Search, Bell, Settings, Layers, Menu, User } from "lucide-react";
+import { Search, Bell, Settings, Layers, Menu, User, Globe } from "lucide-react";
 import { useState } from "react";
 import { useI18n } from "../../context/i18nContext";
 import logoImg from "../../imports/openlibcrop.png";
 
 export function Header({ onHomeClick, onProfileClick, onMenuClick }: { onHomeClick?: () => void, onProfileClick?: () => void, onMenuClick?: () => void }) {
-  const { t } = useI18n();
+  const { t, locale, setLocale } = useI18n();
   const [showAdvanced, setShowAdvanced] = useState(false);
   return (
     <header className="flex items-center justify-between px-4 md:px-8 py-4 md:py-5 h-20 md:h-24 transition-all duration-300 relative z-40 bg-background/80 backdrop-blur-md"
@@ -137,6 +137,24 @@ export function Header({ onHomeClick, onProfileClick, onMenuClick }: { onHomeCli
           <Bell className="size-5 transition-transform group-hover:rotate-12" style={{ color: "var(--muted-foreground)" }} aria-hidden="true" />
           <span className="absolute top-3.5 right-3.5 size-2.5 rounded-full ring-2 ring-card shadow-lg" style={{ background: "var(--primary)" }} aria-hidden="true" />
         </button>
+
+        {/* Language Switcher */}
+        <div className="hidden sm:flex items-center gap-1.5 p-1 rounded-2xl bg-card border border-border shadow-sm">
+          {(["id", "en"] as const).map(l => (
+            <button
+              key={l}
+              onClick={() => setLocale(l)}
+              aria-pressed={locale === l}
+              className={`px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                locale === l 
+                ? "bg-primary text-white shadow-md shadow-primary/20" 
+                : "text-muted-foreground hover:bg-muted"
+              }`}
+            >
+              {l === "id" ? "ID" : "EN"}
+            </button>
+          ))}
+        </div>
 
         {/* User Account */}
         <button

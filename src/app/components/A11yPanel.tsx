@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useA11y } from "../../context/a11yContext";
 import { useI18n } from "../../context/i18nContext";
-import { RotateCcw, Globe, X } from "lucide-react";
+import { RotateCcw, X } from "lucide-react";
 import A11yIconImage from "../../imports/aksesbilitas ikon.png";
 
 export function A11yPanel() {
@@ -189,24 +189,6 @@ export function A11yPanel() {
             onChange={toggleReducedMotion}
           />
 
-          {/* Language Switcher */}
-          <div style={{ marginBottom: "1rem" }}>
-            <p style={{ fontSize: "0.7rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--muted-foreground)", marginBottom: "0.5rem" }}>
-              {t("a11y.language")}
-            </p>
-            <div style={{ display: "flex", gap: "0.5rem" }}>
-              {(["id", "en"] as const).map(l => (
-                <button
-                  key={l}
-                  onClick={() => setLocale(l)}
-                  aria-pressed={locale === l}
-                  style={btnStyle(locale === l, false)}
-                >
-                  {l === "id" ? <><Globe size={14} style={{ display: "inline", marginRight: "4px" }} /> ID</> : <><Globe size={14} style={{ display: "inline", marginRight: "4px" }} /> EN</>}
-                </button>
-              ))}
-            </div>
-          </div>
 
           {/* Reset All */}
           <button
