@@ -100,26 +100,30 @@ function BookSlide({ id, title, author, cover, category, featured, location, sta
       </div>
 
       {/* Book details */}
-      <div className="px-1 text-center flex flex-col items-center">
-        <h3
-          className={`line-clamp-2 leading-tight mb-2 uppercase tracking-wide px-2 ${featured ? "text-sm font-bold opacity-100" : "text-xs font-semibold opacity-80 group-hover:opacity-100"}`}
-          style={{ color: "var(--foreground)" }}
-        >
-          {title}
-        </h3>
-        <p className="text-[10px] uppercase font-bold tracking-widest mb-2" style={{ color: "var(--primary)" }}>
-           {author}
-        </p>
+      <div className="px-1 text-center flex flex-col items-center justify-between h-[100px] md:h-[110px]">
+        <div className="w-full">
+          <h3
+            className={`line-clamp-2 leading-tight mb-1.5 uppercase tracking-wide px-2 min-h-[32px] md:min-h-[36px] flex items-start justify-center ${featured ? "text-sm font-bold opacity-100" : "text-xs font-semibold opacity-80 group-hover:opacity-100"}`}
+            style={{ color: "var(--foreground)" }}
+          >
+            {title}
+          </h3>
+          <p className="text-[10px] uppercase font-bold tracking-widest mb-2 line-clamp-1 px-2" style={{ color: "var(--primary)" }}>
+             {author}
+          </p>
+        </div>
 
         {/* Availability & Location */}
-        {(status || location) && (
-          <div className={`mt-1 px-2.5 py-1 rounded-md text-[8px] font-black tracking-widest uppercase border inline-flex items-center gap-1.5 transition-all
-            ${status === 'Available' ? 'text-green-500 border-green-500/30 bg-green-500/10' : 'text-red-500 border-red-500/30 bg-red-500/10'}
-          `}>
-            <div className={`size-1.5 rounded-full ${status === 'Available' ? 'bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.5)] animate-pulse' : 'bg-red-500'}`} />
-            {status} - {location}
-          </div>
-        )}
+        <div className="mt-auto w-full flex justify-center pb-1">
+          {(status || location) && (
+            <div className={`px-2.5 py-1 rounded-md text-[8px] font-black tracking-widest uppercase border inline-flex items-center gap-1.5 transition-all max-w-full
+              ${status === 'Available' ? 'text-green-500 border-green-500/30 bg-green-500/10' : 'text-red-500 border-red-500/30 bg-red-500/10'}
+            `}>
+              <div className={`size-1.5 rounded-full flex-shrink-0 ${status === 'Available' ? 'bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.5)] animate-pulse' : 'bg-red-500'}`} />
+              <span className="truncate">{status} - {location}</span>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

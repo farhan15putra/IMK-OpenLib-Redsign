@@ -14,6 +14,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useI18n } from "../../context/i18nContext";
+import { Pointer, Search, Home, ArrowUpToLine, ArrowUp, ArrowDown, ArrowDownToLine, ZoomIn, ZoomOut, Target, ChevronLeft, ChevronRight, X, Check } from "lucide-react";
 
 interface Position { x: number; y: number; }
 
@@ -273,7 +274,7 @@ export function AssistiveTouch() {
         onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
         onMouseLeave={e => (e.currentTarget.style.opacity = "0.6")}
       >
-        👆
+        <Pointer />
       </button>
     );
   }
@@ -319,7 +320,7 @@ export function AssistiveTouch() {
           transition: "box-shadow 0.2s, background 0.3s",
         }}
       >
-        <span aria-hidden="true">{scanMode ? "🔍" : "👆"}</span>
+        {scanMode ? <Search /> : <Pointer />}
       </button>
 
       {/* Menu Panel */}
@@ -348,7 +349,7 @@ export function AssistiveTouch() {
           {/* Header */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.75rem" }}>
             <h2 style={{ fontSize: "0.72rem", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.15em", color: "rgba(255,255,255,0.5)", margin: 0 }}>
-              👆 AssistiveTouch
+              <Pointer size={14} style={{ display: "inline", marginRight: "4px", verticalAlign: "baseline" }} /> AssistiveTouch
             </h2>
             <button
               onClick={() => setIsEnabled(false)}
@@ -361,15 +362,15 @@ export function AssistiveTouch() {
 
           {/* Grid of actions */}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "0.5rem", marginBottom: "0.75rem" }}>
-            <ATBtn icon="🏠" label="Beranda" onClick={goHome} />
-            <ATBtn icon="🔍" label="Cari" onClick={focusSearch} />
-            <ATBtn icon="⬆️" label="Ke Atas" onClick={scrollTop} />
-            <ATBtn icon="🔼" label="Gulir ↑" onClick={scrollUp} />
-            <ATBtn icon="🔽" label="Gulir ↓" onClick={scrollDown} />
-            <ATBtn icon="⬇️" label="Ke Bawah" onClick={scrollBottom} />
-            <ATBtn icon="🔎" label="Perbesar" onClick={zoomIn} />
-            <ATBtn icon="🔍" label="Perkecil" onClick={zoomOut} />
-            <ATBtn icon="🎯" label="Konten" onClick={focusMain} />
+            <ATBtn icon={<Home size={20} />} label="Beranda" onClick={goHome} />
+            <ATBtn icon={<Search size={20} />} label="Cari" onClick={focusSearch} />
+            <ATBtn icon={<ArrowUpToLine size={20} />} label="Ke Atas" onClick={scrollTop} />
+            <ATBtn icon={<ArrowUp size={20} />} label="Gulir ↑" onClick={scrollUp} />
+            <ATBtn icon={<ArrowDown size={20} />} label="Gulir ↓" onClick={scrollDown} />
+            <ATBtn icon={<ArrowDownToLine size={20} />} label="Ke Bawah" onClick={scrollBottom} />
+            <ATBtn icon={<ZoomIn size={20} />} label="Perbesar" onClick={zoomIn} />
+            <ATBtn icon={<ZoomOut size={20} />} label="Perkecil" onClick={zoomOut} />
+            <ATBtn icon={<Target size={20} />} label="Konten" onClick={focusMain} />
           </div>
 
           {/* Scan Mode */}
@@ -394,7 +395,7 @@ export function AssistiveTouch() {
             }}
             aria-label="Aktifkan mode scan — sorot dan aktifkan elemen satu per satu"
           >
-            🔍 Mode Scan Elemen
+            <Search size={14} style={{ display: "inline", marginRight: "4px", verticalAlign: "middle" }} /> Mode Scan Elemen
           </button>
           <p style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.35)", textAlign: "center", marginTop: "0.4rem" }}>
             Gunakan ← → untuk navigasi, Enter untuk klik
@@ -424,17 +425,17 @@ export function AssistiveTouch() {
             zIndex: 99995,
           }}
         >
-          <ScanBtn icon="◀" label="Elemen sebelumnya" onClick={scanPrev} />
+          <ScanBtn icon={<ChevronLeft size={20} />} label="Elemen sebelumnya" onClick={scanPrev} />
           <button
             onClick={activateScan}
             aria-label="Aktifkan elemen yang disorot"
             style={{ padding: "0.5rem 1.25rem", borderRadius: "1.5rem", background: "#ff6600", color: "#fff", border: "none", fontSize: "0.8rem", fontWeight: 800, cursor: "pointer", minHeight: "2.75rem" }}
           >
-            ✓ Aktifkan
+            <Check size={14} style={{ display: "inline", marginRight: "4px", verticalAlign: "middle" }} /> Aktifkan
           </button>
-          <ScanBtn icon="▶" label="Elemen berikutnya" onClick={scanNext} />
+          <ScanBtn icon={<ChevronRight size={20} />} label="Elemen berikutnya" onClick={scanNext} />
           <div style={{ width: "1px", height: "1.5rem", background: "rgba(255,255,255,0.15)" }} aria-hidden="true" />
-          <ScanBtn icon="✕" label="Keluar mode scan" onClick={stopScan} color="rgba(255,255,255,0.5)" />
+          <ScanBtn icon={<X size={20} />} label="Keluar mode scan" onClick={stopScan} color="rgba(255,255,255,0.5)" />
 
           {/* Element counter */}
           <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.5)", minWidth: "3rem", textAlign: "center" }} aria-live="polite">
@@ -448,7 +449,7 @@ export function AssistiveTouch() {
 
 /* ── Sub-components ───────────────────────────────────────── */
 
-function ATBtn({ icon, label, onClick }: { icon: string; label: string; onClick: () => void }) {
+function ATBtn({ icon, label, onClick }: { icon: React.ReactNode; label: string; onClick: () => void }) {
   return (
     <button
       onClick={onClick}
@@ -479,7 +480,7 @@ function ATBtn({ icon, label, onClick }: { icon: string; label: string; onClick:
   );
 }
 
-function ScanBtn({ icon, label, onClick, color = "#fff" }: { icon: string; label: string; onClick: () => void; color?: string }) {
+function ScanBtn({ icon, label, onClick, color = "#fff" }: { icon: React.ReactNode; label: string; onClick: () => void; color?: string }) {
   return (
     <button
       onClick={onClick}

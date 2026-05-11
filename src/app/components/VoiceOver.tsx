@@ -11,6 +11,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useI18n } from "../../context/i18nContext";
+import { Volume2, Volume1, BookOpen, Pause, Play, Square, X } from "lucide-react";
 
 interface VoiceOverState {
   isEnabled: boolean;
@@ -295,7 +296,7 @@ export function VoiceOver() {
           animation: state.isReading ? "pulse 1.5s infinite" : "none",
         }}
       >
-        <span aria-hidden="true">{state.isReading ? "🔊" : "🔉"}</span>
+        {state.isReading ? <Volume2 aria-hidden="true" /> : <Volume1 aria-hidden="true" />}
         {/* Reading pulse ring */}
         {state.isReading && (
           <span
@@ -335,7 +336,7 @@ export function VoiceOver() {
           {/* Header */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem", paddingBottom: "0.75rem", borderBottom: "1px solid var(--border)" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <span aria-hidden="true" style={{ fontSize: "1.2rem" }}>🔊</span>
+              <Volume2 aria-hidden="true" size={20} />
               <h2 style={{ fontSize: "0.8rem", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.15em", color: "#0066cc", margin: 0 }}>
                 VoiceOver
               </h2>
@@ -349,7 +350,7 @@ export function VoiceOver() {
               onClick={() => setIsPanelOpen(false)}
               aria-label="Tutup panel VoiceOver"
               style={{ background: "none", border: "none", cursor: "pointer", color: "var(--muted-foreground)", fontSize: "1rem", borderRadius: "0.5rem", padding: "0.25rem" }}
-            >✕</button>
+            ><X size={16} /></button>
           </div>
 
           {/* Enable Toggle */}
@@ -377,24 +378,26 @@ export function VoiceOver() {
             <>
               <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
                 <button onClick={readPage} aria-label="Baca seluruh konten halaman ini" style={voBtn("#0066cc")}>
-                  📖 Baca Halaman
+                  <BookOpen size={14} style={{ display: "inline", marginRight: "4px", verticalAlign: "text-bottom" }} /> Baca Halaman
                 </button>
                 {state.isReading ? (
-                  <button onClick={pause} aria-label="Jeda pembacaan" style={voBtn("#555")}>⏸ Jeda</button>
+                  <button onClick={pause} aria-label="Jeda pembacaan" style={voBtn("#555")}>
+                    <Pause size={14} style={{ display: "inline", marginRight: "4px", verticalAlign: "text-bottom" }} /> Jeda
+                  </button>
                 ) : (
                   <button onClick={resume} aria-label="Lanjutkan pembacaan" style={voBtn("#006600", !state.currentText)} disabled={!state.currentText}>
-                    ▶ Lanjut
+                    <Play size={14} style={{ display: "inline", marginRight: "4px", verticalAlign: "text-bottom" }} /> Lanjut
                   </button>
                 )}
                 <button onClick={stop} aria-label="Hentikan pembacaan" style={voBtn("#c00", !state.isReading)} disabled={!state.isReading}>
-                  ⏹ Stop
+                  <Square size={14} style={{ display: "inline", marginRight: "4px", verticalAlign: "text-bottom" }} /> Stop
                 </button>
               </div>
 
               {/* Current Reading Display */}
               {state.currentText && (
                 <div aria-live="polite" aria-label="Sedang dibaca" style={{ marginBottom: "1rem", padding: "0.6rem 0.75rem", borderRadius: "0.75rem", background: "rgba(0,100,200,0.05)", border: "1px solid rgba(0,100,200,0.15)", fontSize: "0.7rem", color: "var(--muted-foreground)", lineHeight: 1.5, maxHeight: "3.5rem", overflow: "hidden" }}>
-                  🔊 <em>{state.currentText.substring(0, 120)}{state.currentText.length > 120 ? "..." : ""}</em>
+                  <Volume2 size={12} style={{ display: "inline", marginRight: "4px", verticalAlign: "middle" }} /> <em>{state.currentText.substring(0, 120)}{state.currentText.length > 120 ? "..." : ""}</em>
                 </div>
               )}
 

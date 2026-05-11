@@ -1,4 +1,4 @@
-import { Search, Bell, Settings, Layers, Menu } from "lucide-react";
+import { Search, Bell, Settings, Layers, Menu, User } from "lucide-react";
 import { useState } from "react";
 import { useI18n } from "../../context/i18nContext";
 import logoImg from "../../imports/openlibcrop.png";

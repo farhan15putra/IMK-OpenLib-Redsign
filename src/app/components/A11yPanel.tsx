@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useA11y } from "../../context/a11yContext";
 import { useI18n } from "../../context/i18nContext";
+import { RotateCcw, Globe, X } from "lucide-react";
+import A11yIconImage from "../../imports/aksesbilitas ikon.png";
 
 export function A11yPanel() {
   const [isOpen, setIsOpen] = useState(false);
@@ -76,7 +78,22 @@ export function A11yPanel() {
         onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.1)")}
         onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
       >
-        <span aria-hidden="true">♿</span>
+        <div
+          aria-hidden="true"
+          style={{
+            width: "36px",
+            height: "36px",
+            WebkitMaskImage: `url('${A11yIconImage}')`,
+            WebkitMaskSize: "contain",
+            WebkitMaskRepeat: "no-repeat",
+            WebkitMaskPosition: "center",
+            maskImage: `url('${A11yIconImage}')`,
+            maskSize: "contain",
+            maskRepeat: "no-repeat",
+            maskPosition: "center",
+            backgroundColor: "currentColor"
+          }}
+        />
       </button>
 
       {/* Panel */}
@@ -109,7 +126,7 @@ export function A11yPanel() {
               aria-label={t("a11y.close")}
               style={{ background: "none", border: "none", cursor: "pointer", color: "var(--muted-foreground)", fontSize: "1.1rem", padding: "0.25rem", borderRadius: "0.5rem" }}
             >
-              ✕
+              <X size={16} />
             </button>
           </div>
 
@@ -185,7 +202,7 @@ export function A11yPanel() {
                   aria-pressed={locale === l}
                   style={btnStyle(locale === l, false)}
                 >
-                  {l === "id" ? "🇮🇩 ID" : "🇬🇧 EN"}
+                  {l === "id" ? <><Globe size={14} style={{ display: "inline", marginRight: "4px" }} /> ID</> : <><Globe size={14} style={{ display: "inline", marginRight: "4px" }} /> EN</>}
                 </button>
               ))}
             </div>
@@ -211,7 +228,7 @@ export function A11yPanel() {
             onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--primary)"; e.currentTarget.style.color = "var(--primary)"; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.color = "var(--muted-foreground)"; }}
           >
-            ↺ {t("a11y.reset_all")}
+            <RotateCcw size={14} style={{ display: "inline", marginRight: "0.4rem" }} /> {t("a11y.reset_all")}
           </button>
         </div>
       )}
