@@ -1,4 +1,4 @@
-import { Bookmark, ExternalLink } from "lucide-react";
+import { Bookmark, ExternalLink, Library } from "lucide-react";
 
 export function SavedBooks({ savedBooks, onRemove }: { savedBooks: any[], onRemove: (id: number) => void }) {
 
@@ -53,8 +53,13 @@ export function SavedBooks({ savedBooks, onRemove }: { savedBooks: any[], onRemo
             </div>
 
             <div className="flex-1 flex flex-col">
-              <h3 className="text-base font-black leading-snug mb-1 group-hover:text-primary transition-colors" style={{ color: "var(--foreground)" }}>{book.title}</h3>
-              <p className="text-xs font-bold uppercase tracking-widest opacity-60 mb-2">{book.author}</p>
+              {/* FIX #5: line-clamp + title attribute to prevent invisible truncation */}
+              <h3
+                className="text-base font-black leading-snug mb-1 group-hover:text-primary transition-colors line-clamp-2"
+                style={{ color: "var(--foreground)" }}
+                title={book.title}
+              >{book.title}</h3>
+              <p className="text-xs font-bold uppercase tracking-widest opacity-60 mb-2" title={book.author}>{book.author}</p>
             </div>
             
             <div className="mt-4 pt-3 border-t border-border/60 flex items-center justify-between">
@@ -65,12 +70,18 @@ export function SavedBooks({ savedBooks, onRemove }: { savedBooks: any[], onRemo
         ))}
         
         {/* Placeholder for Discover More */}
+        {/* FIX #5b: Improved empty state with direct action button */}
         <div className="flex flex-col items-center justify-center p-8 rounded-3xl border-2 border-dashed border-border hover:border-primary/50 hover:bg-primary/5 transition-all cursor-pointer group">
            <div className="size-14 rounded-full bg-muted flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
              <Bookmark className="size-6 text-muted-foreground group-hover:text-primary transition-colors" />
            </div>
-           <h3 className="font-bold text-sm" style={{ color: "var(--foreground)" }}>Add new to list</h3>
-           <p className="text-xs mt-1 text-center font-medium" style={{ color: "var(--muted-foreground)" }}>Explore the catalog to pin more books here.</p>
+           <h3 className="font-bold text-sm" style={{ color: "var(--foreground)" }}>Tambahkan ke daftar</h3>
+           <p className="text-xs mt-1 text-center font-medium mb-4" style={{ color: "var(--muted-foreground)" }}>Jelajahi katalog untuk menyimpan lebih banyak buku di sini.</p>
+           <button className="flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest text-white transition-all hover:opacity-90 active:scale-95"
+             style={{ background: "var(--primary)" }}>
+             <Library className="size-3.5" />
+             Jelajahi Katalog
+           </button>
         </div>
       </div>
     </div>

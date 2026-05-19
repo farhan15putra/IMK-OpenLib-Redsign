@@ -53,14 +53,14 @@ export function LoanHistory() {
   };
 
   return (
-    <div className="px-8 py-10 max-w-5xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div className="flex items-center gap-3 mb-8 pb-6 border-b border-border">
-        <div className="size-12 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20">
-          <Clock className="size-6 text-primary" />
+    <div className="px-8 py-6 max-w-5xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border">
+        <div className="size-10 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20">
+          <Clock className="size-5 text-primary" />
         </div>
         <div>
-          <h1 className="text-3xl font-black tracking-tight leading-none" style={{ color: "var(--foreground)" }}>Loan History</h1>
-          <p className="text-sm font-medium mt-1" style={{ color: "var(--muted-foreground)" }}>Track your active borrowings and return deadlines.</p>
+          <h1 className="text-2xl font-black tracking-tight leading-none" style={{ color: "var(--foreground)" }}>Loan History</h1>
+          <p className="text-xs font-medium mt-0.5" style={{ color: "var(--muted-foreground)" }}>Track your active borrowings and return deadlines.</p>
         </div>
       </div>
 

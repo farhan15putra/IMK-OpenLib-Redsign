@@ -16,111 +16,226 @@ import { AssistiveTouch } from "./components/AssistiveTouch";
 import { I18nProvider, useI18n } from "../context/i18nContext";
 import { A11yProvider } from "../context/a11yContext";
 import { ExternalLink } from "lucide-react";
+import ieeeLogo from "../imports/ieee.png";
+import springerLogo from "../imports/Springer.jpg";
+import proquestLogo from "../imports/proquest.jpg";
+import scienceDirectLogo from "../imports/sciencedirect.png";
 
-
+// ── 5 BUKU (format: Physical / E-Book) ─────────────────────────────────────
 const books = [
   {
     id: 1,
-    title: "Beauty and the Beast: Disney",
-    author: "Disney Studios",
-    cover: "https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-    category: "Fantasy",
+    title: "The Design of Everyday Things",
+    author: "Don Norman",
+    cover: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "Teknologi",
     featured: false,
     location: "Kampus Bandung",
     status: "Available" as const,
-    abstract: "An enchanting tale about looking past outward appearances to see the true beauty within. A must-read classic.",
-    shelf: "FAN-301",
+    abstract: "Buku klasik tentang desain berpusat pada manusia. Don Norman menjelaskan bagaimana desain yang baik membuat produk intuitif dan menyenangkan digunakan.",
+    shelf: "TEK-001",
     format: "Physical",
+    year: "2020 & Older",
+    program: "Informatics",
   },
   {
     id: 2,
-    title: "Fire and Blood — A Game of Thrones series",
-    author: "George R. R. Martin",
-    cover: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-    category: "Fantasy",
+    title: "Rich Dad Poor Dad",
+    author: "Robert T. Kiyosaki",
+    cover: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "Bisnis & Keuangan",
     featured: false,
-    location: "Kampus Jakarta",
-    status: "Borrowed" as const,
-    abstract: "Set 300 years before A Game of Thrones, dragons rule Westeros. This is the definitive history of the Targaryens.",
-    shelf: "FAN-992",
-    format: "Physical",
+    location: "Online Access",
+    status: "Available" as const,
+    abstract: "Pelajari rahasia orang kaya dan langkah-langkah fundamental menuju kebebasan finansial melalui aset dan investasi cerdas.",
+    shelf: "BIS-199",
+    format: "E-Book",
+    year: "2020 & Older",
+    program: "Business & Economics",
   },
   {
     id: 3,
-    title: "The Chronicles of Narnia",
-    author: "C.S. Lewis",
-    cover: "https://images.unsplash.com/photo-1589998059171-988d887df646?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-    category: "Fantasy",
+    title: "Atomic Habits",
+    author: "James Clear",
+    cover: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "Pengembangan Diri",
     featured: false,
-    location: "Kampus Bandung",
+    location: "Kampus Jakarta",
     status: "Available" as const,
-    abstract: "Journeys to the end of the world, fantastic creatures, and epic battles between good and evil.",
-    shelf: "FAN-105",
+    abstract: "Panduan praktis membangun kebiasaan baik dan menghilangkan kebiasaan buruk melalui perubahan kecil yang berdampak besar.",
+    shelf: "PDR-012",
     format: "Physical",
+    year: "2020 & Older",
+    program: "Business & Economics",
   },
   {
     id: 4,
-    title: "The Psychology of Success",
-    author: "Prof. David Miller",
-    cover: "https://images.unsplash.com/photo-1541963463532-d68292c34b19?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-    category: "Leadership",
+    title: "Pemrograman Web Modern dengan React & TypeScript",
+    author: "Dr. Rizal Fachrudin, M.Kom",
+    cover: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "Teknologi",
     featured: false,
-    location: "Kampus Bandung",
+    location: "Online Access",
     status: "Available" as const,
-    abstract: "Understanding the mindset of high achievers through the lens of cognitive psychology.",
-    shelf: "PSY-404",
-    format: "Physical",
+    abstract: "Panduan lengkap pengembangan aplikasi web modern menggunakan React, TypeScript, dan ekosistem tools terkini untuk mahasiswa Informatika.",
+    shelf: "TEK-045",
+    format: "E-Book",
+    year: "2023",
+    program: "Informatics",
   },
   {
     id: 5,
-    title: "Modern Business Strategy",
-    author: "Robert Kiyosaki",
-    cover: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-    category: "Business",
+    title: "Psikologi Komunikasi Organisasi",
+    author: "Prof. Dr. Siti Rahayu, M.Si",
+    cover: "https://images.unsplash.com/photo-1543269865-cbf427effbad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "Sosial & Humaniora",
     featured: false,
-    location: "Online Access",
-    status: "Available" as const,
-    abstract: "Tactical approaches to dominating markets in the era of platform economies.",
-    shelf: "BUS-505",
-    format: "E-Book",
+    location: "Kampus Bandung",
+    status: "Borrowed" as const,
+    abstract: "Mengkaji dinamika komunikasi dalam konteks organisasi modern, termasuk komunikasi lintas budaya dan manajemen konflik interpersonal.",
+    shelf: "SOS-088",
+    format: "Physical",
+    year: "2022",
+    program: "Business & Economics",
   },
+
+  // ── 6 JURNAL (format: Journal) ──────────────────────────────────────────────
   {
     id: 6,
-    title: "Rich Dad Poor Dad",
-    author: "Robert Kiyosaki",
-    cover: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-    category: "Finance",
+    title: "Journal of Information Systems & Digital Transformation",
+    author: "Telkom University Research Center",
+    cover: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "Jurnal",
     featured: false,
-    location: "Online Access",
+    location: "Online Access Only",
     status: "Available" as const,
-    abstract: "Learn the secrets of the rich and understand fundamental steps towards creating passive income in the modern era.",
-    shelf: "FIN-199",
-    format: "E-Book",
+    abstract: "Jurnal ilmiah yang memuat penelitian terkini di bidang sistem informasi, transformasi digital, dan inovasi teknologi informasi.",
+    shelf: "JNL-IS-2024",
+    format: "Journal",
+    year: "2024",
+    program: "Information Systems",
   },
   {
     id: 7,
-    title: "Journal of IT and Computer Science",
-    author: "Telkom University Researchers",
-    cover: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-    category: "Journals",
+    title: "Indonesian Journal of Electrical Engineering & Computer Science",
+    author: "Institute of Advanced Engineering",
+    cover: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "Jurnal",
     featured: false,
     location: "Online Access Only",
     status: "Available" as const,
-    abstract: "A collection of peer-reviewed research papers focusing on the latest advancements in AI, Cybersecurity, and Software Engineering.",
-    shelf: "DIG-001",
+    abstract: "Menerbitkan karya penelitian orisinal di bidang teknik elektro, elektronika, sistem kontrol, dan ilmu komputer terapan.",
+    shelf: "JNL-EE-001",
     format: "Journal",
+    year: "2023",
+    program: "Engineering",
   },
   {
     id: 8,
-    title: "Industrial Revolution in Southeast Asia",
-    author: "Prof. Ahmad Yani",
-    cover: "https://images.unsplash.com/photo-1543269865-cbf427effbad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-    category: "Journals",
+    title: "Journal of Business, Economics & Management",
+    author: "Himpunan Peneliti Ekonomi Indonesia",
+    cover: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "Jurnal",
     featured: false,
     location: "Online Access Only",
     status: "Available" as const,
-    abstract: "A detailed analysis of industrial growth and economic shifts in the SEA region over the last century.",
+    abstract: "Kajian akademik tentang manajemen strategis, ekonomi makro-mikro, kewirausahaan digital, dan ekosistem bisnis Asia Tenggara.",
+    shelf: "JNL-BE-2024",
     format: "Journal",
+    year: "2024",
+    program: "Business & Economics",
+  },
+  {
+    id: 9,
+    title: "Journal of Human-Computer Interaction Studies",
+    author: "Usability Professionals' Association",
+    cover: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "Jurnal",
+    featured: false,
+    location: "Online Access Only",
+    status: "Available" as const,
+    abstract: "Penelitian peer-reviewed tentang desain pengalaman pengguna, metode evaluasi usabilitas, dan interaksi manusia-komputer.",
+    shelf: "JNL-HCI-018",
+    format: "Journal",
+    year: "2021",
+    program: "Informatics",
+  },
+  {
+    id: 10,
+    title: "Asian Journal of Artificial Intelligence & Data Science",
+    author: "IEEE Asia Pacific Chapter",
+    cover: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "Jurnal",
+    featured: false,
+    location: "Online Access Only",
+    status: "Available" as const,
+    abstract: "Forum ilmiah untuk penelitian Machine Learning, Deep Learning, Computer Vision, dan aplikasi kecerdasan buatan di berbagai sektor industri.",
+    shelf: "JNL-AI-2024",
+    format: "Journal",
+    year: "2024",
+    program: "Informatics",
+  },
+  {
+    id: 11,
+    title: "Jurnal Kesehatan Masyarakat & Epidemiologi Indonesia",
+    author: "Asosiasi Peneliti Kesehatan Nasional",
+    cover: "https://images.unsplash.com/photo-1532012197267-da84d127e765?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "Jurnal",
+    featured: false,
+    location: "Online Access Only",
+    status: "Available" as const,
+    abstract: "Mempublikasikan penelitian epidemiologi, kebijakan kesehatan publik, surveilans penyakit, dan inovasi promosi kesehatan masyarakat.",
+    shelf: "JNL-KES-2024",
+    format: "Journal",
+    year: "2022",
+    program: "Creative Industries",
+  },
+
+  // ── KARYA TULIS (format: Skripsi / Tesis) ──────────────────────────────────
+  {
+    id: 12,
+    title: "Analisis Pengalaman Pengguna pada Aplikasi e-Learning Perguruan Tinggi",
+    author: "Farhan A. Pratama — Skripsi S1 Informatika, 2024",
+    cover: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "Karya Tulis",
+    featured: false,
+    location: "Repositori Digital",
+    status: "Available" as const,
+    abstract: "Penelitian mengevaluasi tingkat usabilitas platform e-learning perguruan tinggi menggunakan metode System Usability Scale (SUS) dan wawancara mendalam terhadap 120 mahasiswa.",
+    shelf: "SKR-IF-2024-001",
+    format: "Skripsi",
+    year: "2024",
+    program: "Informatics",
+  },
+  {
+    id: 13,
+    title: "Implementasi Machine Learning untuk Prediksi Prestasi Akademik Mahasiswa",
+    author: "Rizky Setiawan — Skripsi S1 Sistem Informasi, 2024",
+    cover: "https://images.unsplash.com/photo-1589998059171-988d887df646?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "Karya Tulis",
+    featured: false,
+    location: "Repositori Digital",
+    status: "Available" as const,
+    abstract: "Pengembangan model prediktif menggunakan algoritma Random Forest dan XGBoost untuk mengidentifikasi mahasiswa berisiko drop-out berdasarkan data akademik dan aktivitas LMS.",
+    shelf: "SKR-SI-2024-002",
+    format: "Skripsi",
+    year: "2024",
+    program: "Information Systems",
+  },
+  {
+    id: 14,
+    title: "Pengaruh Transformasi Digital UMKM terhadap Peningkatan Omzet Penjualan",
+    author: "Anisa Putri Dewi — Tesis S2 Manajemen Bisnis, 2023",
+    cover: "https://images.unsplash.com/photo-1541963463532-d68292c34b19?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "Karya Tulis",
+    featured: false,
+    location: "Repositori Digital",
+    status: "Available" as const,
+    abstract: "Studi kuantitatif menganalisis dampak adopsi platform digital marketing dan e-commerce terhadap pertumbuhan pendapatan UMKM kuliner di Kota Bandung selama 2021–2023.",
+    shelf: "TES-MB-2023-007",
+    format: "Skripsi",
+    year: "2023",
+    program: "Business & Economics",
   },
 ];
 
@@ -130,82 +245,94 @@ const topPickBooks = [
     title: "Interaction Design: Beyond Human-Computer Interaction",
     author: "Helen Sharp, Yvonne Rogers, Jenny Preece",
     cover: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-    category: "HCI",
+    category: "Teknologi",
     featured: false,
     location: "Online Access",
     status: "Available" as const,
-    abstract: "A comprehensive guide to interaction design covering user research, prototyping, evaluation, and interface design principles.",
+    abstract: "Panduan komprehensif desain interaksi yang mencakup riset pengguna, prototyping, evaluasi, dan prinsip desain antarmuka.",
     shelf: "HCI-001",
     format: "E-Book",
+    year: "2023",
+    program: "Informatics",
   },
   {
     id: 102,
-    title: "The Design of Everyday Things",
-    author: "Don Norman",
-    cover: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-    category: "HCI",
-    featured: false,
-    location: "Kampus Bandung",
-    status: "Available" as const,
-    abstract: "A landmark book on human-centered design. Don Norman explores how good design makes products intuitive and satisfying to use.",
-    shelf: "HCI-002",
-    format: "Physical",
-  },
-  {
-    id: 103,
-    title: "Don't Make Me Think, Revisited",
-    author: "Steve Krug",
+    title: "Clean Code: A Handbook of Agile Software Craftsmanship",
+    author: "Robert C. Martin",
     cover: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-    category: "HCI",
+    category: "Teknologi",
     featured: false,
     location: "Online Access",
     status: "Available" as const,
-    abstract: "A common-sense guide to web usability. Learn how users think and how to design websites that are easy to navigate.",
-    shelf: "HCI-003",
+    abstract: "Prinsip dan praktik penulisan kode yang bersih, mudah dibaca, dan mudah dipelihara untuk pengembang perangkat lunak profesional.",
+    shelf: "TEK-CC-001",
     format: "E-Book",
+    year: "2020 & Older",
+    program: "Informatics",
+  },
+  {
+    id: 103,
+    title: "Dare to Lead",
+    author: "Brené Brown",
+    cover: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "Pengembangan Diri",
+    featured: false,
+    location: "Kampus Bandung",
+    status: "Available" as const,
+    abstract: "Eksplorasi mendalam tentang kepemimpinan berbasis keberanian, kerentanan, dan empati yang mengubah budaya organisasi secara nyata.",
+    shelf: "PDR-DL-003",
+    format: "Physical",
+    year: "2021",
+    program: "Business & Economics",
   },
   {
     id: 104,
-    title: "Journal of Usability Studies — Vol. 18",
-    author: "Usability Professionals' Association",
+    title: "Statistika Inferensia untuk Penelitian Sosial",
+    author: "Prof. Dr. Bambang Setiadi, M.Si",
     cover: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-    category: "HCI",
-    featured: false,
-    location: "Online Access Only",
-    status: "Available" as const,
-    abstract: "Peer-reviewed research on user experience design, usability evaluation methods, and human-computer interaction studies.",
-    shelf: "JNL-HCI-018",
-    format: "Journal",
-  },
-  {
-    id: 105,
-    title: "Designing with the Mind in Mind",
-    author: "Jeff Johnson",
-    cover: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-    category: "HCI",
+    category: "Sosial & Humaniora",
     featured: false,
     location: "Kampus Jakarta",
     status: "Available" as const,
-    abstract: "A guide to UI design based on human psychology. Learn how perception, attention, memory, and decision-making affect UI design.",
-    shelf: "HCI-005",
+    abstract: "Pemahaman mendalam tentang metode statistika inferensia, uji hipotesis, regresi, dan analisis data untuk penelitian sosial dan pendidikan.",
+    shelf: "SOS-STAT-004",
     format: "Physical",
+    year: "2022",
+    program: "Information Systems",
+  },
+  {
+    id: 105,
+    title: "Kewirausahaan Digital di Era Ekonomi Kreatif",
+    author: "Dr. Indra Gunawan, M.B.A",
+    cover: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "Bisnis & Keuangan",
+    featured: false,
+    location: "Online Access",
+    status: "Available" as const,
+    abstract: "Panduan membangun startup digital dari nol: validasi ide, model bisnis canvas, strategi go-to-market, dan pendanaan ventura.",
+    shelf: "BIS-KWU-005",
+    format: "E-Book",
+    year: "2023",
+    program: "Business & Economics",
   },
   {
     id: 106,
-    title: "International Journal of Human-Computer Studies",
-    author: "Elsevier — Academic Press",
-    cover: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-    category: "HCI",
+    title: "Algoritma & Struktur Data dengan Python",
+    author: "Dr. Kevin Hartono, M.Sc",
+    cover: "https://images.unsplash.com/photo-1543269865-cbf427effbad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    category: "Teknologi",
     featured: false,
-    location: "Online Access Only",
+    location: "Online Access",
     status: "Available" as const,
-    abstract: "A leading peer-reviewed journal publishing research on the study and practice of how humans interact with computational systems.",
-    shelf: "JNL-HCI-INT",
-    format: "Journal",
+    abstract: "Implementasi algoritma klasik dan struktur data fundamental menggunakan Python, dilengkapi latihan soal dan analisis kompleksitas waktu-ruang.",
+    shelf: "TEK-ASD-006",
+    format: "E-Book",
+    year: "2024",
+    program: "Engineering",
   },
 ];
 
-const allCategories = ["All", "Fantasy", "Finance", "Leadership", "Journals", "Business"];
+const allCategories = ["All", "Teknologi", "Bisnis & Keuangan", "Pengembangan Diri", "Sosial & Humaniora", "Jurnal", "Karya Tulis"];
 
 export default function App() {
   return (
@@ -224,6 +351,26 @@ function AppContent() {
   const [savedBookIds, setSavedBookIds] = useState<number[]>([1, 4]);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [readingBook, setReadingBook] = useState<any>(null);
+  // Catalog state: key forces remount (= full reset) every time user navigates to catalog
+  const [catalogKey, setCatalogKey] = useState(0);
+  const [catalogInitialFormats, setCatalogInitialFormats] = useState<string[]>([]);
+
+  // Central function for any navigation to catalog — always resets filter state
+  const goToCatalog = (formats: string[] = []) => {
+    setCatalogInitialFormats(formats);
+    setCatalogKey(k => k + 1); // force SearchResults to remount → clean slate
+    setCurrentView("catalog");
+  };
+
+  // General navigation used by Sidebar, Header, etc.
+  const navigate = (view: string) => {
+    if (view === "catalog") {
+      goToCatalog(); // always reset when going via sidebar/header
+    } else {
+      setCurrentView(view);
+    }
+    setIsMobileMenuOpen(false);
+  };
 
   const toggleSaveBook = (id: number) => {
     setSavedBookIds(prev => prev.includes(id) ? prev.filter(bId => bId !== id) : [...prev, id]);
@@ -251,7 +398,7 @@ function AppContent() {
       {/* Left Sidebar */}
       <Sidebar 
         currentView={currentView} 
-        setCurrentView={(view) => { setCurrentView(view); setIsMobileMenuOpen(false); }} 
+        setCurrentView={navigate}
         isOpen={isMobileMenuOpen}
         setIsOpen={setIsMobileMenuOpen}
       />
@@ -259,8 +406,8 @@ function AppContent() {
       {/* Main Container */}
       <div className="main-content flex flex-col flex-1 min-w-0 h-full transition-all duration-300">
         <Header 
-          onHomeClick={() => setCurrentView("home")} 
-          onProfileClick={() => setCurrentView("profile")} 
+          onHomeClick={() => navigate("home")} 
+          onProfileClick={() => navigate("profile")} 
           onMenuClick={() => setIsMobileMenuOpen(true)}
         />
 
@@ -271,8 +418,10 @@ function AppContent() {
           <div className="max-w-[1440px] mx-auto transition-all duration-500">
             {currentView === "catalog" && (
               <SearchResults 
+                key={catalogKey}
                 books={books} 
-                selectedCategory={selectedCategory} 
+                selectedCategory={selectedCategory}
+                initialFormats={catalogInitialFormats}
                 onOpenReader={(book) => setReadingBook(book)} 
               />
             )}
@@ -284,11 +433,16 @@ function AppContent() {
               <>
                 {/* Hero Section */}
                 <Hero onNavigate={(target, category) => {
-                  setCurrentView(target);
-                  if (category) {
-                    setSelectedCategory(category);
-                  } else if (target === "catalog") {
-                    setSelectedCategory("All");
+                  if (target === "catalog") {
+                    // E-Books quick access → format filter "Buku"
+                    // Journals quick access → format filter "Jurnal"
+                    const fmtMap: Record<string, string[]> = {
+                      "E-Book":  ["Buku"],
+                      "Journals": ["Jurnal"],
+                    };
+                    goToCatalog(category ? (fmtMap[category] ?? []) : []);
+                  } else {
+                    navigate(target);
                   }
                 }} />
 
@@ -382,10 +536,10 @@ function AppContent() {
 
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                 {[
-                  { code: "IEEE", name: "IEEE Xplore", logo: "/src/imports/ieee.png", bg: "#fff", desc: "Engineering & Tech" },
-                  { code: "S", name: "Springer", logo: "/src/imports/Springer.jpg", bg: "#fff", desc: "Scientific Journals" },
-                  { code: "P", name: "ProQuest", logo: "/src/imports/proquest.jpg", bg: "#fff", desc: "Research Papers" },
-                  { code: "SD", name: "ScienceDirect", logo: "/src/imports/sciencedirect.png", bg: "#fff", desc: "Physics & Chemistry" },
+                  { code: "IEEE", name: "IEEE Xplore", logo: ieeeLogo, bg: "#fff", desc: "Engineering & Tech" },
+                  { code: "S", name: "Springer", logo: springerLogo, bg: "#fff", desc: "Scientific Journals" },
+                  { code: "P", name: "ProQuest", logo: proquestLogo, bg: "#fff", desc: "Research Papers" },
+                  { code: "SD", name: "ScienceDirect", logo: scienceDirectLogo, bg: "#fff", desc: "Physics & Chemistry" },
                 ].map(db => (
                   <div
                     key={db.code}
