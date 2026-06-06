@@ -17,6 +17,8 @@ export function SearchResults({
   selectedCategory, 
   initialFormats = [],
   searchQuery = "",
+  savedBookIds = [],
+  onToggleSave,
   onOpenReader,
   onOpenDetails
 }: { 
@@ -24,6 +26,8 @@ export function SearchResults({
   selectedCategory: string,
   initialFormats?: string[],
   searchQuery?: string,
+  savedBookIds: number[],
+  onToggleSave: (id: number) => void,
   onOpenReader?: (book: any) => void,
   onOpenDetails?: (book: any) => void
 }) {
@@ -60,8 +64,24 @@ export function SearchResults({
   // Filter books by selectedCategory from parent (Home page pills)
   const filteredBooks = books.filter(b => {
     // 0. Search query check
-    if (searchQuery && !b.title.toLowerCase().includes(searchQuery.toLowerCase()) && !b.author.toLowerCase().includes(searchQuery.toLowerCase())) {
-        return false;
+    if (searchQuery) {
+      if (searchQuery.startsWith("adv: ")) {
+        const authorMatch = searchQuery.match(/author=([^ ]*)/);
+        const yearMatch = searchQuery.match(/year=([^ ]*)/);
+        const publisherMatch = searchQuery.match(/publisher=([^ ]*)/);
+        
+        const advAuthor = authorMatch ? authorMatch[1].toLowerCase() : "";
+        const advYear = yearMatch ? yearMatch[1] : "";
+        const advPublisher = publisherMatch ? publisherMatch[1].toLowerCase() : "";
+        
+        if (advAuthor && !b.author.toLowerCase().includes(advAuthor)) return false;
+        if (advYear && !b.year.includes(advYear)) return false;
+        if (advPublisher && !b.abstract.toLowerCase().includes(advPublisher)) return false;
+      } else {
+        if (!b.title.toLowerCase().includes(searchQuery.toLowerCase()) && !b.author.toLowerCase().includes(searchQuery.toLowerCase())) {
+            return false;
+        }
+      }
     }
 
     // 1. Category check
@@ -254,8 +274,10 @@ export function SearchResults({
                     className="flex-1 max-w-[120px] py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest border border-border bg-card hover:bg-muted transition-colors text-foreground shadow-sm">
                     {t("catalog.view_details")}
                   </button>
-                  <button className="p-1.5 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors shadow-sm bg-card">
-                    <Bookmark className="size-3.5" />
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); onToggleSave(book.id); }}
+                    className={`p-1.5 rounded-lg border transition-colors shadow-sm ${savedBookIds.includes(book.id) ? 'border-primary/50 text-primary bg-primary/10' : 'border-border text-muted-foreground hover:text-primary hover:border-primary/50 bg-card'}`}>
+                    <Bookmark className="size-3.5" fill={savedBookIds.includes(book.id) ? "currentColor" : "none"} />
                   </button>
                   <button className="p-1.5 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors shadow-sm bg-card">
                     <ExternalLink className="size-3.5" />

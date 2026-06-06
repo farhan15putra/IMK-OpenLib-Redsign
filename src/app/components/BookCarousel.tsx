@@ -36,7 +36,7 @@ function BookSlide({ id, title, author, cover, category, featured, location, sta
     <div className={`group relative cursor-pointer px-3 py-4 md:py-8 transition-all duration-500 ease-out ${featured ? "md:scale-110 z-10 scale-105" : "hover:-translate-y-2 opacity-90 hover:opacity-100"}`}>
       {/* Book cover elevation */}
       <div
-        className="relative overflow-hidden rounded-2xl mb-4 h-[260px] md:h-[300px]"
+        className="relative overflow-hidden rounded-2xl mb-4 aspect-[2/3] w-full"
         style={{
           boxShadow: featured
             ? "0 35px 70px -15px rgba(0,0,0,0.9), 0 0 0 2px rgba(139,0,0,0.6)"
@@ -134,7 +134,7 @@ export function BookCarousel({ books, savedBookIds = [], onToggleSave, onOpenRea
 
   const settings = {
     dots: false,
-    infinite: books.length > 5,
+    infinite: true,
     speed: 700,
     slidesToShow: 5,
     slidesToScroll: 1,
@@ -142,12 +142,22 @@ export function BookCarousel({ books, savedBookIds = [], onToggleSave, onOpenRea
     autoplay: true,
     autoplaySpeed: 4000,
     pauseOnHover: true,
+    swipeToSlide: true,
     cssEase: "cubic-bezier(0.23, 1, 0.32, 1)",
     responsive: [
       { breakpoint: 1400, settings: { slidesToShow: 4 } },
       { breakpoint: 1100, settings: { slidesToShow: 3 } },
       { breakpoint: 768,  settings: { slidesToShow: 2 } },
-      { breakpoint: 480,  settings: { slidesToShow: 1.3 } },
+      { breakpoint: 500,  settings: { 
+        slidesToShow: 1,
+        centerMode: true,
+        centerPadding: '60px'
+      } },
+      { breakpoint: 400,  settings: { 
+        slidesToShow: 1,
+        centerMode: true,
+        centerPadding: '40px'
+      } },
     ],
   };
 

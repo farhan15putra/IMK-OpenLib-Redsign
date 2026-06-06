@@ -434,6 +434,8 @@ function AppContent() {
                 selectedCategory={selectedCategory}
                 initialFormats={catalogInitialFormats}
                 searchQuery={searchQuery}
+                savedBookIds={savedBookIds}
+                onToggleSave={toggleSaveBook}
                 onOpenReader={(book) => setReadingBook(book)} 
                 onOpenDetails={(book) => setDetailBook(book)}
               />
@@ -584,7 +586,12 @@ function AppContent() {
       )}
       {/* Details Modal */}
       {detailBook && (
-        <BookDetails book={detailBook} onClose={() => setDetailBook(null)} />
+        <BookDetails 
+          book={detailBook} 
+          onClose={() => setDetailBook(null)} 
+          isSaved={savedBookIds.includes(detailBook.id)} 
+          onToggleSave={toggleSaveBook} 
+        />
       )}
       {/* Floating Accessibility Panel (a11y settings) */}
       <A11yPanel />

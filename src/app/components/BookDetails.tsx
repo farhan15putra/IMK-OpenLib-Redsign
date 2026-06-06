@@ -2,7 +2,7 @@ import { X, Bookmark, ExternalLink } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useI18n } from "../../context/i18nContext";
 
-export function BookDetails({ book, onClose }: { book: any, onClose: () => void }) {
+export function BookDetails({ book, onClose, isSaved, onToggleSave }: { book: any, onClose: () => void, isSaved?: boolean, onToggleSave?: (id: number) => void }) {
   const { t } = useI18n();
   const dialogRef = useRef<HTMLDivElement>(null);
 
@@ -68,8 +68,10 @@ export function BookDetails({ book, onClose }: { book: any, onClose: () => void 
             <button className="flex-1 py-3 bg-primary text-white rounded-xl text-[11px] font-black uppercase tracking-widest hover:opacity-90 active:scale-[0.98] transition-all shadow-lg shadow-primary/30">
               {book.format === 'Physical' ? t("catalog.request_loan") : t("catalog.read_now")}
             </button>
-            <button className="p-3 rounded-xl border border-border text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors shadow-sm bg-muted/50">
-              <Bookmark className="size-5" />
+            <button 
+              onClick={(e) => { e.stopPropagation(); onToggleSave?.(book.id); }}
+              className={`p-3 rounded-xl border transition-colors shadow-sm ${isSaved ? 'border-primary/50 text-primary bg-primary/10' : 'border-border text-muted-foreground hover:text-primary hover:border-primary/50 bg-muted/50'}`}>
+              <Bookmark className="size-5" fill={isSaved ? "currentColor" : "none"} />
             </button>
             <button className="p-3 rounded-xl border border-border text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors shadow-sm bg-muted/50">
               <ExternalLink className="size-5" />
