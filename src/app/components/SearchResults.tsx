@@ -16,12 +16,16 @@ export function SearchResults({
   books, 
   selectedCategory, 
   initialFormats = [],
-  onOpenReader 
+  searchQuery = "",
+  onOpenReader,
+  onOpenDetails
 }: { 
   books: any[], 
   selectedCategory: string,
   initialFormats?: string[],
-  onOpenReader?: (book: any) => void 
+  searchQuery?: string,
+  onOpenReader?: (book: any) => void,
+  onOpenDetails?: (book: any) => void
 }) {
   const { t } = useI18n();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -55,6 +59,11 @@ export function SearchResults({
 
   // Filter books by selectedCategory from parent (Home page pills)
   const filteredBooks = books.filter(b => {
+    // 0. Search query check
+    if (searchQuery && !b.title.toLowerCase().includes(searchQuery.toLowerCase()) && !b.author.toLowerCase().includes(searchQuery.toLowerCase())) {
+        return false;
+    }
+
     // 1. Category check
     const matchCategory = selectedCategory === "All" ? true : b.category === selectedCategory;
     
@@ -197,7 +206,9 @@ export function SearchResults({
                             {t("catalog.read_online")}
                           </button>
                         ) : (
-                          <button className="px-2 py-1 bg-primary text-white text-[8px] font-black uppercase tracking-widest rounded shadow-lg scale-90 group-hover/card:scale-100 transition-transform">
+                          <button 
+                            onClick={(e) => { e.stopPropagation(); onOpenDetails?.(book); }}
+                            className="px-2 py-1 bg-primary text-white text-[8px] font-black uppercase tracking-widest rounded shadow-lg scale-90 group-hover/card:scale-100 transition-transform">
                             {t("catalog.quick_view")}
                           </button>
                         )}
@@ -238,7 +249,9 @@ export function SearchResults({
                   {book.abstract || "This comprehensive guide covers modern architectural patterns for building scalable and reliable distributed systems..."}
                 </p>
                 <div className="mt-auto pt-4 flex items-center gap-2">
-                  <button className="flex-1 max-w-[120px] py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest border border-border bg-card hover:bg-muted transition-colors text-foreground shadow-sm">
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); onOpenDetails?.(book); }}
+                    className="flex-1 max-w-[120px] py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest border border-border bg-card hover:bg-muted transition-colors text-foreground shadow-sm">
                     {t("catalog.view_details")}
                   </button>
                   <button className="p-1.5 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors shadow-sm bg-card">

@@ -3,7 +3,19 @@ import { useState } from "react";
 import { useI18n } from "../../context/i18nContext";
 import logoImg from "../../imports/openlibcrop.png";
 
-export function Header({ onHomeClick, onProfileClick, onMenuClick }: { onHomeClick?: () => void, onProfileClick?: () => void, onMenuClick?: () => void }) {
+export function Header({ 
+  onHomeClick, 
+  onProfileClick, 
+  onMenuClick,
+  searchQuery = "",
+  onSearch
+}: { 
+  onHomeClick?: () => void, 
+  onProfileClick?: () => void, 
+  onMenuClick?: () => void,
+  searchQuery?: string,
+  onSearch?: (query: string) => void
+}) {
   const { t, locale, setLocale } = useI18n();
   const [showAdvanced, setShowAdvanced] = useState(false);
   return (
@@ -57,16 +69,26 @@ export function Header({ onHomeClick, onProfileClick, onMenuClick }: { onHomeCli
       {/* Global Command Center (Centered Search) */}
       <div className="flex-1 min-w-0 max-w-lg mx-3 md:mx-8 relative z-50">
         <div className="absolute inset-0 bg-primary/5 blur-xl focus-within:bg-primary/10 transition-colors rounded-3xl" aria-hidden="true" />
-        <div
+        <form
           role="search"
           aria-label={t("header.search_label")}
+          onSubmit={(e) => {
+            e.preventDefault();
+            const form = e.currentTarget;
+            const input = form.elements.namedItem("q") as HTMLInputElement;
+            if (input) onSearch?.(input.value);
+          }}
           className="relative flex items-center h-10 md:h-12 w-full px-3 md:px-5 rounded-2xl bg-card border border-border shadow-sm focus-within:border-primary focus-within:shadow-[0_0_0_3px_rgba(139,0,0,0.1)] transition-all"
         >
-          <Search className="size-4 md:size-5 transition-transform" style={{ color: "var(--muted-foreground)" }} aria-hidden="true" />
+          <button type="submit" aria-label={t("header.search_label")} className="focus:outline-none flex items-center">
+            <Search className="size-4 md:size-5 transition-transform" style={{ color: "var(--muted-foreground)" }} aria-hidden="true" />
+          </button>
           <label htmlFor="header-search" className="sr-only">{t("header.search_label")}</label>
           <input
             id="header-search"
+            name="q"
             type="search"
+            defaultValue={searchQuery}
             placeholder={t("header.search_placeholder")}
             className="flex-1 ml-3 md:ml-4 bg-transparent text-[11px] md:text-sm font-bold placeholder:font-medium placeholder:opacity-40 outline-none w-full"
             style={{ color: "var(--foreground)" }}
@@ -86,7 +108,7 @@ export function Header({ onHomeClick, onProfileClick, onMenuClick }: { onHomeCli
               <span className="hidden xs:inline" aria-hidden="true">{t("header.advanced_search")}</span>
             </button>
           </div>
-        </div>
+        </form>
 
         {/* Advanced Search Pop-up */}
         {showAdvanced && (

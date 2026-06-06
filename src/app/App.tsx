@@ -10,6 +10,7 @@ import { Settings } from "./components/Settings";
 import { Login } from "./components/Login";
 import { Profile } from "./components/Profile";
 import { BookReader } from "./components/BookReader";
+import { BookDetails } from "./components/BookDetails";
 import { A11yPanel } from "./components/A11yPanel";
 import { VoiceOver } from "./components/VoiceOver";
 import { AssistiveTouch } from "./components/AssistiveTouch";
@@ -351,13 +352,16 @@ function AppContent() {
   const [savedBookIds, setSavedBookIds] = useState<number[]>([1, 4]);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [readingBook, setReadingBook] = useState<any>(null);
+  const [detailBook, setDetailBook] = useState<any>(null);
   // Catalog state: key forces remount (= full reset) every time user navigates to catalog
   const [catalogKey, setCatalogKey] = useState(0);
   const [catalogInitialFormats, setCatalogInitialFormats] = useState<string[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Central function for any navigation to catalog — always resets filter state
-  const goToCatalog = (formats: string[] = []) => {
+  const goToCatalog = (formats: string[] = [], query: string = "") => {
     setCatalogInitialFormats(formats);
+    setSearchQuery(query);
     setCatalogKey(k => k + 1); // force SearchResults to remount → clean slate
     setCurrentView("catalog");
   };
@@ -365,7 +369,7 @@ function AppContent() {
   // General navigation used by Sidebar, Header, etc.
   const navigate = (view: string) => {
     if (view === "catalog") {
-      goToCatalog(); // always reset when going via sidebar/header
+      goToCatalog([], searchQuery); // always reset when going via sidebar/header
     } else {
       setCurrentView(view);
     }
@@ -409,6 +413,13 @@ function AppContent() {
           onHomeClick={() => navigate("home")} 
           onProfileClick={() => navigate("profile")} 
           onMenuClick={() => setIsMobileMenuOpen(true)}
+          searchQuery={searchQuery}
+          onSearch={(q) => {
+            setSearchQuery(q);
+            if (currentView !== "catalog") {
+              goToCatalog([], q);
+            }
+          }}
         />
 
         {/* Screen reader live region for dynamic announcements */}
@@ -422,7 +433,9 @@ function AppContent() {
                 books={books} 
                 selectedCategory={selectedCategory}
                 initialFormats={catalogInitialFormats}
+                searchQuery={searchQuery}
                 onOpenReader={(book) => setReadingBook(book)} 
+                onOpenDetails={(book) => setDetailBook(book)}
               />
             )}
             {currentView === "history" && <LoanHistory />}
@@ -568,6 +581,10 @@ function AppContent() {
       {/* Reader Modal */}
       {readingBook && (
         <BookReader book={readingBook} onClose={() => setReadingBook(null)} />
+      )}
+      {/* Details Modal */}
+      {detailBook && (
+        <BookDetails book={detailBook} onClose={() => setDetailBook(null)} />
       )}
       {/* Floating Accessibility Panel (a11y settings) */}
       <A11yPanel />
