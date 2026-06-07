@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -131,6 +131,11 @@ function BookSlide({ id, title, author, cover, category, featured, location, sta
 
 export function BookCarousel({ books, savedBookIds = [], onToggleSave, onOpenReader }: BookCarouselProps) {
   const sliderRef = useRef<Slider>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const settings = {
     dots: false,
@@ -171,8 +176,8 @@ export function BookCarousel({ books, savedBookIds = [], onToggleSave, onOpenRea
 
   return (
     <div className="relative w-full overflow-visible min-h-[450px]">
-      {/* Precision Navigation - Hidden on mobile if not enough space */}
-      <div className="absolute top-[-52px] right-2 z-10 flex items-center gap-2">
+      {/* Precision Navigation - Hidden on mobile */}
+      <div className="absolute top-[-52px] right-2 z-10 hidden md:flex items-center gap-2">
         <button
           onClick={() => sliderRef.current?.slickPrev()}
           className="size-10 rounded-2xl flex items-center justify-center transition-all duration-300 border hover:shadow-2xl active:scale-90 group/btn"
@@ -197,20 +202,43 @@ export function BookCarousel({ books, savedBookIds = [], onToggleSave, onOpenRea
         </button>
       </div>
 
-      {/* Slider Container with min-width fix */}
-      <div className="w-full min-w-0 px-0 md:mx-[-12px]">
-        <Slider ref={sliderRef} {...settings}>
-          {books.map((book) => (
-            <div key={book.id}>
-              <BookSlide 
-                {...book} 
-                isSaved={savedBookIds.includes(book.id)} 
-                onToggleSave={onToggleSave} 
-                onOpenReader={() => onOpenReader?.(book)}
-              />
-            </div>
-          ))}
-        </Slider>
+      {/* Desktop Slider Container with min-width fix */}
+      <div className="hidden md:block w-full min-w-0 px-0 mx-[-12px]">
+        {isMounted ? (
+          <Slider ref={sliderRef} {...settings}>
+            {books.map((book) => (
+              <div key={book.id}>
+                <BookSlide 
+                  {...book} 
+                  isSaved={savedBookIds.includes(book.id)} 
+                  onToggleSave={onToggleSave} 
+                  onOpenReader={() => onOpenReader?.(book)}
+                />
+              </div>
+            ))}
+          </Slider>
+        ) : (
+          <div className="flex gap-4 overflow-hidden opacity-50 px-3">
+            {/* Skeletons for initial loading state */}
+            {[1, 2, 3, 4, 5].map(i => (
+              <div key={i} className="w-[180px] h-[280px] bg-muted/20 rounded-2xl animate-pulse flex-shrink-0" />
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Mobile Native Horizontal Scroll Container */}
+      <div className="md:hidden flex gap-3 overflow-x-auto pb-8 pt-4 hide-scrollbar snap-x snap-mandatory scroll-smooth w-full px-1" style={{ WebkitOverflowScrolling: "touch", paddingRight: "2rem" }}>
+        {books.map((book) => (
+          <div key={book.id} className="snap-center shrink-0 w-[55vw] xs:w-[45vw]">
+            <BookSlide 
+              {...book} 
+              isSaved={savedBookIds.includes(book.id)} 
+              onToggleSave={onToggleSave} 
+              onOpenReader={() => onOpenReader?.(book)}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
