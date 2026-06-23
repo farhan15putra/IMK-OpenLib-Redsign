@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../../styles/carousel.css";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useI18n } from "../../context/i18nContext";
 
 interface Book {
   id: number;
@@ -32,6 +33,8 @@ interface BookSlideProps extends Book {
 }
 
 function BookSlide({ id, title, author, cover, category, featured, location, status, abstract, shelf, isSaved, onToggleSave, onOpenReader }: BookSlideProps) {
+  const { t } = useI18n();
+
   return (
     <div className={`group relative cursor-pointer px-3 py-4 md:py-8 transition-all duration-500 ease-out ${featured ? "md:scale-110 z-10 scale-105" : "hover:-translate-y-2 opacity-90 hover:opacity-100"}`}>
       {/* Book cover elevation */}
@@ -120,7 +123,9 @@ function BookSlide({ id, title, author, cover, category, featured, location, sta
               ${status === 'Available' ? 'text-green-500 border-green-500/30 bg-green-500/10' : 'text-red-500 border-red-500/30 bg-red-500/10'}
             `}>
               <div className={`size-1.5 rounded-full flex-shrink-0 ${status === 'Available' ? 'bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.5)] animate-pulse' : 'bg-red-500'}`} />
-              <span className="truncate">{status} - {location}</span>
+              <span className="truncate">
+                {status === 'Available' ? t("book.available") : (status ? t(`book.${status.toLowerCase()}` as any) : '')} - {location === 'Online Access Only' ? t("book.status_online_only") : location}
+              </span>
             </div>
           )}
         </div>
