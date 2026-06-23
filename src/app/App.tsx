@@ -578,7 +578,7 @@ function AppContent() {
                       <div className="flex items-center gap-3 mt-3">
                         <span className="px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-widest bg-primary/10 text-primary">{item.category}</span>
                         <span className="text-[9px] font-bold text-muted-foreground flex items-center gap-1">
-                          <TrendingUp className="size-3" />{item.readers} readers
+                          <TrendingUp className="size-3" />{t("app.readers").replace("{{count}}", String(item.readers))}
                         </span>
                       </div>
                     </div>
@@ -600,10 +600,10 @@ function AppContent() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[
-                  { type: "viewed", title: "Clean Code", time: "2 hours ago", icon: Eye, color: "text-blue-500", bg: "bg-blue-500/10" },
-                  { type: "borrowed", title: "Atomic Habits", time: "3 days ago", icon: BookOpen, color: "text-green-500", bg: "bg-green-500/10" },
-                  { type: "returned", title: "Rich Dad Poor Dad", time: "1 week ago", icon: CheckCircle, color: "text-purple-500", bg: "bg-purple-500/10" },
-                  { type: "viewed", title: "Interaction Design", time: "2 weeks ago", icon: Eye, color: "text-blue-500", bg: "bg-blue-500/10" },
+                  { type: "viewed", title: "Clean Code", time: t("time.hours_ago").replace("{{count}}", "2"), icon: Eye, color: "text-blue-500", bg: "bg-blue-500/10" },
+                  { type: "borrowed", title: "Atomic Habits", time: t("time.days_ago").replace("{{count}}", "3"), icon: BookOpen, color: "text-green-500", bg: "bg-green-500/10" },
+                  { type: "returned", title: "Rich Dad Poor Dad", time: t("time.weeks_ago").replace("{{count}}", "1"), icon: CheckCircle, color: "text-purple-500", bg: "bg-purple-500/10" },
+                  { type: "viewed", title: "Interaction Design", time: t("time.weeks_ago").replace("{{count}}", "2"), icon: Eye, color: "text-blue-500", bg: "bg-blue-500/10" },
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-center gap-4 p-4 rounded-2xl border border-border hover:border-primary/30 hover:shadow-md transition-all cursor-pointer group" style={{ background: "var(--card)" }}>
                     <div className={`size-11 rounded-xl flex-shrink-0 flex items-center justify-center ${item.bg} ${item.color} group-hover:scale-110 transition-transform`}>

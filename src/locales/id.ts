@@ -273,6 +273,29 @@ export const id = {
   // Hero Search
   "hero.search_placeholder": "Cari buku, jurnal, skripsi...",
   "hero.search_button": "Cari",
+
+  // Time & Stats
+  "time.hours_ago": "{{count}} jam yang lalu",
+  "time.days_ago": "{{count}} hari yang lalu",
+  "time.weeks_ago": "{{count}} minggu yang lalu",
+  "time.months_ago": "{{count}} bulan yang lalu",
+  "app.readers": "{{count}} pembaca",
+
+  // Filters
+  "filter.older": "2020 & Sebelumnya",
+  "filter.informatics": "Informatika",
+  "filter.is": "Sistem Informasi",
+  "filter.business": "Bisnis & Ekonomi",
+  "filter.creative": "Industri Kreatif",
+  "filter.engineering": "Teknik",
+
+  // Book Types & Status
+  "book.type_journal": "JURNAL",
+  "book.type_physical": "FISIK",
+  "book.type_ebook": "E-BOOK",
+  "book.status_available_campus": "TERSEDIA - KAMPUS BANDUNG",
+  "book.status_online_only": "Hanya Akses Online",
+  "book.abstract_synopsis": "ABSTRAK / SINOPSIS",
 };
 
 export type TranslationKey = keyof typeof id;

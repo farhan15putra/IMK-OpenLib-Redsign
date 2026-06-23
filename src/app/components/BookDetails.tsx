@@ -37,7 +37,7 @@ export function BookDetails({ book, onClose, isSaved, onToggleSave }: { book: an
           <img src={book.cover} alt={book.title} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
             <span className={`px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-md text-white border border-white/20 shadow-lg ${book.format === 'Journal' ? 'bg-blue-600' : (book.format === 'E-Book' ? 'bg-blue-500' : 'bg-primary')}`}>
-              {book.format}
+              {book.format === 'Journal' ? t("book.type_journal") : (book.format === 'E-Book' ? t("book.type_ebook") : t("book.type_physical"))}
             </span>
           </div>
         </div>
@@ -52,13 +52,13 @@ export function BookDetails({ book, onClose, isSaved, onToggleSave }: { book: an
           <div className="flex items-center gap-2 mb-6">
             <div className={`px-2.5 py-1 rounded-md text-[10px] font-black tracking-widest uppercase border inline-flex items-center gap-1.5 ${book.status === 'Available' ? 'text-green-500 border-green-500/30 bg-green-500/10' : 'text-red-500 border-red-500/30 bg-red-500/10'}`}>
               <div className={`size-1.5 rounded-full ${book.status === 'Available' ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
-              {book.status}
+              {book.status === 'Available' ? t("book.available") : t(`book.${book.status.toLowerCase()}` as any)}
             </div>
-            <span className="text-xs font-medium text-muted-foreground">• {book.location || 'Kampus Jakarta'}</span>
+            <span className="text-xs font-medium text-muted-foreground">• {book.location === 'Online Access Only' ? t("book.status_online_only") : book.location}</span>
           </div>
 
           <div className="flex-1 overflow-y-auto mb-6 pr-2">
-            <h3 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">Abstract / Synopsis</h3>
+            <h3 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">{t("book.abstract_synopsis")}</h3>
             <p className="text-sm leading-relaxed text-foreground opacity-80">
               {book.abstract || "This comprehensive guide covers modern architectural patterns for building scalable and reliable distributed systems. Learn how to design robust applications that can handle high traffic and data volume."}
             </p>

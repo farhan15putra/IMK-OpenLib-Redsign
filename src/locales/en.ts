@@ -273,4 +273,27 @@ export const en = {
   // Hero Search
   "hero.search_placeholder": "Search books, journals, thesis...",
   "hero.search_button": "Search",
+
+  // Time & Stats
+  "time.hours_ago": "{{count}} hours ago",
+  "time.days_ago": "{{count}} days ago",
+  "time.weeks_ago": "{{count}} weeks ago",
+  "time.months_ago": "{{count}} months ago",
+  "app.readers": "{{count}} readers",
+
+  // Filters
+  "filter.older": "2020 & Older",
+  "filter.informatics": "Informatics",
+  "filter.is": "Information Systems",
+  "filter.business": "Business & Economics",
+  "filter.creative": "Creative Industries",
+  "filter.engineering": "Engineering",
+
+  // Book Types & Status
+  "book.type_journal": "JOURNAL",
+  "book.type_physical": "PHYSICAL",
+  "book.type_ebook": "E-BOOK",
+  "book.status_available_campus": "AVAILABLE - KAMPUS BANDUNG",
+  "book.status_online_only": "Online Access Only",
+  "book.abstract_synopsis": "ABSTRACT / SYNOPSIS",
 };

@@ -40,6 +40,18 @@ export function SearchResults({
     formats: initialFormats,
   });
 
+  const getFilterTranslation = (val: string) => {
+    switch (val) {
+      case "2020 & Older": return t("filter.older");
+      case "Informatics": return t("filter.informatics");
+      case "Information Systems": return t("filter.is");
+      case "Business & Economics": return t("filter.business");
+      case "Creative Industries": return t("filter.creative");
+      case "Engineering": return t("filter.engineering");
+      default: return val;
+    }
+  };
+
   const toggleFilter = (group: keyof FilterState, value: string) => {
     setFilters(prev => ({
       ...prev,
@@ -129,7 +141,7 @@ export function SearchResults({
         <span
           className="text-xs font-bold group-hover:opacity-100 transition-opacity"
           style={{ color: "var(--foreground)", opacity: checked ? 1 : 0.7 }}
-        >{value}</span>
+        >{getFilterTranslation(value)}</span>
       </label>
     );
   };
@@ -167,7 +179,7 @@ export function SearchResults({
                 className="flex items-center gap-1 px-2 py-1 rounded-full text-[9px] font-black uppercase tracking-wider transition-colors"
                 style={{ background: "rgba(139,0,0,0.12)", color: "var(--primary)", border: "1px solid rgba(139,0,0,0.2)" }}
               >
-                {f.label}
+                {getFilterTranslation(f.label)}
                 <X className="size-2.5" />
               </button>
             ))}
@@ -237,7 +249,7 @@ export function SearchResults({
                 <div className="flex flex-col py-1">
                   <div className="flex items-center gap-2 mb-2">
                     <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest ${book.format === 'Journal' ? 'bg-blue-500/10 text-blue-500' : (book.format === 'E-Book' ? 'bg-blue-500/10 text-blue-500' : 'bg-primary/10 text-primary')}`}>
-                      {book.format === 'Journal' ? 'Digital Journal' : (book.format === 'E-Book' ? 'E-Book' : 'Physical')}
+                      {book.format === 'Journal' ? t("book.type_journal") : (book.format === 'E-Book' ? t("book.type_ebook") : t("book.type_physical"))}
                     </span>
                     <span className="text-[10px] font-bold opacity-60">2024</span>
                     <span className="text-[10px] font-bold opacity-60 px-1">•</span>
@@ -252,7 +264,7 @@ export function SearchResults({
                   <div>
                     <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[9px] font-black tracking-widest uppercase border ${book.status === 'Available' ? 'text-green-500 border-green-500/20 bg-green-500/10' : 'text-red-500 border-red-500/20 bg-red-500/10'}`}>
                       <div className={`size-1.5 rounded-full ${book.status === 'Available' ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
-                      {book.status} - {book.location || 'Kampus Jakarta'}
+                      {book.status === 'Available' ? t("book.available") : t(`book.${book.status.toLowerCase()}` as any)} - {book.location === 'Online Access Only' ? t("book.status_online_only") : book.location || 'Kampus Jakarta'}
                     </div>
                   </div>
                   <div className="mt-3 flex md:hidden">
