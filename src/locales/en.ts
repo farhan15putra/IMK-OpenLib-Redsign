@@ -296,4 +296,10 @@ export const en = {
   "book.status_available_campus": "AVAILABLE - KAMPUS BANDUNG",
   "book.status_online_only": "Online Access Only",
   "book.abstract_synopsis": "ABSTRACT / SYNOPSIS",
+
+  // Vault
+  "vault.desc_ieee": "Engineering & Tech",
+  "vault.desc_springer": "Scientific Journals",
+  "vault.desc_proquest": "Research Papers",
+  "vault.desc_sd": "Physics & Chemistry",
 };

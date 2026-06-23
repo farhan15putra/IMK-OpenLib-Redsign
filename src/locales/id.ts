@@ -296,6 +296,12 @@ export const id = {
   "book.status_available_campus": "TERSEDIA - KAMPUS BANDUNG",
   "book.status_online_only": "Hanya Akses Online",
   "book.abstract_synopsis": "ABSTRAK / SINOPSIS",
+
+  // Vault
+  "vault.desc_ieee": "Teknik & Teknologi",
+  "vault.desc_springer": "Jurnal Ilmiah",
+  "vault.desc_proquest": "Karya Tulis Riset",
+  "vault.desc_sd": "Fisika & Kimia",
 };
 
 export type TranslationKey = keyof typeof id;

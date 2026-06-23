@@ -632,10 +632,10 @@ function AppContent() {
 
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                 {[
-                  { code: "IEEE", name: "IEEE Xplore", logo: ieeeLogo, bg: "#fff", desc: "Engineering & Tech" },
-                  { code: "S", name: "Springer", logo: springerLogo, bg: "#fff", desc: "Scientific Journals" },
-                  { code: "P", name: "ProQuest", logo: proquestLogo, bg: "#fff", desc: "Research Papers" },
-                  { code: "SD", name: "ScienceDirect", logo: scienceDirectLogo, bg: "#fff", desc: "Physics & Chemistry" },
+                  { code: "IEEE", name: "IEEE Xplore", logo: ieeeLogo, bg: "#fff", descKey: "vault.desc_ieee" },
+                  { code: "S", name: "Springer", logo: springerLogo, bg: "#fff", descKey: "vault.desc_springer" },
+                  { code: "P", name: "ProQuest", logo: proquestLogo, bg: "#fff", descKey: "vault.desc_proquest" },
+                  { code: "SD", name: "ScienceDirect", logo: scienceDirectLogo, bg: "#fff", descKey: "vault.desc_sd" },
                 ].map(db => (
                   <div
                     key={db.code}
@@ -650,7 +650,7 @@ function AppContent() {
                     </div>
                     <div>
                       <p className="text-base font-black leading-tight" style={{ color: "var(--foreground)" }}>{db.name}</p>
-                      <p className="text-[10px] font-bold uppercase tracking-widest mt-1 opacity-50">{db.desc}</p>
+                      <p className="text-[10px] font-bold uppercase tracking-widest mt-1 opacity-50">{t(db.descKey as any)}</p>
                     </div>
                   </div>
                 ))}
