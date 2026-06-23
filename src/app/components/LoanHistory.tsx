@@ -1,6 +1,8 @@
 import { Clock, RefreshCcw, CheckCircle, AlertTriangle } from "lucide-react";
+import { useI18n } from "../../context/i18nContext";
 
 export function LoanHistory() {
+  const { t } = useI18n();
   const loans = [
     {
       id: 1, 
@@ -59,8 +61,8 @@ export function LoanHistory() {
           <Clock className="size-5 text-primary" />
         </div>
         <div>
-          <h1 className="text-2xl font-black tracking-tight leading-none" style={{ color: "var(--foreground)" }}>Loan History</h1>
-          <p className="text-xs font-medium mt-0.5" style={{ color: "var(--muted-foreground)" }}>Track your active borrowings and return deadlines.</p>
+          <h1 className="text-2xl font-black tracking-tight leading-none" style={{ color: "var(--foreground)" }}>{t("history.title")}</h1>
+          <p className="text-xs font-medium mt-0.5" style={{ color: "var(--muted-foreground)" }}>{t("history.subtitle")}</p>
         </div>
       </div>
 
@@ -73,7 +75,7 @@ export function LoanHistory() {
                   {/* Lens Preview Overlay */}
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center backdrop-blur-sm"
                        style={{ background: "rgba(0,0,0,0.6)" }}>
-                      <span className="text-white text-[7px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded border border-white/20 bg-white/10">Details</span>
+                      <span className="text-white text-[7px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded border border-white/20 bg-white/10">{t("history.details")}</span>
                   </div>
               </div>
               
@@ -83,16 +85,16 @@ export function LoanHistory() {
                 
                 <div className="flex items-center gap-6 flex-wrap text-xs">
                   <div className="flex flex-col gap-1">
-                    <span className="font-bold uppercase tracking-widest opacity-40 text-[9px]" style={{ color: "var(--muted-foreground)" }}>Borrow Date</span>
+                    <span className="font-bold uppercase tracking-widest opacity-40 text-[9px]" style={{ color: "var(--muted-foreground)" }}>{t("history.borrow_date")}</span>
                     <span className="font-medium" style={{ color: "var(--foreground)" }}>{loan.borrowDate}</span>
                   </div>
                   <div className="flex flex-col gap-1">
-                    <span className="font-bold uppercase tracking-widest opacity-40 text-[9px]" style={{ color: "var(--muted-foreground)" }}>Due Date</span>
+                    <span className="font-bold uppercase tracking-widest opacity-40 text-[9px]" style={{ color: "var(--muted-foreground)" }}>{t("history.due_date")}</span>
                     <span className="font-medium" style={{ color: "var(--foreground)" }}>{loan.dueDate}</span>
                   </div>
                   {loan.returnedDate !== "-" && (
                     <div className="flex flex-col gap-1">
-                      <span className="font-bold uppercase tracking-widest opacity-40 text-[9px]" style={{ color: "var(--muted-foreground)" }}>Returned On</span>
+                      <span className="font-bold uppercase tracking-widest opacity-40 text-[9px]" style={{ color: "var(--muted-foreground)" }}>{t("history.return_date")}</span>
                       <span className="font-medium" style={{ color: "var(--foreground)" }}>{loan.returnedDate}</span>
                     </div>
                   )}
@@ -104,17 +106,17 @@ export function LoanHistory() {
             <div className="flex flex-col items-end gap-3 mt-4 sm:mt-0 ml-auto border-l border-border pl-6 m-4 w-full sm:w-auto">
               <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest border ${getStatusClasses(loan.status)}`}>
                 {getStatusIcon(loan.status)}
-                {loan.status}
+                {t(`history.status_${loan.status.toLowerCase()}` as any)}
               </div>
               
               {loan.status === "Active" && (
                 <button className="text-[10px] font-bold uppercase tracking-widest px-4 py-2 border border-border rounded-lg hover:border-primary hover:text-primary transition-colors">
-                  Renew Loan
+                  {t("history.renew")}
                 </button>
               )}
               {loan.status === "Overdue" && (
                 <button className="text-[10px] font-bold uppercase tracking-widest px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors shadow-md shadow-red-500/20">
-                  Pay Penalty
+                  {t("history.pay_penalty")}
                 </button>
               )}
             </div>

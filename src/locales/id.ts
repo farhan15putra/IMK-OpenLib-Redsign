@@ -144,6 +144,9 @@ export const id = {
   "history.return_date": "Tanggal Kembali",
   "history.borrow_date": "Tanggal Pinjam",
   "history.empty": "Belum ada riwayat peminjaman",
+  "history.renew": "Perpanjang Pinjaman",
+  "history.pay_penalty": "Bayar Denda",
+  "history.details": "Detail",
 
   // Saved Books
   "saved.title": "Bookmark Tersimpan",
@@ -180,7 +183,9 @@ export const id = {
   "settings.accessibility": "Aksesibilitas",
   "settings.accessibility_desc": "Sesuaikan tampilan untuk kebutuhan aksesibilitas Anda.",
   "settings.language": "Bahasa & Wilayah",
+  "settings.language_region": "Bahasa & Wilayah",
   "settings.help": "Pusat Bantuan",
+  "settings.help_center": "Pusat Bantuan",
   "settings.configure": "Atur {{section}} →",
   "settings.theme_light": "Terang",
   "settings.theme_dark": "Gelap",

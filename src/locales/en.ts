@@ -144,6 +144,9 @@ export const en = {
   "history.return_date": "Return Date",
   "history.borrow_date": "Borrow Date",
   "history.empty": "No loan history yet",
+  "history.renew": "Renew Loan",
+  "history.pay_penalty": "Pay Penalty",
+  "history.details": "Details",
 
   // Saved Books
   "saved.title": "Saved Bookmark",
@@ -180,7 +183,9 @@ export const en = {
   "settings.accessibility": "Accessibility",
   "settings.accessibility_desc": "Customize the display for your accessibility needs.",
   "settings.language": "Language & Region",
+  "settings.language_region": "Language & Region",
   "settings.help": "Help Center",
+  "settings.help_center": "Help Center",
   "settings.configure": "Configure {{section}} →",
   "settings.theme_light": "Light",
   "settings.theme_dark": "Dark",

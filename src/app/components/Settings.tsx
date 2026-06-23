@@ -1,30 +1,32 @@
 import { User, Bell, Shield, Paintbrush, Globe, Smartphone, HelpCircle } from "lucide-react";
+import { useI18n } from "../../context/i18nContext";
 
 export function Settings() {
+  const { t } = useI18n();
   const sections = [
     {
       id: "account",
-      title: "Account Settings",
+      titleKey: "settings.account",
       icon: User,
-      description: "Manage your profile, email, and authentication methods.",
+      descriptionKey: "settings.account_desc",
       color: "text-blue-500",
       bgClass: "bg-blue-500/10 border-blue-500/20"
     },
     {
       id: "appearance",
-      title: "Appearance",
+      titleKey: "settings.appearance",
       icon: Paintbrush,
-      description: "Customize the interface, theme, and animations.",
+      descriptionKey: "settings.appearance_desc",
       color: "text-primary",
       bgClass: "bg-primary/10 border-primary/20",
       content: (
         <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-4">
-           {['Light', 'Dark', 'System'].map((mode, idx) => (
+           {['settings.theme_light', 'settings.theme_dark', 'settings.theme_system'].map((modeKey, idx) => (
               <button 
-                key={mode} 
+                key={modeKey} 
                 className={`py-2 px-3 md:px-4 rounded-xl border border-border bg-card text-[10px] md:text-xs font-black uppercase tracking-widest hover:border-primary hover:text-primary transition-all shadow-sm ${idx === 2 ? 'col-span-2 sm:col-span-1' : ''}`}
               >
-                {mode}
+                {t(modeKey as any)}
               </button>
            ))}
         </div>
@@ -32,17 +34,17 @@ export function Settings() {
     },
     {
       id: "notifications",
-      title: "Notifications",
+      titleKey: "settings.notifications",
       icon: Bell,
-      description: "Control push notifications, due date alerts, and emails.",
+      descriptionKey: "settings.notifications_desc",
       color: "text-amber-500",
       bgClass: "bg-amber-500/10 border-amber-500/20"
     },
     {
       id: "privacy",
-      title: "Privacy & Security",
+      titleKey: "settings.privacy",
       icon: Shield,
-      description: "Configure visibility for your loan history and connected apps.",
+      descriptionKey: "settings.privacy_desc",
       color: "text-green-500",
       bgClass: "bg-green-500/10 border-green-500/20"
     }
@@ -51,8 +53,8 @@ export function Settings() {
   return (
     <div className="px-8 py-10 max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500 pb-20">
       <div className="mb-10">
-        <h1 className="text-3xl font-black tracking-tight leading-none mb-1" style={{ color: "var(--foreground)" }}>Preferences</h1>
-        <p className="text-sm font-medium" style={{ color: "var(--muted-foreground)" }}>Customize your library experience and account details.</p>
+        <h1 className="text-3xl font-black tracking-tight leading-none mb-1" style={{ color: "var(--foreground)" }}>{t("settings.title")}</h1>
+        <p className="text-sm font-medium" style={{ color: "var(--muted-foreground)" }}>{t("settings.subtitle")}</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
@@ -64,15 +66,15 @@ export function Settings() {
                <div className={`p-1.5 rounded-lg border flex items-center justify-center ${section.bgClass}`}>
                   <section.icon className={`size-4 ${section.color}`} />
                </div>
-               <span className="group-hover:text-primary transition-colors">{section.title}</span>
+               <span className="group-hover:text-primary transition-colors">{t(section.titleKey as any)}</span>
              </button>
            ))}
            <div className="w-full h-px bg-border my-2" />
            <button className="flex items-center gap-3 w-full text-left p-3 rounded-2xl hover:bg-muted text-muted-foreground font-bold text-sm tracking-wide transition-colors">
-              <Globe className="size-4" /> Language & Region
+              <Globe className="size-4" /> {t("settings.language_region")}
            </button>
            <button className="flex items-center gap-3 w-full text-left p-3 rounded-2xl hover:bg-muted text-muted-foreground font-bold text-sm tracking-wide transition-colors">
-              <HelpCircle className="size-4" /> Help Center
+              <HelpCircle className="size-4" /> {t("settings.help_center")}
            </button>
         </div>
 
@@ -85,15 +87,15 @@ export function Settings() {
                     <section.icon className={`size-6 ${section.color}`} />
                  </div>
                  <div className="flex-1 pt-1">
-                   <h2 className="text-lg font-black tracking-tight mb-1" style={{ color: "var(--foreground)" }}>{section.title}</h2>
-                   <p className="text-xs font-medium text-muted-foreground leading-relaxed">{section.description}</p>
+                   <h2 className="text-lg font-black tracking-tight mb-1" style={{ color: "var(--foreground)" }}>{t(section.titleKey as any)}</h2>
+                   <p className="text-xs font-medium text-muted-foreground leading-relaxed">{t(section.descriptionKey as any)}</p>
                    
                    {section.content}
                    
                    {!section.content && (
                      <div className="mt-5 text-left border-t border-border pt-4">
                         <button className="text-[10px] font-black uppercase tracking-widest text-primary hover:underline underline-offset-4">
-                          Configure {section.title} →
+                          {t("settings.configure").replace("{{section}}", t(section.titleKey as any))}
                         </button>
                      </div>
                    )}
