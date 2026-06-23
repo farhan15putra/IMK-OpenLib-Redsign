@@ -103,19 +103,19 @@ export function LoanHistory() {
             </div>
 
             {/* Status Section */}
-            <div className="flex flex-col items-end gap-3 mt-4 sm:mt-0 ml-auto border-l border-border pl-6 m-4 w-full sm:w-auto">
-              <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest border ${getStatusClasses(loan.status)}`}>
+            <div className="flex flex-col items-stretch gap-3 mt-4 sm:mt-0 ml-auto border-l border-border pl-6 m-4 w-full sm:w-36 flex-shrink-0">
+              <div className={`flex items-center justify-center gap-1.5 w-full px-2 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest border text-center ${getStatusClasses(loan.status)}`}>
                 {getStatusIcon(loan.status)}
-                {t(`history.status_${loan.status.toLowerCase()}` as any)}
+                <span className="truncate">{t(`history.status_${loan.status.toLowerCase()}` as any)}</span>
               </div>
               
               {loan.status === "Active" && (
-                <button className="text-[10px] font-bold uppercase tracking-widest px-4 py-2 border border-border rounded-lg hover:border-primary hover:text-primary transition-colors">
+                <button className="w-full text-center text-[10px] font-bold uppercase tracking-widest px-2 py-2 border border-border rounded-lg hover:border-primary hover:text-primary transition-colors">
                   {t("history.renew")}
                 </button>
               )}
               {loan.status === "Overdue" && (
-                <button className="text-[10px] font-bold uppercase tracking-widest px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors shadow-md shadow-red-500/20">
+                <button className="w-full text-center text-[10px] font-bold uppercase tracking-widest px-2 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors shadow-md shadow-red-500/20">
                   {t("history.pay_penalty")}
                 </button>
               )}
