@@ -1,28 +1,53 @@
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { User, Mail, Phone, MapPin, Award, BookOpen, Clock, ShieldCheck, Edit3, Bookmark, Globe, ChevronDown, Check } from "lucide-react";
+import { useI18n } from "../../context/i18nContext";
+import { User, Mail, Phone, MapPin, Award, BookOpen, Clock, ShieldCheck, Edit3, Bookmark, Globe, ChevronDown, Check, Play, Eye, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function Profile() {
-  const { t, i18n } = useTranslation();
+  const { t, locale, setLocale } = useI18n();
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
 
-  const toggleLanguage = (lang: string) => {
-    i18n.changeLanguage(lang);
+  const toggleLanguage = (lang: "id" | "en") => {
+    setLocale(lang);
     setIsLangMenuOpen(false);
   };
 
   const activityData = [
-    { action: t('actions.Borrowed'), book: "The Pragmatic Programmer", date: "Oct 12, 2024", icon: BookOpen, color: "text-blue-500", bg: "bg-blue-500/10" },
-    { action: t('actions.Returned'), book: "Design Patterns: Elements of Reusable...", date: "Oct 10, 2024", icon: Clock, color: "text-green-500", bg: "bg-green-500/10" },
-    { action: t('actions.Reserved'), book: "Clean Code", date: "Oct 05, 2024", icon: Bookmark, color: "text-purple-500", bg: "bg-purple-500/10" },
-    { action: t('actions.PaidFine'), book: "Late return fee - 2 days", date: "Sep 28, 2024", icon: ShieldCheck, color: "text-red-500", bg: "bg-red-500/10" }
+    { action: t('actions.borrowed'), book: "The Pragmatic Programmer", date: "Oct 12, 2024", icon: BookOpen, color: "text-blue-500", bg: "bg-blue-500/10" },
+    { action: t('actions.returned'), book: "Design Patterns: Elements of Reusable...", date: "Oct 10, 2024", icon: Clock, color: "text-green-500", bg: "bg-green-500/10" },
+    { action: t('actions.reserved'), book: "Clean Code", date: "Oct 05, 2024", icon: Bookmark, color: "text-purple-500", bg: "bg-purple-500/10" },
+    { action: t('actions.paid_fine'), book: "Late return fee - 2 days", date: "Sep 28, 2024", icon: ShieldCheck, color: "text-red-500", bg: "bg-red-500/10" }
+  ];
+
+  // ── Mock data: Continue Reading ──────────────────────────────
+  const continueReading = {
+    title: "Clean Code: A Handbook of Agile Software Craftsmanship",
+    author: "Robert C. Martin",
+    cover: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    progress: 65,
+    currentPage: 218,
+    totalPages: 335,
+  };
+
+  // ── Mock data: Recently Viewed ───────────────────────────────
+  const recentlyViewed = [
+    { id: 1, title: "The Design of Everyday Things", cover: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", viewedAgo: "2h" },
+    { id: 2, title: "Atomic Habits", cover: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", viewedAgo: "5h" },
+    { id: 3, title: "Rich Dad Poor Dad", cover: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", viewedAgo: "1d" },
+    { id: 4, title: "Interaction Design", cover: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", viewedAgo: "2d" },
+  ];
+
+  // ── Mock data: Recommendations ───────────────────────────────
+  const recommendations = [
+    { id: 101, title: "Interaction Design: Beyond HCI", author: "Helen Sharp, Yvonne Rogers", cover: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", category: "Teknologi" },
+    { id: 102, title: "Dare to Lead", author: "Brené Brown", cover: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", category: "Pengembangan Diri" },
+    { id: 103, title: "Algoritma & Struktur Data", author: "Dr. Kevin Hartono", cover: "https://images.unsplash.com/photo-1543269865-cbf427effbad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", category: "Teknologi" },
   ];
 
   return (
     <div className="max-w-5xl mx-auto py-8 px-6 min-h-screen">
       
-      {/* Header section with Magic UI / Origin UI inspired Language Switcher */}
+      {/* Header section with Language Switcher */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
         <div>
           <motion.h1 
@@ -42,12 +67,12 @@ export function Profile() {
             style={{ color: "var(--muted-foreground)" }}
           >
             <span className="size-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)] animate-pulse" />
-            {t('profile.memberStatus')}
+            {t('profile.member_status')}
           </motion.p>
         </div>
         
         <div className="flex items-center gap-4">
-          {/* Origin UI Style Accessible Language Selector */}
+          {/* Language Selector */}
           <div className="relative">
             <button 
               onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
@@ -57,7 +82,7 @@ export function Profile() {
               aria-label="Select Language"
             >
               <Globe className="size-4 text-muted-foreground" />
-              <span>{i18n.language === 'id' ? 'ID' : 'EN'}</span>
+              <span>{locale === 'id' ? 'ID' : 'EN'}</span>
               <ChevronDown className={`size-3 text-muted-foreground transition-transform duration-300 ${isLangMenuOpen ? 'rotate-180' : ''}`} />
             </button>
 
@@ -76,7 +101,7 @@ export function Profile() {
                     aria-label="Switch to English"
                   >
                     <span className="font-medium group-hover:text-primary transition-colors">English</span>
-                    {i18n.language === 'en' && <Check className="size-4 text-primary" />}
+                    {locale === 'en' && <Check className="size-4 text-primary" />}
                   </button>
                   <button
                     onClick={() => toggleLanguage('id')}
@@ -84,7 +109,7 @@ export function Profile() {
                     aria-label="Ganti ke Bahasa Indonesia"
                   >
                     <span className="font-medium group-hover:text-primary transition-colors">Indonesia</span>
-                    {i18n.language === 'id' && <Check className="size-4 text-primary" />}
+                    {locale === 'id' && <Check className="size-4 text-primary" />}
                   </button>
                 </motion.div>
               )}
@@ -93,10 +118,10 @@ export function Profile() {
 
           <button 
             className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-primary/10 text-primary hover:bg-primary/20 text-xs font-black uppercase tracking-widest transition-colors shadow-sm active:scale-95 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-            aria-label={t('profile.editProfile')}
+            aria-label={t('profile.edit_profile')}
           >
             <Edit3 className="size-4 group-hover:-translate-y-0.5 transition-transform" />
-            {t('profile.editProfile')}
+            {t('profile.edit_profile')}
           </button>
         </div>
       </div>
@@ -106,7 +131,7 @@ export function Profile() {
         {/* Left Col: ID Card & Info */}
         <div className="lg:col-span-1 space-y-8">
           
-          {/* Aceternity UI Inspired Digital ID Card */}
+          {/* Digital ID Card */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -142,16 +167,16 @@ export function Profile() {
             </div>
           </motion.div>
 
-          {/* Contact Details with Hover Effects */}
+          {/* Contact Details */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
             className="rounded-[2rem] bg-card border border-border shadow-sm p-8"
             role="region"
-            aria-label={t('profile.contactInfo')}
+            aria-label={t('profile.contact_info')}
           >
-            <h3 className="text-sm font-black uppercase tracking-widest text-primary mb-6">{t('profile.contactInfo')}</h3>
+            <h3 className="text-sm font-black uppercase tracking-widest text-primary mb-6">{t('profile.contact_info')}</h3>
             <div className="space-y-6">
               <div className="flex flex-col gap-1.5 group">
                 <span className="flex items-center gap-2 text-xs font-bold text-muted-foreground uppercase tracking-wider group-hover:text-primary transition-colors">
@@ -175,13 +200,13 @@ export function Profile() {
           </motion.div>
         </div>
 
-        {/* Right Col: Stats & Activity */}
+        {/* Right Col: Stats, Activity & Personalization */}
         <div className="lg:col-span-2 space-y-8">
           
-          {/* Stats Grid - Magic UI inspired subtle borders */}
+          {/* Stats Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4" role="list" aria-label="Library Statistics">
             {[
-              { icon: BookOpen, val: "42", label: t('profile.booksRead'), c: "blue" },
+              { icon: BookOpen, val: "42", label: t('profile.books_read'), c: "blue" },
               { icon: Clock, val: "2", label: t('profile.borrowed'), c: "primary" },
               { icon: ShieldCheck, val: "0", label: t('profile.overdue'), c: "green" },
               { icon: Award, val: "Top 5%", label: t('profile.rank'), c: "purple" }
@@ -209,20 +234,116 @@ export function Profile() {
             ))}
           </div>
 
-          {/* Detailed Sections */}
-          <motion.div 
+          {/* ══════ FIX #3: CONTINUE READING ══════ */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="rounded-[2rem] bg-card border border-border shadow-sm p-6 md:p-8"
+          >
+            <div className="flex items-center gap-2 mb-6">
+              <Play className="size-4 text-primary" />
+              <h3 className="text-lg font-black text-foreground">{t('profile.continue_reading')}</h3>
+              <span className="text-[10px] font-bold text-muted-foreground ml-1">— {t('profile.continue_reading_sub')}</span>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-5">
+              <div className="w-24 h-36 rounded-2xl overflow-hidden flex-shrink-0 shadow-lg border border-border bg-muted">
+                <img src={continueReading.cover} alt={continueReading.title} className="w-full h-full object-cover" />
+              </div>
+              <div className="flex-1 flex flex-col justify-between min-w-0">
+                <div>
+                  <h4 className="text-base font-black text-foreground leading-snug line-clamp-2">{continueReading.title}</h4>
+                  <p className="text-xs font-bold text-muted-foreground mt-1 uppercase tracking-widest">{continueReading.author}</p>
+                </div>
+                <div className="mt-4">
+                  {/* Progress Bar */}
+                  <div className="flex items-center justify-between text-[10px] font-bold text-muted-foreground mb-2">
+                    <span>{t('profile.progress', { percent: String(continueReading.progress) })}</span>
+                    <span>{t('profile.page', { current: String(continueReading.currentPage), total: String(continueReading.totalPages) })}</span>
+                  </div>
+                  <div className="w-full h-2 rounded-full bg-muted overflow-hidden">
+                    <div className="h-full rounded-full transition-all duration-700" style={{ width: `${continueReading.progress}%`, background: "var(--primary)" }} />
+                  </div>
+                  <button className="mt-4 flex items-center gap-2 px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest text-white active:scale-95 transition-all shadow-md hover:opacity-90"
+                    style={{ background: "var(--primary)" }}>
+                    <Play className="size-3.5" />
+                    {t('profile.resume_reading')}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* ══════ FIX #3: RECENTLY VIEWED ══════ */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25 }}
+            className="rounded-[2rem] bg-card border border-border shadow-sm p-6 md:p-8"
+          >
+            <div className="flex items-center gap-2 mb-6">
+              <Eye className="size-4 text-primary" />
+              <h3 className="text-lg font-black text-foreground">{t('profile.recently_viewed')}</h3>
+              <span className="text-[10px] font-bold text-muted-foreground ml-1">— {t('profile.recently_viewed_sub')}</span>
+            </div>
+
+            <div className="flex gap-4 overflow-x-auto pb-2 hide-scrollbar">
+              {recentlyViewed.map((book) => (
+                <div key={book.id} className="flex-shrink-0 w-28 group cursor-pointer">
+                  <div className="w-28 h-40 rounded-2xl overflow-hidden shadow-md border border-border mb-2 bg-muted group-hover:shadow-xl group-hover:border-primary/30 transition-all">
+                    <img src={book.cover} alt={book.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  </div>
+                  <p className="text-[11px] font-bold text-foreground leading-tight line-clamp-2">{book.title}</p>
+                  <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest mt-0.5">{book.viewedAgo} ago</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* ══════ FIX #3: RECOMMENDATIONS ══════ */}
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
+            className="rounded-[2rem] bg-card border border-border shadow-sm p-6 md:p-8"
+          >
+            <div className="flex items-center gap-2 mb-6">
+              <Sparkles className="size-4 text-primary fill-primary" />
+              <h3 className="text-lg font-black text-foreground">{t('profile.recommendations')}</h3>
+              <span className="text-[10px] font-bold text-muted-foreground ml-1">— {t('profile.recommendations_sub')}</span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {recommendations.map((book) => (
+                <div key={book.id} className="flex gap-3 p-3 rounded-2xl border border-border hover:border-primary/30 hover:shadow-md transition-all cursor-pointer group">
+                  <div className="w-14 h-20 rounded-xl overflow-hidden flex-shrink-0 shadow-sm border border-border bg-muted">
+                    <img src={book.cover} alt={book.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  </div>
+                  <div className="flex-1 min-w-0 flex flex-col justify-center">
+                    <h4 className="text-xs font-black text-foreground leading-tight line-clamp-2 group-hover:text-primary transition-colors">{book.title}</h4>
+                    <p className="text-[9px] font-bold text-muted-foreground mt-1 truncate">{book.author}</p>
+                    <span className="mt-1.5 inline-flex px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-widest bg-primary/10 text-primary w-fit">{book.category}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Recent Activity */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35 }}
             className="rounded-[2rem] bg-card border border-border shadow-sm p-8"
           >
              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-border">
-              <h3 className="text-lg font-black text-foreground">{t('profile.activityTitle')}</h3>
+              <h3 className="text-lg font-black text-foreground">{t('profile.activity_title')}</h3>
               <button 
                 className="text-xs font-bold text-primary hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-2 py-1"
-                aria-label={t('profile.viewHistory')}
+                aria-label={t('profile.view_history')}
               >
-                {t('profile.viewHistory')}
+                {t('profile.view_history')}
               </button>
             </div>
 

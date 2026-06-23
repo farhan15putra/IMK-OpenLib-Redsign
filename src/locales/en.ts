@@ -146,11 +146,25 @@ export const en = {
   "history.empty": "No loan history yet",
 
   // Saved Books
-  "saved.title": "Saved Books",
-  "saved.subtitle": "Your saved book collection",
+  "saved.title": "Saved Bookmark",
+  "saved.subtitle": "Curated lists of your favorite discoveries.",
   "saved.remove": "Remove from saved",
   "saved.empty": "No saved books yet",
   "saved.empty_sub": "Save books from the catalog to find them here",
+  "saved.filter_list": "Filter List",
+  "saved.filter_by_category": "By Category",
+  "saved.filter_by_format": "By Format",
+  "saved.sort_label": "Sort",
+  "saved.sort_az": "A → Z",
+  "saved.sort_za": "Z → A",
+  "saved.sort_newest": "Newest First",
+  "saved.add_to_list": "Add to list",
+  "saved.explore_catalog": "Explore Catalog",
+  "saved.explore_desc": "Browse catalog to save more books here.",
+  "saved.saved_recently": "Saved recently",
+  "saved.open_details": "Open Details",
+  "saved.no_match": "No books match the current filters.",
+  "saved.all": "All",
 
   // Settings
   "settings.title": "Preferences",
@@ -197,12 +211,34 @@ export const en = {
   "skip.nav": "Skip to navigation",
 
   // Profile
-  "profile.title": "My Profile",
+  "profile.title": "Student Profile",
   "profile.edit": "Edit Profile",
   "profile.student_id": "Student ID",
   "profile.faculty": "Faculty",
   "profile.active_loans": "Active Loans",
   "profile.total_read": "Total Read",
+  "profile.member_status": "Active Library Member",
+  "profile.edit_profile": "Edit Profile",
+  "profile.contact_info": "Contact Info",
+  "profile.email": "Email Address",
+  "profile.phone": "Phone Number",
+  "profile.location": "Campus Location",
+  "profile.books_read": "Books Read",
+  "profile.borrowed": "Currently Borrowed",
+  "profile.overdue": "Overdue Status",
+  "profile.rank": "Reader Rank",
+  "profile.activity_title": "Recent Library Activity",
+  "profile.view_history": "View Full History",
+  "profile.major": "Informatics Engineering",
+  "profile.continue_reading": "Continue Reading",
+  "profile.continue_reading_sub": "Pick up where you left off",
+  "profile.recently_viewed": "Recently Viewed",
+  "profile.recently_viewed_sub": "Books you've browsed recently",
+  "profile.recommendations": "Recommended for You",
+  "profile.recommendations_sub": "Based on your reading history",
+  "profile.progress": "{{percent}}% completed",
+  "profile.resume_reading": "Resume",
+  "profile.page": "Page {{current}} of {{total}}",
 
   // General
   "general.loading": "Loading...",
@@ -213,4 +249,23 @@ export const en = {
   "general.save": "Save",
   "general.back": "Back",
   "general.required": "(required)",
+
+  // Actions
+  "actions.borrowed": "Borrowed",
+  "actions.returned": "Returned",
+  "actions.reserved": "Reserved",
+  "actions.paid_fine": "Paid Fine",
+  "actions.viewed": "Viewed",
+
+  // Homepage Sections
+  "section.trending": "Trending This Week",
+  "section.trending_sub": "Most popular books among students",
+  "section.trending_badge": "Hot",
+  "section.your_activity": "Your Recent Activity",
+  "section.your_activity_sub": "Your latest library interactions",
+  "section.view_all": "View All",
+
+  // Hero Search
+  "hero.search_placeholder": "Search books, journals, thesis...",
+  "hero.search_button": "Search",
 };

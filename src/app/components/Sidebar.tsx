@@ -1,4 +1,4 @@
-import { Home, BookMarked, Clock, Bookmark, Settings, LogOut, Sun, Moon } from "lucide-react";
+import { LayoutDashboard, Search, History, Heart, SlidersHorizontal, LogOut, Sun, Moon } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useI18n } from "../../context/i18nContext";
 import logoImg from "../../imports/cropped-logo_telkom_university.png";
@@ -8,11 +8,11 @@ export function Sidebar({ currentView, setCurrentView, isOpen, setIsOpen }: { cu
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
 
   const navItems = [
-    { id: 'home', icon: Home, labelKey: "nav.home" as const },
-    { id: 'catalog', icon: BookMarked, labelKey: "nav.catalog" as const },
-    { id: 'history', icon: Clock, labelKey: "nav.history" as const },
-    { id: 'saved', icon: Bookmark, labelKey: "nav.saved" as const },
-    { id: 'settings', icon: Settings, labelKey: "nav.settings" as const },
+    { id: 'home', icon: LayoutDashboard, labelKey: "nav.home" as const },
+    { id: 'catalog', icon: Search, labelKey: "nav.catalog" as const },
+    { id: 'history', icon: History, labelKey: "nav.history" as const },
+    { id: 'saved', icon: Heart, labelKey: "nav.saved" as const },
+    { id: 'settings', icon: SlidersHorizontal, labelKey: "nav.settings" as const },
   ];
 
   useEffect(() => {
@@ -118,8 +118,8 @@ export function Sidebar({ currentView, setCurrentView, isOpen, setIsOpen }: { cu
                 <Icon className={`size-5 transition-transform duration-300 ${isActive ? "scale-110" : "group-hover:scale-110"}`} aria-hidden="true" />
                 {/* FIX #1b: Permanent visible label below each icon */}
                 <span
-                  className="text-[7px] font-black uppercase tracking-tight leading-none"
-                  style={{ opacity: isActive ? 1 : 0.55 }}
+                  className="text-[8px] font-black uppercase tracking-tight leading-none"
+                  style={{ opacity: isActive ? 1 : 0.7 }}
                   aria-hidden="true"
                 >
                   {label}

@@ -16,7 +16,7 @@ import { VoiceOver } from "./components/VoiceOver";
 import { AssistiveTouch } from "./components/AssistiveTouch";
 import { I18nProvider, useI18n } from "../context/i18nContext";
 import { A11yProvider } from "../context/a11yContext";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, TrendingUp, BookOpen, Eye, CheckCircle, Flame } from "lucide-react";
 import ieeeLogo from "../imports/ieee.png";
 import springerLogo from "../imports/Springer.jpg";
 import proquestLogo from "../imports/proquest.jpg";
@@ -349,7 +349,7 @@ function AppContent() {
   const { t } = useI18n();
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [currentView, setCurrentView] = useState("login");
-  const [savedBookIds, setSavedBookIds] = useState<number[]>([1, 4]);
+  const [savedBookIds, setSavedBookIds] = useState<number[]>([]);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [readingBook, setReadingBook] = useState<any>(null);
   const [detailBook, setDetailBook] = useState<any>(null);
@@ -441,25 +441,29 @@ function AppContent() {
               />
             )}
             {currentView === "history" && <LoanHistory />}
-            {currentView === "saved" && <SavedBooks savedBooks={books.filter(b => savedBookIds.includes(b.id))} onRemove={toggleSaveBook} />}
+            {currentView === "saved" && <SavedBooks savedBooks={books.filter(b => savedBookIds.includes(b.id))} onRemove={toggleSaveBook} onNavigateCatalog={() => navigate("catalog")} />}
             {currentView === "settings" && <Settings />}
             {currentView === "profile" && <Profile />}
             {currentView === "home" && (
               <>
                 {/* Hero Section */}
-                <Hero onNavigate={(target, category) => {
-                  if (target === "catalog") {
-                    // E-Books quick access → format filter "Buku"
-                    // Journals quick access → format filter "Jurnal"
-                    const fmtMap: Record<string, string[]> = {
-                      "E-Book":  ["Buku"],
-                      "Journals": ["Jurnal"],
-                    };
-                    goToCatalog(category ? (fmtMap[category] ?? []) : []);
-                  } else {
-                    navigate(target);
-                  }
-                }} />
+                <Hero
+                  onNavigate={(target, category) => {
+                    if (target === "catalog") {
+                      const fmtMap: Record<string, string[]> = {
+                        "E-Book":  ["Buku"],
+                        "Journals": ["Jurnal"],
+                      };
+                      goToCatalog(category ? (fmtMap[category] ?? []) : []);
+                    } else {
+                      navigate(target);
+                    }
+                  }}
+                  onSearch={(q) => {
+                    setSearchQuery(q);
+                    goToCatalog([], q);
+                  }}
+                />
 
             {/* Divider */}
             <div className="mx-4 md:mx-8 opacity-50" style={{ borderTop: "1.5px solid var(--border)" }} />
@@ -535,6 +539,83 @@ function AppContent() {
                   onToggleSave={toggleSaveBook}
                   onOpenReader={(book) => setReadingBook(book)}
                 />
+              </div>
+            </section>
+
+            {/* ══════ FIX #5: TRENDING THIS WEEK ══════ */}
+            <section aria-labelledby="trending-heading" className="px-4 md:px-8 pt-8 pb-10 md:pb-14">
+              <div className="mb-8 md:mb-10 opacity-30" style={{ borderTop: "1.5px solid var(--border)" }} />
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <div className="flex items-center gap-3 mb-1">
+                    <h2 id="trending-heading" className="text-2xl font-black tracking-tight" style={{ color: "var(--foreground)" }}>{t("section.trending")}</h2>
+                    <span className="px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest text-white flex items-center gap-1" style={{ background: "linear-gradient(135deg, #ef4444, var(--primary))" }}>
+                      <Flame className="size-3" />{t("section.trending_badge")}
+                    </span>
+                  </div>
+                  <p className="text-xs font-medium" style={{ color: "var(--muted-foreground)" }}>{t("section.trending_sub")}</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                {[
+                  { rank: 1, title: "Atomic Habits", author: "James Clear", readers: 342, cover: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", category: "Pengembangan Diri" },
+                  { rank: 2, title: "Clean Code", author: "Robert C. Martin", readers: 298, cover: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", category: "Teknologi" },
+                  { rank: 3, title: "The Design of Everyday Things", author: "Don Norman", readers: 256, cover: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", category: "Teknologi" },
+                ].map(item => (
+                  <div key={item.rank} className="group flex gap-4 p-4 rounded-[2rem] border border-border hover:border-primary/40 hover:shadow-xl transition-all cursor-pointer" style={{ background: "var(--card)" }}>
+                    <div className="relative flex-shrink-0">
+                      <div className="w-20 h-28 rounded-xl overflow-hidden shadow-md border border-border bg-muted">
+                        <img src={item.cover} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      </div>
+                      <div className="absolute -top-2 -left-2 size-8 rounded-full flex items-center justify-center text-xs font-black text-white shadow-lg" style={{ background: item.rank === 1 ? "linear-gradient(135deg, #f59e0b, #ef4444)" : "var(--primary)" }}>
+                        #{item.rank}
+                      </div>
+                    </div>
+                    <div className="flex-1 min-w-0 flex flex-col justify-center">
+                      <h3 className="text-sm font-black text-foreground leading-tight line-clamp-2 group-hover:text-primary transition-colors">{item.title}</h3>
+                      <p className="text-[10px] font-bold text-muted-foreground mt-1 uppercase tracking-widest">{item.author}</p>
+                      <div className="flex items-center gap-3 mt-3">
+                        <span className="px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-widest bg-primary/10 text-primary">{item.category}</span>
+                        <span className="text-[9px] font-bold text-muted-foreground flex items-center gap-1">
+                          <TrendingUp className="size-3" />{item.readers} readers
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* ══════ FIX #5: YOUR RECENT ACTIVITY ══════ */}
+            <section aria-labelledby="activity-heading" className="px-4 md:px-8 pb-10 md:pb-14">
+              <div className="mb-8 md:mb-10 opacity-30" style={{ borderTop: "1.5px solid var(--border)" }} />
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h2 id="activity-heading" className="text-2xl font-black tracking-tight" style={{ color: "var(--foreground)" }}>{t("section.your_activity")}</h2>
+                  <p className="text-xs font-medium mt-1" style={{ color: "var(--muted-foreground)" }}>{t("section.your_activity_sub")}</p>
+                </div>
+                <button onClick={() => navigate("history")} className="text-xs font-bold text-primary hover:underline underline-offset-4">{t("section.view_all")}</button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {[
+                  { type: "viewed", title: "Clean Code", time: "2 hours ago", icon: Eye, color: "text-blue-500", bg: "bg-blue-500/10" },
+                  { type: "borrowed", title: "Atomic Habits", time: "3 days ago", icon: BookOpen, color: "text-green-500", bg: "bg-green-500/10" },
+                  { type: "returned", title: "Rich Dad Poor Dad", time: "1 week ago", icon: CheckCircle, color: "text-purple-500", bg: "bg-purple-500/10" },
+                  { type: "viewed", title: "Interaction Design", time: "2 weeks ago", icon: Eye, color: "text-blue-500", bg: "bg-blue-500/10" },
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-4 p-4 rounded-2xl border border-border hover:border-primary/30 hover:shadow-md transition-all cursor-pointer group" style={{ background: "var(--card)" }}>
+                    <div className={`size-11 rounded-xl flex-shrink-0 flex items-center justify-center ${item.bg} ${item.color} group-hover:scale-110 transition-transform`}>
+                      <item.icon className="size-5" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-bold text-foreground truncate">{item.title}</p>
+                      <p className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground mt-0.5">{t(`actions.${item.type}` as any) || item.type}</p>
+                    </div>
+                    <span className="text-[10px] font-medium text-muted-foreground whitespace-nowrap">{item.time}</span>
+                  </div>
+                ))}
               </div>
             </section>
 

@@ -146,11 +146,25 @@ export const id = {
   "history.empty": "Belum ada riwayat peminjaman",
 
   // Saved Books
-  "saved.title": "Buku Tersimpan",
-  "saved.subtitle": "Koleksi buku yang telah Anda simpan",
+  "saved.title": "Bookmark Tersimpan",
+  "saved.subtitle": "Daftar koleksi favoritmu yang telah dikurasi.",
   "saved.remove": "Hapus dari tersimpan",
   "saved.empty": "Belum ada buku yang disimpan",
   "saved.empty_sub": "Simpan buku dari katalog untuk menemukannya di sini",
+  "saved.filter_list": "Filter Daftar",
+  "saved.filter_by_category": "Berdasarkan Kategori",
+  "saved.filter_by_format": "Berdasarkan Format",
+  "saved.sort_label": "Urutkan",
+  "saved.sort_az": "A → Z",
+  "saved.sort_za": "Z → A",
+  "saved.sort_newest": "Terbaru",
+  "saved.add_to_list": "Tambahkan ke daftar",
+  "saved.explore_catalog": "Jelajahi Katalog",
+  "saved.explore_desc": "Jelajahi katalog untuk menyimpan lebih banyak buku di sini.",
+  "saved.saved_recently": "Baru disimpan",
+  "saved.open_details": "Buka Detail",
+  "saved.no_match": "Tidak ada buku yang cocok dengan filter.",
+  "saved.all": "Semua",
 
   // Settings
   "settings.title": "Preferensi",
@@ -197,12 +211,34 @@ export const id = {
   "skip.nav": "Lewati ke navigasi",
 
   // Profile
-  "profile.title": "Profil Saya",
+  "profile.title": "Profil Mahasiswa",
   "profile.edit": "Edit Profil",
   "profile.student_id": "NIM",
   "profile.faculty": "Fakultas",
   "profile.active_loans": "Pinjaman Aktif",
   "profile.total_read": "Total Dibaca",
+  "profile.member_status": "Anggota Perpustakaan Aktif",
+  "profile.edit_profile": "Edit Profil",
+  "profile.contact_info": "Info Kontak",
+  "profile.email": "Alamat Email",
+  "profile.phone": "Nomor Telepon",
+  "profile.location": "Lokasi Kampus",
+  "profile.books_read": "Buku Dibaca",
+  "profile.borrowed": "Sedang Dipinjam",
+  "profile.overdue": "Status Terlambat",
+  "profile.rank": "Peringkat Pembaca",
+  "profile.activity_title": "Aktivitas Perpustakaan Terbaru",
+  "profile.view_history": "Lihat Riwayat Lengkap",
+  "profile.major": "Teknik Informatika",
+  "profile.continue_reading": "Lanjut Baca",
+  "profile.continue_reading_sub": "Lanjutkan dari terakhir kali",
+  "profile.recently_viewed": "Terakhir Dilihat",
+  "profile.recently_viewed_sub": "Buku yang baru saja kamu telusuri",
+  "profile.recommendations": "Rekomendasi Untukmu",
+  "profile.recommendations_sub": "Berdasarkan riwayat bacamu",
+  "profile.progress": "{{percent}}% selesai",
+  "profile.resume_reading": "Lanjutkan",
+  "profile.page": "Halaman {{current}} dari {{total}}",
 
   // General
   "general.loading": "Memuat...",
@@ -213,6 +249,25 @@ export const id = {
   "general.save": "Simpan",
   "general.back": "Kembali",
   "general.required": "(wajib diisi)",
+
+  // Actions
+  "actions.borrowed": "Dipinjam",
+  "actions.returned": "Dikembalikan",
+  "actions.reserved": "Direservasi",
+  "actions.paid_fine": "Denda Dibayar",
+  "actions.viewed": "Dilihat",
+
+  // Homepage Sections
+  "section.trending": "Trending Minggu Ini",
+  "section.trending_sub": "Buku terpopuler di kalangan mahasiswa",
+  "section.trending_badge": "Populer",
+  "section.your_activity": "Aktivitas Terakhirmu",
+  "section.your_activity_sub": "Interaksi terbarumu dengan perpustakaan",
+  "section.view_all": "Lihat Semua",
+
+  // Hero Search
+  "hero.search_placeholder": "Cari buku, jurnal, skripsi...",
+  "hero.search_button": "Cari",
 };
 
 export type TranslationKey = keyof typeof id;
