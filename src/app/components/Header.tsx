@@ -18,6 +18,7 @@ export function Header({
 }) {
   const { t, locale, setLocale } = useI18n();
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [showAppSwitcher, setShowAppSwitcher] = useState(false);
   return (
     <header className="flex items-center justify-between px-4 md:px-8 py-4 md:py-5 h-20 md:h-24 transition-all duration-300 relative z-40 bg-background/80 backdrop-blur-md"
       style={{ borderBottom: "1.5px solid var(--border)" }}>
@@ -155,12 +156,37 @@ export function Header({
       <div className="flex flex-shrink-0 items-center gap-3 md:gap-6">
 
         {/* App Switcher */}
-        <button
-          aria-label={t("header.app_switcher")}
-          className="relative flex-center size-12 rounded-2xl bg-card border border-border shadow-sm hover:shadow-md transition-all active:scale-95 group hidden md:flex items-center justify-center"
-        >
-          <Layers className="size-5" style={{ color: "var(--muted-foreground)" }} aria-hidden="true" />
-        </button>
+        <div className="relative hidden md:block">
+          <button
+            onClick={() => setShowAppSwitcher(!showAppSwitcher)}
+            aria-label={t("header.app_switcher")}
+            className="relative flex items-center justify-center size-12 rounded-2xl bg-card border border-border shadow-sm hover:shadow-md transition-all active:scale-95 group"
+          >
+            <Layers className="size-5 transition-transform group-hover:scale-110" style={{ color: "var(--muted-foreground)" }} aria-hidden="true" />
+          </button>
+          
+          {showAppSwitcher && (
+            <>
+              <div className="fixed inset-0 z-40" onClick={() => setShowAppSwitcher(false)} />
+              <div className="absolute right-0 top-[calc(100%+0.5rem)] w-64 bg-card border border-border rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] p-3 animate-in fade-in slide-in-from-top-4 duration-200 z-50">
+                <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-3 px-2">Telkom Apps</p>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { id: 'openlibrary', name: 'Open Library', icon: '📚' },
+                    { id: 'lms', name: 'CeLOE LMS', icon: '🎓' },
+                    { id: 'igracias', name: 'iGracias', icon: '🏛️' },
+                    { id: 'student', name: 'Student Portal', icon: '👤' },
+                  ].map(app => (
+                    <a key={app.id} href="#" onClick={(e) => { e.preventDefault(); setShowAppSwitcher(false); }} className="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-muted transition-colors text-center border border-transparent hover:border-border group/app">
+                      <span className="text-2xl mb-2 group-hover/app:scale-110 transition-transform">{app.icon}</span>
+                      <span className="text-[10px] font-bold text-foreground leading-tight">{app.name}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+        </div>
 
         {/* Global Notifications */}
         <button
