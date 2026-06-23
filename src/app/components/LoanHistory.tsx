@@ -2,7 +2,20 @@ import { Clock, RefreshCcw, CheckCircle, AlertTriangle } from "lucide-react";
 import { useI18n } from "../../context/i18nContext";
 
 export function LoanHistory() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+
+  const formatDate = (dateStr: string) => {
+    if (dateStr === "-") return "-";
+    if (locale === "id") {
+      return dateStr
+        .replace("May", "Mei")
+        .replace("Aug", "Ags")
+        .replace("Oct", "Okt")
+        .replace("Dec", "Des");
+    }
+    return dateStr;
+  };
+
   const loans = [
     {
       id: 1, 
@@ -86,16 +99,16 @@ export function LoanHistory() {
                 <div className="flex items-center gap-6 flex-wrap text-xs">
                   <div className="flex flex-col gap-1">
                     <span className="font-bold uppercase tracking-widest opacity-40 text-[9px]" style={{ color: "var(--muted-foreground)" }}>{t("history.borrow_date")}</span>
-                    <span className="font-medium" style={{ color: "var(--foreground)" }}>{loan.borrowDate}</span>
+                    <span className="font-medium" style={{ color: "var(--foreground)" }}>{formatDate(loan.borrowDate)}</span>
                   </div>
                   <div className="flex flex-col gap-1">
                     <span className="font-bold uppercase tracking-widest opacity-40 text-[9px]" style={{ color: "var(--muted-foreground)" }}>{t("history.due_date")}</span>
-                    <span className="font-medium" style={{ color: "var(--foreground)" }}>{loan.dueDate}</span>
+                    <span className="font-medium" style={{ color: "var(--foreground)" }}>{formatDate(loan.dueDate)}</span>
                   </div>
                   {loan.returnedDate !== "-" && (
                     <div className="flex flex-col gap-1">
                       <span className="font-bold uppercase tracking-widest opacity-40 text-[9px]" style={{ color: "var(--muted-foreground)" }}>{t("history.return_date")}</span>
-                      <span className="font-medium" style={{ color: "var(--foreground)" }}>{loan.returnedDate}</span>
+                      <span className="font-medium" style={{ color: "var(--foreground)" }}>{formatDate(loan.returnedDate)}</span>
                     </div>
                   )}
                 </div>
