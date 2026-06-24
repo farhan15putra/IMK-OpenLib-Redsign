@@ -79,7 +79,7 @@ export function Hero({ onNavigate, onSearch }: { onNavigate?: (target: string, c
         <div className="flex flex-col items-start max-w-2xl flex-1">
           <div
             className="rounded-[2.5rem] p-8 md:p-10 backdrop-blur-xl border border-border/50 shadow-2xl w-full"
-            style={{ background: "color-mix(in srgb, var(--card) 80%, transparent)" }}
+            style={{ background: "var(--card)" }}
           >
             <div
               className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest mb-6 border border-border/80 shadow-sm"
@@ -176,7 +176,7 @@ export function Hero({ onNavigate, onSearch }: { onNavigate?: (target: string, c
           {/* Stats Row — separate card container */}
           <div
             className="mt-6 w-full rounded-2xl px-8 py-5 border border-border/50 shadow-md flex flex-wrap gap-6 md:gap-10"
-            style={{ background: "color-mix(in srgb, var(--card) 70%, transparent)", backdropFilter: "blur(12px)" }}
+            style={{ background: "var(--card)", backdropFilter: "blur(12px)" }}
           >
             {stats.map((stat) => (
               <div key={stat.labelKey} className="flex flex-col">
