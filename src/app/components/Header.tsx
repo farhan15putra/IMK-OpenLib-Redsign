@@ -25,7 +25,7 @@ export function Header({
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.altKey && e.key.toLowerCase() === 'k') {
         e.preventDefault();
-        searchInputRef.current?.focus();
+        setShowAdvanced(prev => !prev);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
