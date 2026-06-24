@@ -1,5 +1,5 @@
 import { Search, Bell, Settings, Layers, Menu, User, Globe } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useI18n } from "../../context/i18nContext";
 import logoImg from "../../imports/openlibcrop.png";
 
@@ -19,6 +19,18 @@ export function Header({
   const { t, locale, setLocale } = useI18n();
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [showAppSwitcher, setShowAppSwitcher] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.altKey && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
   return (
     <header className="flex items-center justify-between px-4 md:px-8 py-4 md:py-5 h-20 md:h-24 transition-all duration-300 relative z-40 bg-background/80 backdrop-blur-md"
       style={{ borderBottom: "1.5px solid var(--border)" }}>
@@ -86,6 +98,7 @@ export function Header({
           </button>
           <label htmlFor="header-search" className="sr-only">{t("header.search_label")}</label>
           <input
+            ref={searchInputRef}
             id="header-search"
             name="q"
             type="search"
