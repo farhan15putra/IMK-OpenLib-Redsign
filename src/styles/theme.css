@@ -24,9 +24,9 @@
   --font-family: 'Poppins', sans-serif;
 
   /* LIGHT MODE (Versi Terang - Referensi Gambar) */
-  --background: #FDFBF3;        /* Cream/Off-white hangat */
+  --background: #ffffff;        /* Putih bersih */
   --foreground: #252422;        /* Hitam arang */
-  --card: #ffffff;              /* Putih bersih */
+  --card: #FDFBF3;              /* Cream/Off-white hangat */
   --card-foreground: #252422;
   --popover: #ffffff;
   --popover-foreground: #252422;
