@@ -2,16 +2,41 @@
 
 /* ── Accessibility: VoiceOver & AssistiveTouch Animations ── */
 @keyframes ripple {
-  0%   { transform: scale(1); opacity: 0.8; }
-  100% { transform: scale(1.9); opacity: 0; }
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
 }
+
 @keyframes scan-pulse {
-  0%, 100% { box-shadow: 0 0 0 3px rgba(255,100,0,0.4), 0 0 0 6px rgba(255,100,0,0.15); }
-  50%       { box-shadow: 0 0 0 6px rgba(255,100,0,0.6), 0 0 0 12px rgba(255,100,0,0.2); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px rgba(255, 100, 0, 0.4), 0 0 0 6px rgba(255, 100, 0, 0.15);
+  }
+
+  50% {
+    box-shadow: 0 0 0 6px rgba(255, 100, 0, 0.6), 0 0 0 12px rgba(255, 100, 0, 0.2);
+  }
 }
+
 @keyframes vo-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.85; transform: scale(1.02); }
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.85;
+    transform: scale(1.02);
+  }
 }
 
 /* AssistiveTouch scan highlight animation */
@@ -24,23 +49,34 @@
   --font-family: 'Poppins', sans-serif;
 
   /* LIGHT MODE (Versi Terang - Referensi Gambar) */
-  --background: #ffffff;        /* Putih bersih */
-  --foreground: #252422;        /* Hitam arang */
-  --card: #FDFBF3;              /* Cream/Off-white hangat */
+  /* [TANDAIN DI SINI]: Warna background keseluruhan halaman */
+  --background: #ffffff;
+  /* Putih bersih */
+  --foreground: #252422;
+  /* Hitam arang */
+
+  /* [TANDAIN DI SINI]: Warna container/card (Cream) */
+  --card: #F5F3E7;
+  /* Cream/Off-white hangat */
   --card-foreground: #252422;
   --popover: #ffffff;
   --popover-foreground: #252422;
-  --primary: #8B0000;           /* Crimson Red USM */
+  --primary: #8B0000;
+  /* Crimson Red USM */
   --primary-foreground: #ffffff;
-  --secondary: #EB6440;         /* Aksen oranye lembut (opsional) */
+  --secondary: #EB6440;
+  /* Aksen oranye lembut (opsional) */
   --secondary-foreground: #ffffff;
-  --muted: #F5F3E7;             /* Cream lebih gelap */
-  --muted-foreground: #73736E;  /* Abu-abu hangat */
+  --muted: #F5F3E7;
+  /* Cream lebih gelap */
+  --muted-foreground: #73736E;
+  /* Abu-abu hangat */
   --accent: #8B0000;
   --accent-foreground: #ffffff;
   --destructive: #ef4444;
   --destructive-foreground: #f8fafc;
-  --border: #E8E6D9;            /* Border tipis kecokelatan */
+  --border: #E8E6D9;
+  /* Border tipis kecokelatan */
   --input: #E8E6D9;
   --ring: #8B0000;
   --radius: 0.875rem;
@@ -59,23 +95,31 @@
 
 .dark {
   /* DARK MODE — Warm Dark Gray + Soft Red */
-  --background: #1e1e20;        /* Abu-abu gelap hangat, bukan hitam */
-  --foreground: #e8e6e1;        /* Putih sedikit warm */
-  --card: #26262a;              /* Card sedikit lebih terang dari bg */
+  --background: #1e1e20;
+  /* Abu-abu gelap hangat, bukan hitam */
+  --foreground: #e8e6e1;
+  /* Putih sedikit warm */
+  --card: #26262a;
+  /* Card sedikit lebih terang dari bg */
   --card-foreground: #e8e6e1;
   --popover: #26262a;
   --popover-foreground: #e8e6e1;
-  --primary: #c0392b;           /* Merah lebih soft/muted di dark mode */
+  --primary: #c0392b;
+  /* Merah lebih soft/muted di dark mode */
   --primary-foreground: #ffffff;
   --secondary: #313136;
   --secondary-foreground: #e8e6e1;
-  --muted: #2e2e32;             /* Muted area sedikit lebih terang */
-  --muted-foreground: #9a9890;  /* Abu hangat */
+  --muted: #2e2e32;
+  /* Muted area sedikit lebih terang */
+  --muted-foreground: #9a9890;
+  /* Abu hangat */
   --accent: #c0392b;
   --accent-foreground: #ffffff;
-  --border: #35353a;            /* Border lebih terlihat, tidak terlalu gelap */
+  --border: #35353a;
+  /* Border lebih terlihat, tidak terlalu gelap */
   --input: #35353a;
-  --sidebar: #18181b;           /* Sidebar sedikit lebih gelap dari bg */
+  --sidebar: #18181b;
+  /* Sidebar sedikit lebih gelap dari bg */
   --sidebar-foreground: #e8e6e1;
   --sidebar-border: #2c2c30;
   --sidebar-accent: #2e2e32;
@@ -134,6 +178,7 @@
 *:focus {
   outline: none;
 }
+
 *:focus-visible {
   outline: 3px solid var(--primary);
   outline-offset: 3px;
@@ -154,9 +199,10 @@
   border-radius: 0 0 1rem 1rem;
   text-decoration: none;
   transition: top 0.2s ease;
-  box-shadow: 0 4px 20px rgba(139,0,0,0.4);
+  box-shadow: 0 4px 20px rgba(139, 0, 0, 0.4);
   letter-spacing: 0.02em;
 }
+
 .skip-link:focus {
   top: 0;
   outline: 3px solid #fff;
@@ -193,6 +239,7 @@
   --sidebar-foreground: #000000;
   --sidebar-border: #000000;
 }
+
 [data-high-contrast].dark,
 [data-high-contrast] .dark {
   --background: #000000;
@@ -217,7 +264,10 @@
 
 /* ── Accessibility: Reduced Motion ───────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -226,8 +276,8 @@
 }
 
 /* Also respect JS-toggled reduced motion */
-[data-reduce-motion] *, 
-[data-reduce-motion] *::before, 
+[data-reduce-motion] *,
+[data-reduce-motion] *::before,
 [data-reduce-motion] *::after {
   animation-duration: 0.01ms !important;
   animation-iteration-count: 1 !important;
@@ -236,9 +286,15 @@
 }
 
 /* ── Accessibility: Minimum Touch Target ─────────────────── */
-button, [role="button"], a, input, select, textarea {
+button,
+[role="button"],
+a,
+input,
+select,
+textarea {
   min-height: 44px;
 }
+
 input[type="checkbox"],
 input[type="radio"] {
   min-height: unset;
