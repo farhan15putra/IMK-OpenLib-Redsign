@@ -75,7 +75,7 @@ function BookSlide({ id, title, author, cover, category, featured, location, sta
              onClick={(e) => { e.stopPropagation(); onOpenReader?.(); }}
              className="w-full py-2 rounded-xl text-xs font-black uppercase tracking-widest translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75 shadow-lg active:scale-95"
              style={{ background: "var(--primary)", color: "#fff", border: "1px solid rgba(255,255,255,0.2)" }}>
-             Open Reader
+             {t("carousel.open_reader" as any)}
            </button>
         </div>
 
@@ -85,7 +85,7 @@ function BookSlide({ id, title, author, cover, category, featured, location, sta
             onClick={(e) => { e.stopPropagation(); onOpenReader?.(); }}
             className="w-full py-1.5 rounded-lg bg-black/60 backdrop-blur-md text-white text-[8px] font-black uppercase tracking-widest border border-white/20 active:scale-95 shadow-lg"
           >
-            Read Online
+            {t("carousel.read_online" as any)}
           </button>
         </div>
 

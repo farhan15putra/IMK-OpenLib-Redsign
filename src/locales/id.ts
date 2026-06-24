@@ -113,6 +113,8 @@ export const id = {
   "book.cover_alt": "Sampul buku {{title}}",
 
   // Book Reader
+  "carousel.open_reader": "Baca",
+  "carousel.read_online": "Baca Online",
   "reader.close": "Tutup pembaca buku",
   "reader.loading": "Memuat buku...",
   "reader.external": "Buka di tab baru",

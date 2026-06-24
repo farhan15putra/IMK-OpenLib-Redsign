@@ -113,6 +113,8 @@ export const en = {
   "book.cover_alt": "Cover of {{title}}",
 
   // Book Reader
+  "carousel.open_reader": "Open Reader",
+  "carousel.read_online": "Read Online",
   "reader.close": "Close book reader",
   "reader.loading": "Loading book...",
   "reader.external": "Open in new tab",
