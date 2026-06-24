@@ -242,14 +242,26 @@ export function VoiceOver() {
           return { ...s, isEnabled: next };
         });
       }
-      if (e.altKey && e.key === " " && state.isEnabled) {
+      if (e.altKey && (e.key === " " || e.code === "Space")) {
         e.preventDefault();
-        if (state.isReading) pause(); else resume();
+        setState(s => {
+          if (!s.isEnabled) return s;
+          if (window.speechSynthesis.speaking) {
+            if (window.speechSynthesis.paused) {
+              window.speechSynthesis.resume();
+              return { ...s, isReading: true };
+            } else {
+              window.speechSynthesis.pause();
+              return { ...s, isReading: false };
+            }
+          }
+          return s;
+        });
       }
     };
     document.addEventListener("keydown", handleKey);
     return () => document.removeEventListener("keydown", handleKey);
-  }, [state.isEnabled, state.isReading, speak, stop, pause, resume]);
+  }, [speak, stop]);
 
   // Close panel on outside click
   useEffect(() => {
