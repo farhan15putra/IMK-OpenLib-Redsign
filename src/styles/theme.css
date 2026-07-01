@@ -50,13 +50,13 @@
 
   /* LIGHT MODE (Versi Terang - Referensi Gambar) */
   /* [TANDAIN DI SINI]: Warna background keseluruhan halaman */
-  --background: #ffffff;
+  --background: #fff9ef;
   /* Putih bersih */
   --foreground: #252422;
   /* Hitam arang */
 
   /* [TANDAIN DI SINI]: Warna container/card (Cream) */
-  --card: #F5F3E7;
+  --card: #ffffff;
   /* Cream/Off-white hangat */
   --card-foreground: #252422;
   --popover: #ffffff;
